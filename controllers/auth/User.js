@@ -1,29 +1,34 @@
-import { Route, Redirect } from "react-router-dom";
-import React from "react";
-const fakeAuth = {
-    isAuthenticated: true,
-    authenticate(cb) {
-        console.log(cb);
-        this.isAuthenticated = true;
-        setTimeout(cb, 100);
-    },
-    signout(cb) {
-        console.log(cb);
-        this.isAuthenticated = false;
-        setTimeout(cb, 100);
-    }
-};
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Route, Redirect } from 'react-router-dom'
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+const AuthUser = ({ component: Component, authenticated, redirectTo, ...rest}) => {
+  return (
     <Route
-        {...rest}
-        render={props =>
-            fakeAuth.isAuthenticated === true ? (
-                <Component {...props} />
-            ) : (
-                <Redirect to="/login" />
-            )
-        }
+      {...rest}
+      render={props => (
+        authenticated ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={{
+            pathname: redirectTo,
+            state: { from: props.location }  
+          }}
+          />
+        )
+      )}
     />
-);
-export {fakeAuth,PrivateRoute};
+  )
+}
+
+AuthUser.propTypes = {
+  authenticated: PropTypes.bool,
+  redirectTo: PropTypes.string.isRequired,
+  component: PropTypes.func.isRequired,
+}
+
+AuthUser.defaultProps = {
+  authenticated: false,
+}
+
+export default AuthUser;

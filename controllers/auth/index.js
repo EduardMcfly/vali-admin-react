@@ -1,3 +1,3 @@
-import  UserAuth from './User';
+import  AuthUser from './User';
 
-export { UserAuth };
+export { AuthUser };

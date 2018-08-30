@@ -14,7 +14,8 @@ import {
     Row
 } from "reactstrap";
 import { I18n, Trans } from "react-i18next";
-import UserAuth  from "../../../controllers/auth";
+import AuthUser  from "../../../controllers/auth";
+import Link from "react-router-dom/Link";
 
 class Login extends Component {
     render() {
@@ -118,18 +119,16 @@ class Login extends Component {
                                                     </InputGroup>
                                                     <Row>
                                                         <Col sm="12" lg="6">
-                                                            <Button
+                                                            <Link to="./dashboard"
                                                                 color="primary"
-                                                                onClick={UserAuth.fakeAuth.authenticate(3232)}
                                                                 className="w-100 px-4 text-truncate"
                                                             >
                                                                 {t(
                                                                     "loginTitle"
                                                                 )}
-                                                            </Button>
+                                                            </Link>
                                                             <Button
                                                                 color="primary"
-                                                                onClick={UserAuth.fakeAuth.signout(3232)}
                                                                 className="w-100 px-4 text-truncate"
                                                             >
                                                                 {t("cancel")}
