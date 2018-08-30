@@ -16,38 +16,15 @@ import '../sass/app.css';
 
 // Containers
 import { DefaultLayout } from './containers';
+import UserAuth from "./controllers/auth";
 // Pages
 import { Login, Page404, Page500, Register,Home } from './views/Pages';
 
 // import { renderRoutes } from 'react-router-config';
 
-const fakeAuth = {
-    isAuthenticated: true,
-    authenticate(cb) {
-        console.log(cb);
-        this.isAuthenticated = true;
-        setTimeout(cb, 100);
-    },
-    signout(cb) {
-        console.log(cb);
-        this.isAuthenticated = false;
-        setTimeout(cb, 100);
-    },
-};
-fakeAuth.signout();
-
-
-const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route
-        {...rest}
-        render={props => (fakeAuth.isAuthenticated === true ? <Component {...props} /> : <Redirect to="/login" />)}
-    />
-);
-
 class App extends Component {
     render() {
-        return (
-            <HashRouter>
+        return <HashRouter>
                 <Switch>
                     <Route exact path="/login" name="Login Page" component={Login} />
                     <Route exact path="/register" name="Register Page" component={Register} />
@@ -55,10 +32,9 @@ class App extends Component {
                     <Route exact path="/404" name="Page 404" component={Page404} />
                     <Route exact path="/500" name="Page 500" component={Page500} />
                     <Route exact path="/home" name="Home" component={Home} />
-                    <PrivateRoute path="/" name="Home" component={DefaultLayout} />
+                    <UserAuth.PrivateRoute path="/" name="Home" component={DefaultLayout} />
                 </Switch>
-            </HashRouter>
-        );
+            </HashRouter>;
     }
 }
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
     Button,
     Card,
@@ -11,9 +11,10 @@ import {
     InputGroup,
     InputGroupAddon,
     InputGroupText,
-    Row,
-} from 'reactstrap';
-import { I18n, Trans } from 'react-i18next';
+    Row
+} from "reactstrap";
+import { I18n, Trans } from "react-i18next";
+import UserAuth  from "../../../controllers/auth";
 
 class Login extends Component {
     render() {
@@ -37,21 +38,34 @@ class Login extends Component {
                                     </a>
                                     <ul className="dropdown-menu settings-menu dropdown-menu-right">
                                         <li>
-                                            <button className="dropdown-item" onClick={() => i18n.changeLanguage('es')}>
+                                            <button
+                                                className="dropdown-item"
+                                                onClick={() =>
+                                                    i18n.changeLanguage("es")
+                                                }
+                                            >
                                                 <i className="fa fa-language fa-lg" />
                                                 Español
                                             </button>
                                         </li>
                                         <li>
-                                            <button className="dropdown-item" onClick={() => i18n.changeLanguage('en')}>
+                                            <button
+                                                className="dropdown-item"
+                                                onClick={() =>
+                                                    i18n.changeLanguage("en")
+                                                }
+                                            >
                                                 <i className="fa fa-language fa-lg" />
                                                 English
                                             </button>
                                         </li>
                                         <li>
-                                            <a className="dropdown-item" href="{{ route('logout') }}">
+                                            <a
+                                                className="dropdown-item"
+                                                href="{{ route('logout') }}"
+                                            >
                                                 <i className="fa fa-sign-out fa-lg" />
-                                                {t('exit')}
+                                                {t("exit")}
                                             </a>
                                         </li>
                                     </ul>
@@ -70,8 +84,10 @@ class Login extends Component {
                                         <Card className="p-4">
                                             <CardBody>
                                                 <div>
-                                                    <h1>{t('loginTitle')}</h1>
-                                                    <p className="text-muted">{t('loginSubtitle')}</p>
+                                                    <h1>{t("loginTitle")}</h1>
+                                                    <p className="text-muted">
+                                                        {t("loginSubtitle")}
+                                                    </p>
                                                     <InputGroup className="mb-3">
                                                         <InputGroupAddon addonType="prepend">
                                                             <InputGroupText>
@@ -80,7 +96,9 @@ class Login extends Component {
                                                         </InputGroupAddon>
                                                         <Input
                                                             type="text"
-                                                            placeholder={t('emailTitle')}
+                                                            placeholder={t(
+                                                                "emailTitle"
+                                                            )}
                                                             autoComplete="username"
                                                         />
                                                     </InputGroup>
@@ -92,19 +110,43 @@ class Login extends Component {
                                                         </InputGroupAddon>
                                                         <Input
                                                             type="password"
-                                                            placeholder={t('password')}
+                                                            placeholder={t(
+                                                                "password"
+                                                            )}
                                                             autoComplete="current-password"
                                                         />
                                                     </InputGroup>
                                                     <Row>
                                                         <Col sm="12" lg="6">
-                                                            <Button color="primary" className="w-100 px-4 text-truncate">
-                                                                {t('loginTitle')}
+                                                            <Button
+                                                                color="primary"
+                                                                onClick={UserAuth.fakeAuth.authenticate(3232)}
+                                                                className="w-100 px-4 text-truncate"
+                                                            >
+                                                                {t(
+                                                                    "loginTitle"
+                                                                )}
+                                                            </Button>
+                                                            <Button
+                                                                color="primary"
+                                                                onClick={UserAuth.fakeAuth.signout(3232)}
+                                                                className="w-100 px-4 text-truncate"
+                                                            >
+                                                                {t("cancel")}
                                                             </Button>
                                                         </Col>
-                                                        <Col sm="12" lg="6" className="text-right">
-                                                            <Button color="link" className="text-truncate w-100 px-0">
-                                                                {t('forgotPassword')}
+                                                        <Col
+                                                            sm="12"
+                                                            lg="6"
+                                                            className="text-right"
+                                                        >
+                                                            <Button
+                                                                color="link"
+                                                                className="text-truncate w-100 px-0"
+                                                            >
+                                                                {t(
+                                                                    "forgotPassword"
+                                                                )}
                                                             </Button>
                                                         </Col>
                                                     </Row>
@@ -113,16 +155,24 @@ class Login extends Component {
                                         </Card>
                                         <Card
                                             className="d-none d-md-block text-white bg-primary py-5 d-md-down-none"
-                                            style={{ width: 44 + '%' }}
+                                            style={{ width: 44 + "%" }}
                                         >
                                             <CardBody className="text-center">
                                                 <div>
                                                     <h2>Sign up</h2>
                                                     <p>
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                        eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                                        Lorem ipsum dolor sit
+                                                        amet, consectetur
+                                                        adipisicing elit, sed do
+                                                        eiusmod tempor
+                                                        incididunt ut labore et
+                                                        dolore magna aliqua.
                                                     </p>
-                                                    <Button color="primary" className="mt-3" active>
+                                                    <Button
+                                                        color="primary"
+                                                        className="mt-3"
+                                                        active
+                                                    >
                                                         Register Now!
                                                     </Button>
                                                 </div>

@@ -34,7 +34,7 @@ class Register extends Component {
                             Pricing
                         </a>
                     </nav>
-                    <a className="btn btn-outline-primary" href="#homelogin">
+                    <a className="btn btn-outline-primary" href="#login">
                         Sign up
                     </a>
                 </div>
