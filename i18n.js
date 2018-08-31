@@ -21,7 +21,7 @@ i18n.use(Backend)
         },
 
         react: {
-            wait: true
+            wait: false
         }
     });
 i18n.on("languageChanged", function(lng) {

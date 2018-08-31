@@ -27,36 +27,49 @@ class App extends Component {
         super(props);
         this.state = {component:DefaultLayout };
         this.authenticated = true
+        this.sendRequest()
     }
     sendRequest() {
         return axios({
             method: "post",
             url: "./verifyAuth"
         }).then(res => {
-            if (!res.data["0"]) {
-                console.log(res)
-                this.setState({ component: Login});
-            }else{
-                this.authenticated=true;
+            if(typeof res.data.redirect !== 'undefined'){
+                this.authenticated=false;
+            }
+            if(typeof res.data.auth !== 'undefined'){
+                if (!res.data.auth) {
+                    this.authenticated=false;
+                    this.setState({ component: Login});
+                }else{
+                    this.authenticated=true;
+                }
             }
         }).catch(error =>{
-            if (!error.data["0"]) {
-                this.setState({ component: Login});
-            }else{
+            if(typeof response.data.redirect !== 'undefined'){
                 this.authenticated=true;
+            }
+            
+            if(typeof error.data.auth !== 'undefined'){
+                if (!res.data.auth) {
+                    this.authenticated=true;
+                    this.setState({ component: Login});
+                }else{
+                    this.authenticated=true;
+                }
             }
         });
     }
     render() {
         return <HashRouter>
                 <Switch>
-                    <Route exact path="/login" name="Login Page" component={Login} />
+                    <AuthUser exact path="/login" name="Login Page" component={Login} redirectTo="/dashboard" authenticated={!this.authenticated}  />
                     <Route exact path="/register" name="Register Page" component={Register} />
                     <Route exact path="/404" name="Page 404" component={Page404} />
                     <Route exact path="/404" name="Page 404" component={Page404} />
                     <Route exact path="/500" name="Page 500" component={Page500} />
                     <Route exact path="/home" name="Home" component={Home} />
-                    <AuthUser path="/" name="root" function={this.sendRequest()} component={this.state.component} redirectTo="/login" authenticated={this.authenticated}  />
+                    <AuthUser path="/" name="root" component={this.state.component} redirectTo="/login" authenticated={this.authenticated}  />
                 </Switch>
             </HashRouter>;
     }
