@@ -72,8 +72,6 @@ const FarmsBuild = response => (
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.sendRequest = this.sendRequest.bind(this);
-        this.sendRequest();
         this.state = {
             modal: false,
             modalCharge: true,
@@ -85,6 +83,8 @@ class Login extends Component {
         this.toggleNested = this.toggleNested.bind(this);
         this.toggleAll = this.toggleAll.bind(this);
         this.modalData = this.modalData.bind(this);
+        this.sendRequest = this.sendRequest.bind(this);
+        this.sendRequest();
     }
 
     toggle(data) {
@@ -132,7 +132,7 @@ class Login extends Component {
                     </div>
                 </div>
                 <Container>
-                    <Row>
+                    <Row className="text-truncate" style={{ height: "100%" }}>
                         <Col sm="12 g-height-20 gray mb-1" />
                         <Col sm="6 col-6 g-height-90 gray" />
                         <Col sm="6 col-6">
@@ -213,17 +213,12 @@ class Login extends Component {
                     });
                 }
             } else {
-                this.setState({
-                    modalCharge: false
-                });
-                this.setState({ modalBody: data });
             }
-            //this.setState({ farms: this.build(res.data) });
+            this.setState({ modalCharge: false, modalBody: data });
         });
         this.toggle();
         this.toggleModalAnimation();
     }
-
     build(responses) {
         return responses[0].map((farm, i) => (
             <FarmsBuild
@@ -244,10 +239,10 @@ class Login extends Component {
     }
     render() {
         return (
-            <React.Fragment>
+            <div>
                 <I18n ns="farm">
                     {(t, { i18n }) => (
-                        <React.Fragment>
+                        <div>
                             <div
                                 className="col-md-12 text-center"
                                 data-aos="zoom-in"
@@ -341,10 +336,35 @@ class Login extends Component {
                                     </div>
                                 </div>
                             </div>
-                        </React.Fragment>
+                        </div>
                     )}
                 </I18n>
-            </React.Fragment>
+                <Modal
+                    isOpen={this.state.modal}
+                    toggle={this.toggle}
+                    className={(this.props.className, "modal-dialog-centered")}
+                >
+                    <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+                    <ModalBody>
+                        <ReactCSSTransitionGroup
+                            transitionName="example"
+                            transitionEnterTimeout={1000}
+                            transitionLeaveTimeout={600}
+                        >
+                            {this.state.modalCharge}
+                        </ReactCSSTransitionGroup>
+                        {this.state.modalBody}
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={this.toggle}>
+                            Do Something
+                        </Button>
+                        <Button color="secondary" onClick={this.toggle}>
+                            Cancel
+                        </Button>
+                    </ModalFooter>
+                </Modal>
+            </div>
         );
     }
 }

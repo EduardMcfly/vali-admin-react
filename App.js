@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
-import "./App.css";
 // Styles
 // CoreUI Icons Set
 import "@coreui/icons/css/coreui-icons.min.css";
@@ -26,7 +25,6 @@ import { LoginComponent } from "./components/Login";
 class App extends Component {
     constructor(props) {
         super(props);
-        this.sendRequest();
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
         this.state = {
@@ -34,36 +32,8 @@ class App extends Component {
             login: false
         };
     }
-    sendRequest() {
-        return axios({
-            method: "post",
-            url: "./verifyAuth"
-        })
-            .then(res => {
-                if (typeof res.data.auth !== "undefined") {
-                    if (!res.data.auth) {
-                        this.logout();
-                    } else {
-                        this.login();
-                    }
-                }
-            })
-            .catch(error => {
-                if (typeof response.data.redirect !== "undefined") {
-                    this.login();
-                }
-
-                if (typeof error.data.auth !== "undefined") {
-                    if (!res.data.auth) {
-                        this.login();
-                    } else {
-                        this.login();
-                    }
-                }
-            });
-    }
     login() {
-        this.setState({ authenticated: true, login: true});
+        this.setState({ authenticated: true, login: true });
     }
     logout() {
         this.setState({ authenticated: false, login: false });
@@ -119,6 +89,10 @@ class App extends Component {
                         component={props => (
                             <DefaultLayout
                                 {...props}
+                                userAuth={{
+                                    login: this.login,
+                                    logout: this.logout
+                                }}
                             />
                         )}
                         redirectTo="/login"

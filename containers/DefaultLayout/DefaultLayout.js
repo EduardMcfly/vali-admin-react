@@ -23,8 +23,30 @@ class DefaultLayout extends Component {
         super(props);
         this.toggleLarge = this.toggleLarge.bind(this);
         this.toggleAsideNav = this.toggleAsideNav.bind(this);
-        console.log(this.props);
-        this.state = { asideNavToggle: true };
+        this.state = { asideNavToggle: false };
+        this.sendRequest = this.sendRequest.bind(this);
+        this.sendRequest();
+    }
+
+    async sendRequest() {
+        return axios({
+            method: "post",
+            url: "./verifyAuth"
+        })
+            .then(res => {
+                if (typeof res.data.auth !== "undefined") {
+                    if (!res.data.auth) {
+                        this.props.userAuth.logout();
+                    }
+                }
+            })
+            .catch(error => {
+                if (typeof error.data.auth !== "undefined") {
+                    if (!res.data.auth) {
+                        this.props.userAuth.logout();
+                    }
+                }
+            });
     }
 
     toggleLarge() {
@@ -37,10 +59,15 @@ class DefaultLayout extends Component {
         this.setState({ asideNavToggle: !this.state.asideNavToggle });
     }
     render() {
-        return <div className={"app sidebar-mini rtl " + classNames({
-                        "sidenav-toggled":
-                            this.state.asideNavToggle === true
-                    })}>
+        return (
+            <div
+                className={
+                    "app sidebar-mini rtl " +
+                    classNames({
+                        "sidenav-toggled": this.state.asideNavToggle === true
+                    })
+                }
+            >
                 <div className="app-header">
                     <Header toggleAsideNav={this.toggleAsideNav} />
                 </div>
@@ -52,7 +79,17 @@ class DefaultLayout extends Component {
                     <Container fluid>
                         <Switch>
                             {routes.map((route, idx) => {
-                                return route.component ? <Route key={idx} path={route.path} exact={route.exact} name={route.name} render={props => <route.component {...props} />} /> : null;
+                                return route.component ? (
+                                    <Route
+                                        key={idx}
+                                        path={route.path}
+                                        exact={route.exact}
+                                        name={route.name}
+                                        render={props => (
+                                            <route.component {...props} />
+                                        )}
+                                    />
+                                ) : null;
                             })}
                             <Redirect from="/" to="/home" />
                         </Switch>
@@ -62,12 +99,12 @@ class DefaultLayout extends Component {
                     <ModalHeader>Inicia seccion por favor</ModalHeader>
                     <ModalBody>{this.props.modal}</ModalBody>
                     <ModalFooter>
-                        <Button color="primary">Do Something</Button> <Button color="secondary">
-                            Cancel
-                        </Button>
+                        <Button color="primary">Do Something</Button>{" "}
+                        <Button color="secondary">Cancel</Button>
                     </ModalFooter>
                 </Modal>
-            </div>;
+            </div>
+        );
     }
 }
 
