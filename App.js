@@ -18,7 +18,6 @@ import { DefaultLayout } from "./containers";
 import { AuthUser } from "./controllers/auth";
 // Pages
 import { Login, Page404, Page500, Register, Home } from "./views/Pages";
-import { LoginComponent } from "./components/Login";
 
 // import { renderRoutes } from 'react-router-config';
 

@@ -18,6 +18,8 @@ import {
 import {
     AppSidebarNav
 } from "@coreui/react";
+import { I18n } from "react-i18next";
+
 class DefaultLayout extends Component {
     constructor(props) {
         super(props);
@@ -86,7 +88,11 @@ class DefaultLayout extends Component {
                                         exact={route.exact}
                                         name={route.name}
                                         render={props => (
-                                            <route.component {...props} />
+                                            <I18n ns="general">
+                                                {(t) => (
+                                                    <route.component {...props} name={document.title =t("routes."+route.name)} />
+                                                )}
+                                            </I18n>
                                         )}
                                     />
                                 ) : null;
