@@ -1,77 +1,132 @@
-import React, { Component } from 'react';
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
-import './App.css';
+import React, { Component } from "react";
+import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
+import "./App.css";
 // Styles
 // CoreUI Icons Set
-import '@coreui/icons/css/coreui-icons.min.css';
+import "@coreui/icons/css/coreui-icons.min.css";
 // Import Flag Icons Set
-import 'flag-icon-css/css/flag-icon.min.css';
+import "flag-icon-css/css/flag-icon.min.css";
 // Import Font Awesome Icons Set
-import 'font-awesome/css/font-awesome.min.css';
+import "font-awesome/css/font-awesome.min.css";
 // Import Simple Line Icons Set
-import 'simple-line-icons/css/simple-line-icons.css';
+import "simple-line-icons/css/simple-line-icons.css";
 // Import Main styles for this application
 /* import './scss/style.css'; */
-import '../sass/app.css';
+import "../sass/app.css";
 
 // Containers
-import { DefaultLayout } from './containers';
-import {AuthUser} from "./controllers/auth";
+import { DefaultLayout } from "./containers";
+import { AuthUser } from "./controllers/auth";
 // Pages
-import { Login, Page404, Page500, Register,Home } from './views/Pages';
+import { Login, Page404, Page500, Register, Home } from "./views/Pages";
+import { LoginComponent } from "./components/Login";
 
 // import { renderRoutes } from 'react-router-config';
 
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {component:DefaultLayout };
-        this.authenticated = true
-        this.sendRequest()
+        this.sendRequest();
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
+        this.state = {
+            authenticated: true,
+            login: false
+        };
     }
     sendRequest() {
         return axios({
             method: "post",
             url: "./verifyAuth"
-        }).then(res => {
-            if(typeof res.data.redirect !== 'undefined'){
-                this.authenticated=false;
-            }
-            if(typeof res.data.auth !== 'undefined'){
-                if (!res.data.auth) {
-                    this.authenticated=false;
-                    this.setState({ component: Login});
-                }else{
-                    this.authenticated=true;
+        })
+            .then(res => {
+                if (typeof res.data.auth !== "undefined") {
+                    if (!res.data.auth) {
+                        this.logout();
+                    } else {
+                        this.login();
+                    }
                 }
-            }
-        }).catch(error =>{
-            if(typeof response.data.redirect !== 'undefined'){
-                this.authenticated=true;
-            }
-            
-            if(typeof error.data.auth !== 'undefined'){
-                if (!res.data.auth) {
-                    this.authenticated=true;
-                    this.setState({ component: Login});
-                }else{
-                    this.authenticated=true;
+            })
+            .catch(error => {
+                if (typeof response.data.redirect !== "undefined") {
+                    this.login();
                 }
-            }
-        });
+
+                if (typeof error.data.auth !== "undefined") {
+                    if (!res.data.auth) {
+                        this.login();
+                    } else {
+                        this.login();
+                    }
+                }
+            });
+    }
+    login() {
+        this.setState({ authenticated: true, login: true});
+    }
+    logout() {
+        this.setState({ authenticated: false, login: false });
     }
     render() {
-        return <HashRouter>
+        return (
+            <HashRouter>
                 <Switch>
-                    <AuthUser exact path="/login" name="Login Page" component={Login} redirectTo="/dashboard" authenticated={!this.authenticated}  />
-                    <Route exact path="/register" name="Register Page" component={Register} />
-                    <Route exact path="/404" name="Page 404" component={Page404} />
-                    <Route exact path="/404" name="Page 404" component={Page404} />
-                    <Route exact path="/500" name="Page 500" component={Page500} />
+                    <AuthUser
+                        exact
+                        path="/login"
+                        name="Login Page"
+                        component={props => (
+                            <Login
+                                {...props}
+                                userAuth={{
+                                    login: this.login,
+                                    logout: this.logout
+                                }}
+                            />
+                        )}
+                        redirectTo="/farms"
+                        authenticated={!this.state.login}
+                    />
+                    <Route
+                        exact
+                        path="/register"
+                        name="Register Page"
+                        component={Register}
+                    />
+                    <Route
+                        exact
+                        path="/404"
+                        name="Page 404"
+                        component={Page404}
+                    />
+                    <Route
+                        exact
+                        path="/404"
+                        name="Page 404"
+                        component={Page404}
+                    />
+                    <Route
+                        exact
+                        path="/500"
+                        name="Page 500"
+                        component={Page500}
+                    />
                     <Route exact path="/home" name="Home" component={Home} />
-                    <AuthUser path="/" name="root" component={this.state.component} redirectTo="/login" authenticated={this.authenticated}  />
+                    <AuthUser
+                        path="/"
+                        name="root"
+                        component={props => (
+                            <DefaultLayout
+                                {...props}
+                            />
+                        )}
+                        redirectTo="/login"
+                        authenticated={this.state.authenticated}
+                    />
                 </Switch>
-            </HashRouter>;
+            </HashRouter>
+        );
     }
 }
 

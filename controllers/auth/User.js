@@ -12,7 +12,7 @@ const AuthUser = ({ component: Component, authenticated, redirectTo, ...rest}) =
         ) : (
           <Redirect to={{
             pathname: redirectTo,
-            state: { from: props.location }  
+            state: { from: props.location }
           }}
           />
         )
