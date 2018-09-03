@@ -35,25 +35,25 @@ class DefaultAside extends Component {
             <React.Fragment>
                 <aside className="app-sidebar">
                     <div className="user-info" />
-                    <div className="app-sidebar__user">
-                        <a href="perfilUsuario/index.php">
+                    <div className="app-sidebarUser">
+                        <a href="#des">
                             <i
-                                className="fa fa-user-circle-o fa-3x mr-2 imgUserNavBar app-sidebar__user-avatar mx-auto"
+                                className="fa fa-user-circle-o fa-3x mr-2 imgUserNavBar app-sidebarUser-avatar mx-auto"
                                 aria-hidden="true"
                             />
                         </a>
                         <div className="text-capitalize mx-2 text-truncate">
-                            <a href="perfilUsuario/index.php" className="btn-primary">
-                                <p className="app-sidebar__user-name">Eduard andres castellanos torres </p>
+                            <a href="#des" className="btn-primary">
+                                <p className="app-sidebarUser-name">Eduard andres castellanos torres </p>
                             </a>
-                            <p className="app-sidebar__user-designation">LA CAMPIÑA</p>
+                            <p className="app-sidebarUser-designation">LA CAMPIÑA</p>
                         </div>
                     </div>
                     <ul className="app-menu">
                         <li className="treeview active">
-                            <a className="app-menu__item" href="#" data-toggle="treeview">
-                                <i className="app-menu__icon fa fa-laptop" />
-                                <span className="app-menu__label">Registros de las vacas</span>
+                            <a className="app-menuItem" href="#" data-toggle="treeview">
+                                <i className="app-menuIcon fa fa-laptop" />
+                                <span className="app-menuLabel">Registros de las vacas</span>
                                 <i className="treeview-indicator fa fa-angle-right" />
                             </a>
                             <ul className="treeview-menu">
@@ -78,9 +78,9 @@ class DefaultAside extends Component {
                             </ul>
                         </li>
                         <li className="treeview">
-                            <a className="app-menu__item" href="#" data-toggle="treeview">
-                                <i className="app-menu__icon fa  fa-th" />
-                                <span className="app-menu__label">Registros de insumos</span>
+                            <a className="app-menuItem" href="#" data-toggle="treeview">
+                                <i className="app-menuIcon fa  fa-th" />
+                                <span className="app-menuLabel">Registros de insumos</span>
                                 <i className="treeview-indicator fa fa-angle-right" />
                             </a>
                             <ul className="treeview-menu">
@@ -96,9 +96,9 @@ class DefaultAside extends Component {
                             </ul>
                         </li>
                         <li className="treeview is-expanded">
-                            <a className="app-menu__item" href="#" data-toggle="treeview">
-                                <i className="app-menu__icon fa fa-dashboard" />
-                                <span className="app-menu__label">Visualizar Fincas</span>
+                            <a className="app-menuItem" href="#" data-toggle="treeview">
+                                <i className="app-menuIcon fa fa-dashboard" />
+                                <span className="app-menuLabel">Visualizar Fincas</span>
                                 <i className="treeview-indicator fa fa-angle-right" />
                             </a>
                             <ul className="treeview-menu">

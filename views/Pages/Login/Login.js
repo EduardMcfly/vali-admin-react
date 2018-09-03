@@ -56,13 +56,13 @@ class Login extends Component {
                 <I18n ns="header">
                     {(t, { i18n }) => (
                         <header className="app-header pr-1">
-                            <a className="app-header__logo" href="#home">
+                            <a className="app-headerLogo" href="#home">
                                 Cosva
                             </a>
                             <ul className="app-nav">
                                 <li className="dropdown">
                                     <a
-                                        className="app-nav__item"
+                                        className="app-navItem"
                                         href="#"
                                         data-toggle="dropdown"
                                         aria-label="Open Profile Menu"

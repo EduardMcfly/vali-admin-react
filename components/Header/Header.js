@@ -27,28 +27,28 @@ class DefaultHeader extends Component {
         return (
             <React.Fragment>
                 <div
-                    className="app-sidebar__toggle jqvmap-region"
+                    className="app-sidebarToggle jqvmap-region"
                     data-toggle="sidebar"
                     aria-label="Hide Sidebar"
                     onClick={this.props.toggleAsideNav}
                 />
-                <a className="app-header__logo" href="#farms">
+                <a className="app-headerLogo" href="#farms">
                     Cosva
                 </a>
                 <ul className="app-nav">
                     <li className="app-search">
                         <input
-                            className="app-search__input"
+                            className="app-searchInput"
                             type="search"
                             placeholder="Search"
                         />
-                        <button className="app-search__button">
+                        <button className="app-searchButton">
                             <i className="fa fa-search" />
                         </button>
                     </li>
                     <li className="dropdown">
                         <a
-                            className="app-nav__item"
+                            className="app-navItem"
                             href="#"
                             data-toggle="dropdown"
                             aria-label="Show notifications"
@@ -56,26 +56,26 @@ class DefaultHeader extends Component {
                             <i className="fa fa-bell-o fa-lg" />
                         </a>
                         <ul className="app-notification dropdown-menu dropdown-menu-right">
-                            <li className="app-notification__title">
+                            <li className="app-notificationTitle">
                                 You have 4 new notifications.
                             </li>
-                            <div className="app-notification__content">
+                            <div className="app-notificationContent">
                                 <li>
                                     <a
-                                        className="app-notification__item"
+                                        className="app-notificationItem"
                                         href="javascript:;"
                                     >
-                                        <span className="app-notification__icon">
+                                        <span className="app-notificationIcon">
                                             <span className="fa-stack fa-lg">
                                                 <i className="fa fa-circle fa-stack-2x text-primary" />
                                                 <i className="fa fa-envelope fa-stack-1x fa-inverse" />
                                             </span>
                                         </span>
                                         <div>
-                                            <p className="app-notification__message">
+                                            <p className="app-notificationMessage">
                                                 Lisa sent you a mail
                                             </p>
-                                            <p className="app-notification__meta">
+                                            <p className="app-notificationMeta">
                                                 2 min ago
                                             </p>
                                         </div>
@@ -83,20 +83,20 @@ class DefaultHeader extends Component {
                                 </li>
                                 <li>
                                     <a
-                                        className="app-notification__item"
+                                        className="app-notificationItem"
                                         href="javascript:;"
                                     >
-                                        <span className="app-notification__icon">
+                                        <span className="app-notificationIcon">
                                             <span className="fa-stack fa-lg">
                                                 <i className="fa fa-circle fa-stack-2x text-danger" />
                                                 <i className="fa fa-hdd-o fa-stack-1x fa-inverse" />
                                             </span>
                                         </span>
                                         <div>
-                                            <p className="app-notification__message">
+                                            <p className="app-notificationMessage">
                                                 Mail server not working
                                             </p>
-                                            <p className="app-notification__meta">
+                                            <p className="app-notificationMeta">
                                                 5 min ago
                                             </p>
                                         </div>
@@ -104,42 +104,42 @@ class DefaultHeader extends Component {
                                 </li>
                                 <li>
                                     <a
-                                        className="app-notification__item"
+                                        className="app-notificationItem"
                                         href="javascript:;"
                                     >
-                                        <span className="app-notification__icon">
+                                        <span className="app-notificationIcon">
                                             <span className="fa-stack fa-lg">
                                                 <i className="fa fa-circle fa-stack-2x text-success" />
                                                 <i className="fa fa-money fa-stack-1x fa-inverse" />
                                             </span>
                                         </span>
                                         <div>
-                                            <p className="app-notification__message">
+                                            <p className="app-notificationMessage">
                                                 Transaction complete
                                             </p>
-                                            <p className="app-notification__meta">
+                                            <p className="app-notificationMeta">
                                                 2 days ago
                                             </p>
                                         </div>
                                     </a>
                                 </li>
-                                <div className="app-notification__content">
+                                <div className="app-notificationContent">
                                     <li>
                                         <a
-                                            className="app-notification__item"
+                                            className="app-notificationItem"
                                             href="javascript:;"
                                         >
-                                            <span className="app-notification__icon">
+                                            <span className="app-notificationIcon">
                                                 <span className="fa-stack fa-lg">
                                                     <i className="fa fa-circle fa-stack-2x text-primary" />
                                                     <i className="fa fa-envelope fa-stack-1x fa-inverse" />
                                                 </span>
                                             </span>
                                             <div>
-                                                <p className="app-notification__message">
+                                                <p className="app-notificationMessage">
                                                     Lisa sent you a mail
                                                 </p>
-                                                <p className="app-notification__meta">
+                                                <p className="app-notificationMeta">
                                                     2 min ago
                                                 </p>
                                             </div>
@@ -147,20 +147,20 @@ class DefaultHeader extends Component {
                                     </li>
                                     <li>
                                         <a
-                                            className="app-notification__item"
+                                            className="app-notificationItem"
                                             href="javascript:;"
                                         >
-                                            <span className="app-notification__icon">
+                                            <span className="app-notificationIcon">
                                                 <span className="fa-stack fa-lg">
                                                     <i className="fa fa-circle fa-stack-2x text-danger" />
                                                     <i className="fa fa-hdd-o fa-stack-1x fa-inverse" />
                                                 </span>
                                             </span>
                                             <div>
-                                                <p className="app-notification__message">
+                                                <p className="app-notificationMessage">
                                                     Mail server not working
                                                 </p>
-                                                <p className="app-notification__meta">
+                                                <p className="app-notificationMeta">
                                                     5 min ago
                                                 </p>
                                             </div>
@@ -168,20 +168,20 @@ class DefaultHeader extends Component {
                                     </li>
                                     <li>
                                         <a
-                                            className="app-notification__item"
+                                            className="app-notificationItem"
                                             href="javascript:;"
                                         >
-                                            <span className="app-notification__icon">
+                                            <span className="app-notificationIcon">
                                                 <span className="fa-stack fa-lg">
                                                     <i className="fa fa-circle fa-stack-2x text-success" />
                                                     <i className="fa fa-money fa-stack-1x fa-inverse" />
                                                 </span>
                                             </span>
                                             <div>
-                                                <p className="app-notification__message">
+                                                <p className="app-notificationMessage">
                                                     Transaction complete
                                                 </p>
-                                                <p className="app-notification__meta">
+                                                <p className="app-notificationMeta">
                                                     2 days ago
                                                 </p>
                                             </div>
@@ -189,14 +189,14 @@ class DefaultHeader extends Component {
                                     </li>
                                 </div>
                             </div>
-                            <li className="app-notification__footer">
+                            <li className="app-notificationFooter">
                                 <a href="#">See all notifications.</a>
                             </li>
                         </ul>
                     </li>
                     <li className="dropdown">
                         <a
-                            className="app-nav__item"
+                            className="app-navItem"
                             href="#"
                             data-toggle="dropdown"
                             aria-label="Open Profile Menu"
