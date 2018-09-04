@@ -8,7 +8,7 @@ import navigation from '../../_nav';
 import routes from '../../routes';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import classNames from 'classnames';
-import { Breadcrumb, LoginComponent, Footer, Header, Aside } from '../../components';
+import { Breadcrumb, Header, Aside } from '../../components';
 import { AppSidebarNav } from '@coreui/react';
 import { I18n } from 'react-i18next';
 
@@ -27,21 +27,7 @@ class DefaultLayout extends Component {
         return axios({
             method: 'post',
             url: './verifyAuth',
-        })
-            .then(res => {
-                if (typeof res.data.auth !== 'undefined') {
-                    if (!res.data.auth) {
-                        this.props.userAuth.logout();
-                    }
-                }
-            })
-            .catch(error => {
-                if (typeof error.data.auth !== 'undefined') {
-                    if (!res.data.auth) {
-                        this.props.userAuth.logout();
-                    }
-                }
-            });
+        });
     }
 
     toggleLarge() {

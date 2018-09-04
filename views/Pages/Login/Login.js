@@ -39,7 +39,7 @@ class Login extends Component {
                 }
             })
             .catch(error => {
-                if (typeof response.data.redirect !== "undefined") {
+                if (typeof error.data.redirect !== "undefined") {
                     this.props.userAuth.login();
                 }
 

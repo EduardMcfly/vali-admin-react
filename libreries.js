@@ -44,27 +44,6 @@ try {
 window.axios = require('axios')
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-
-axios.interceptors.response.use(
-    function (response) {
-        return response
-    },
-    function (error) {
-        if (typeof error.response.data.errors.expired !== 'undefined') {
-            window.axios.defaults.headers.common["X-CSRF-TOKEN"] = error.response.data.token;
-            swal({
-                title: 'Success!',
-                text: error.response.data.errors.expired,
-                type: 'error',
-                confirmButtonColor: '#DD6B55',
-                confirmButtonText: error.response.data.accept
-            }).then(function () {
-                /* location.reload(true) */
-            })
-        }
-        return Promise.reject(error.response)
-    }
-)
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
  * all outgoing HTTP requests automatically have it attached. This is just

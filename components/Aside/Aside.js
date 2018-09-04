@@ -1,22 +1,50 @@
 import React, { Component } from 'react';
-import { Nav, NavItem, NavLink, Progress, TabContent, TabPane, ListGroup, ListGroupItem } from 'reactstrap';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { AppSwitch } from '@coreui/react';
-
-const propTypes = {
-    children: PropTypes.node,
-};
-
-const defaultProps = {};
+import { TextCharge } from '../../components';
+import { AddFarm } from '../../components';
 
 class DefaultAside extends Component {
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
         this.state = {
             activeTab: '1',
+            personName: <TextCharge />,
+            treeview: 0,
         };
+        this.toggle = this.toggle.bind(this);
+        this.treeview = this.treeview.bind(this);
+        this.AddFarmModal = this.AddFarmModal.bind(this);
+        this.sendInfoUser = this.sendInfoUser.bind(this);
+        this.sendInfoUser();
+    }
+
+    AddFarmModal() {
+        this.farmAdd.toggleAddFarm();
+    }
+    treeview(tab) {
+        if (this.state.treeview !== tab) {
+            this.setState({
+                treeview: tab,
+            });
+        } else {
+            this.setState({
+                treeview: 0,
+            });
+        }
+    }
+
+    sendInfoUser() {
+        return axios({
+            method: 'post',
+            url: './infoUser',
+        })
+            .then(res => {
+                let user = res.data.user['0'];
+                this.setState({
+                    personName: user['0'] + ' ' + user['1'],
+                });
+            })
+            .catch(error => {});
     }
 
     toggle(tab) {
@@ -28,34 +56,46 @@ class DefaultAside extends Component {
     }
 
     render() {
-        // eslint-disable-next-line
-        const { children, ...attributes } = this.props;
-
         return (
             <React.Fragment>
+                <AddFarm
+                    ref={farm => {
+                        this.farmAdd = farm;
+                    }}
+                />
                 <aside className="app-sidebar">
                     <div className="user-info" />
                     <div className="app-sidebarUser">
-                        <a href="#des">
+                        <div className="c-pointer">
                             <i
                                 className="fa fa-user-circle-o fa-3x mr-2 imgUserNavBar app-sidebarUser-avatar mx-auto"
                                 aria-hidden="true"
                             />
-                        </a>
-                        <div className="text-capitalize mx-2 text-truncate">
-                            <a href="#des" className="btn-primary">
-                                <p className="app-sidebarUser-name">Eduard andres castellanos torres </p>
-                            </a>
-                            <p className="app-sidebarUser-designation">LA CAMPIÑA</p>
+                        </div>
+                        <div className="c-pointer text-capitalize mx-2 text-truncate container">
+                            <div>
+                                <div className="app-sidebarUser-name">{this.state.personName}</div>
+                            </div>
+                            <div className="app-sidebarUser-designation">{this.state.personName}</div>
                         </div>
                     </div>
                     <ul className="app-menu">
-                        <li className="treeview active">
-                            <a className="app-menuItem" href="#" data-toggle="treeview">
+                        <li
+                            onClick={() => {
+                                this.treeview(1);
+                            }}
+                            className={
+                                'treeview ' +
+                                classNames({
+                                    'is-expanded': this.state.treeview == 1,
+                                })
+                            }
+                        >
+                            <div className="app-menuItem c-pointer" data-toggle="treeview">
                                 <i className="app-menuIcon fa fa-laptop" />
                                 <span className="app-menuLabel">Registros de las vacas</span>
                                 <i className="treeview-indicator fa fa-angle-right" />
-                            </a>
+                            </div>
                             <ul className="treeview-menu">
                                 <li>
                                     <a className="treeview-item" href="listaVacas/index.php?fincaId=1">
@@ -77,12 +117,22 @@ class DefaultAside extends Component {
                                 </li>
                             </ul>
                         </li>
-                        <li className="treeview">
-                            <a className="app-menuItem" href="#" data-toggle="treeview">
+                        <li
+                            onClick={() => {
+                                this.treeview(2);
+                            }}
+                            className={
+                                'treeview ' +
+                                classNames({
+                                    'is-expanded': this.state.treeview == 2,
+                                })
+                            }
+                        >
+                            <div className="app-menuItem c-pointer" data-toggle="treeview">
                                 <i className="app-menuIcon fa  fa-th" />
                                 <span className="app-menuLabel">Registros de insumos</span>
                                 <i className="treeview-indicator fa fa-angle-right" />
-                            </a>
+                            </div>
                             <ul className="treeview-menu">
                                 <li>
                                     <a
@@ -95,12 +145,22 @@ class DefaultAside extends Component {
                                 </li>
                             </ul>
                         </li>
-                        <li className="treeview is-expanded">
-                            <a className="app-menuItem" href="#" data-toggle="treeview">
+                        <li
+                            onClick={() => {
+                                this.treeview(3);
+                            }}
+                            className={
+                                'treeview ' +
+                                classNames({
+                                    'is-expanded': this.state.treeview == 3,
+                                })
+                            }
+                        >
+                            <div className="app-menuItem c-pointer" data-toggle="treeview">
                                 <i className="app-menuIcon fa fa-dashboard" />
                                 <span className="app-menuLabel">Visualizar Fincas</span>
                                 <i className="treeview-indicator fa fa-angle-right" />
-                            </a>
+                            </div>
                             <ul className="treeview-menu">
                                 <li>
                                     <a
@@ -114,10 +174,10 @@ class DefaultAside extends Component {
                                     </a>
                                 </li>
                                 <li>
-                                    <a className="treeview-item" href="index.php?cf=add" target="_blank" rel="noopener">
-                                        <i className="icon fa fa-pencil-square" />
+                                    <div className="treeview-item" onClick={this.AddFarmModal}>
+                                        <i className="icon fa fa-pencil-square"/>
                                         Registrar Finca
-                                    </a>
+                                    </div>
                                 </li>
                             </ul>
                         </li>
@@ -127,8 +187,5 @@ class DefaultAside extends Component {
         );
     }
 }
-
-DefaultAside.propTypes = propTypes;
-DefaultAside.defaultProps = defaultProps;
 
 export default DefaultAside;
