@@ -51,6 +51,7 @@ axios.interceptors.response.use(
     },
     function (error) {
         if (typeof error.response.data.errors.expired !== 'undefined') {
+            window.axios.defaults.headers.common["X-CSRF-TOKEN"] = error.response.data.token;
             swal({
                 title: 'Success!',
                 text: error.response.data.errors.expired,
@@ -58,7 +59,7 @@ axios.interceptors.response.use(
                 confirmButtonColor: '#DD6B55',
                 confirmButtonText: error.response.data.accept
             }).then(function () {
-                location.reload(true)
+                /* location.reload(true) */
             })
         }
         return Promise.reject(error.response)

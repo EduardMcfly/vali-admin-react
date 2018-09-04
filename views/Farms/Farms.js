@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
     Container,
     Row,
     Col,
-    CardGroup,
     Card,
     CardBody,
     Button,
@@ -13,26 +12,39 @@ import {
     Modal,
     ModalHeader,
     ModalBody,
-    ModalFooter,
-} from 'reactstrap';
-import { I18n, Trans } from 'react-i18next';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; // ES6
+    ModalFooter
+} from "reactstrap";
+import { I18n, Trans } from "react-i18next";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group"; // ES6
+import { ModalCharge } from "../../components";
 
 const FarmsBuild = response => (
     <div className="col-md-6 col-lg-6" data-aos="flip-right">
-        <div className="widget-small primary coloured-icon" style={{ alignItems: 'center' }}>
+        <div
+            className="widget-small primary coloured-icon"
+            style={{ alignItems: "center" }}
+        >
             <a href="">
-                <i className="icon fa  fa-eye fa-3x" style={{ backgroundColor: response.colorRand }} />
+                <i
+                    className="icon fa  fa-eye fa-3x"
+                    style={{ backgroundColor: response.colorRand }}
+                />
             </a>
-            <div className="row container" style={{ wordBreak: 'break-word' }}>
-                <div className="info col-sm-9 col-md-9" data-aos="fade-up" data-aos-duration="500">
+            <div className="row container" style={{ wordBreak: "break-word" }}>
+                <div
+                    className="info col-sm-9 col-md-9"
+                    data-aos="fade-up"
+                    data-aos-duration="500"
+                >
                     <h4>
-                        <a href={'./farm/' + response.obj[0]}>{response.obj[1]}</a>
+                        <a href={"./farm/" + response.obj[0]}>
+                            {response.obj[1]}
+                        </a>
                     </h4>
                     <I18n ns="farm">
                         {(t, { i18n }) => (
                             <p>
-                                <b>{t('seeFarm')}.</b>
+                                <b>{t("seeFarm")}.</b>
                             </p>
                         )}
                     </I18n>
@@ -40,13 +52,15 @@ const FarmsBuild = response => (
                 <div className="col-sm-3 col-md-3">
                     <a
                         href="#"
-                        onClick={() => response.modalData(response.obj[0])}
+                        onClick={() =>
+                            response.modalData(response.obj[0], response.obj[1])
+                        }
                         data-toggle="modal"
                         data-target="#modalConfigFinca"
                         style={{
-                            display: 'grid',
-                            alignContent: 'center',
-                            justifyContent: 'flex-end',
+                            display: "grid",
+                            alignContent: "center",
+                            justifyContent: "flex-end"
                         }}
                     >
                         <i className="fa fa-cogs fa-2x" aria-hidden="true" />
@@ -56,16 +70,56 @@ const FarmsBuild = response => (
         </div>
     </div>
 );
+const FarmsWorkerBuild = response => (
+    <div className="card border-dark mb-3 col-sm-6 col-md-6" idtrab="3">
+        <div className="card-header row text-capitalize">
+            <div className="col-md-12">
+                <i
+                    className="fa fa-user-circle-o fa-3x mr-2 imgUserNavBar"
+                    aria-hidden="true"
+                />
+            </div>
+            <div className="col-md-12 mt-2  text-truncate">Juan Torres</div>
+        </div>
+        <div className="card-body text-dark">
+            <h5 className="card-title">Información</h5>
+            <p className="card-text" />
+            <li className="row descriptionUser">
+                <div className="description">
+                    <div>
+                        <b>Telefono:</b> 3218019886
+                    </div>
+                </div>
+            </li>
+            <p />
+            <h5 className="card-title">Cargo</h5>
+            <p className="card-text" />
+            <li className="row descriptionUser">
+                <div className="description">Super Administrador.&nbsp;</div>
+                <i
+                    id="editableDateTxt"
+                    className="fa fa-pencil pl-2"
+                    aria-hidden="true"
+                />
+            </li>
+            <p />
+        </div>
+        <div id="delete" className="card-footer text-center">
+            <i className="fa fa-trash fa-2x" aria-hidden="true" />
+        </div>
+    </div>
+);
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
             modalConfigFarm: false,
+            modalConfigFarmTitle: "",
             modalCharge: true,
             nestedModalConfigFarm: false,
             closeAll: false,
-            modalAddFarm: false,
+            modalAddFarm: false
         };
         this.toggleModalAnimation = this.toggleModalAnimation.bind(this);
         this.toggleConfigFarm = this.toggleConfigFarm.bind(this);
@@ -77,145 +131,103 @@ class Login extends Component {
         this.sendRequest();
     }
 
-    animationModal() {
-        return (
-            <div className="modal-body align-items-center d-flex">
-                <div className="overlay container position-absolute justify-content-center d-flex">
-                    <div className="row text-center">
-                        <div className="col-12">
-                            <div className="m-loader mr-2 mx-auto" style={{ width: '50%' }}>
-                                <svg className="m-circular" viewBox="25 25 50 50">
-                                    <circle
-                                        className="path"
-                                        cx="50"
-                                        cy="50"
-                                        r="20"
-                                        fill="none"
-                                        strokeWidth="4"
-                                        strokeMiterlimit="10"
-                                    />
-                                </svg>
-                            </div>
-                        </div>
-                        <div className="col-12">
-                            <h3 className="l-text">
-                                <I18n ns="general">{(t, { i18n }) => t('charging')}</I18n>.
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <Container>
-                    <Row className="text-truncate" style={{ height: '100%' }}>
-                        <Col sm="12 g-height-20 gray mb-1" />
-                        <Col sm="6 col-6 g-height-90 gray" />
-                        <Col sm="6 col-6">
-                            <Row className="ml-1">
-                                <Col sm="12 g-height-20 gray" />
-                                <Col sm="12 p-1" />
-                                <Col sm="12 g-height-20 gray" />
-                                <Col sm="12 p-1" />
-                                <Col sm="12 g-height-20 gray" />
-                                <Col sm="12 p-1" />
-                                <Col sm="12 g-height-20 gray" />
-                                <Col sm="12 p-1" />
-                            </Row>
-                        </Col>
-                        <Col sm="4 col-6">
-                            <Row>
-                                <Col sm="12 col-12 g-height-20 gray" />
-                                <Col sm="12 col-12 p-1" />
-                                <Col sm="12 col-12 g-height-20 gray" />
-                                <Col sm="12 col-12 p-1" />
-                                <Col sm="12 col-12 g-height-20 gray" />
-                                <Col sm="12 col-12 p-1" />
-                                <Col sm="3 col-3 g-height-20 gray" />
-                                <Col sm="1 col-1 p-1" />
-                                <Col sm="1 col-1 g-height-20 gray" />
-                                <Col sm="1 col-1 p-1" />
-                                <Col sm="4 col-4 g-height-20 gray" />
-                            </Row>
-                        </Col>
-                        <Col sm="8 col-6">
-                            <Row className="ml-1">
-                                <Col sm="6 col-6 g-height-20 gray" />
-                                <Col sm="1 col-1 p-1" />
-                                <Col sm="5 col-5 g-height-20 gray" />
-                                <Col sm="12 col-12 p-1" />
-                                <Col sm="3 col-3 g-height-20 gray" />
-                                <Col sm="1 col-1 p-1" />
-                                <Col sm="1 col-1 g-height-20 gray" />
-                                <Col sm="1 col-1 p-1" />
-                                <Col sm="5 col-5 g-height-20 gray" />
-                                <Col sm="12 col-12 p-1" />
-                                <Col sm="12 col-12 g-height-20 gray" />
-                                <Col sm="12 col-12 p-1" />
-                                <Col sm={{ size: '2', offset: 2 }} />
-                                <Col sm={{ size: '4', offset: 2 }} />
-                            </Row>
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
-        );
-    }
-
     toggleConfigFarm(data) {
         this.setState({
-            modalConfigFarm: !this.state.modalConfigFarm,
+            modalConfigFarm: !this.state.modalConfigFarm
         });
     }
 
     toggleAddFarm(data) {
         this.setState({
-            modalAddFarm: !this.state.modalAddFarm,
+            modalAddFarm: !this.state.modalAddFarm
         });
     }
     toggleModalAnimation(data) {
-        this.setState({ modalCharge: this.animationModal() });
+        this.setState({ modalCharge: <ModalCharge /> });
     }
 
     toggleConfigFarmNested() {
         this.setState({
             nestedModalConfigFarm: !this.state.nestedModalConfigFarm,
-            closeAll: false,
+            closeAll: false
         });
     }
 
     toggleAll() {
         this.setState({
             nestedModalConfigFarm: !this.state.nestedModalConfigFarm,
-            closeAll: true,
+            closeAll: true
         });
     }
 
-    modalData(data) {
+    modalData(id, name) {
+        this.setState({ modalConfigFarmTitle: name });
         axios({
-            method: 'post',
-            url: './farmModalConfig/' + data,
+            method: "post",
+            url: "./farmModalConfig/" + id
         }).then(res => {
-            if (typeof res.data.errors != 'undefined') {
-                if (typeof res.data.errors.permits != 'undefined') {
-                    swal('', res.data.errors.permits, 'warning');
+            if (typeof res.data.errors != "undefined") {
+                if (typeof res.data.errors.permits != "undefined") {
+                    swal("", res.data.errors.permits, "warning");
                     this.setState({
-                        modalConfigFarm: false,
+                        modalConfigFarm: false
                     });
                 }
             } else {
+                this.setState({
+                    modalCharge: false,
+                    modalBodyConfigFarm: this.buildFarmWorker(res.data)
+                });
             }
-            this.setState({ modalCharge: false, modalBodyConfigFarm: data });
         });
-        this.toggleConfigFarm();
         this.toggleModalAnimation();
+        this.toggleConfigFarm();
     }
+
     build(responses) {
         return responses[0].map((farm, i) => (
-            <FarmsBuild obj={farm} key={i} modalData={this.modalData} colorRand={colorRand()} />
+            <FarmsBuild
+                obj={farm}
+                key={i}
+                modalData={this.modalData}
+                colorRand={colorRand()}
+            />
         ));
+    }
+    buildFarmWorker(responses) {
+        return responses.map((farm, i) => (
+            <FarmsWorkerBuild
+                obj={farm}
+                key={i}
+                modalDataAddWorker={this.modalDataAddWorker}
+            />
+        ));
+    }
+    modalDataAddWorker(id, name) {
+        this.setState({ modalConfigFarmTitle: name });
+        axios({
+            method: "post",
+            url: "./farmModalConfig/" + id
+        }).then(res => {
+            if (typeof res.data.errors != "undefined") {
+                if (typeof res.data.errors.permits != "undefined") {
+                    swal("", res.data.errors.permits, "warning");
+                    this.setState({
+                        modalConfigFarm: false
+                    });
+                }
+            } else {
+                /* this.setState({
+                    modalCharge: false,
+                    modalBodyConfigFarm: this.buildFarmWorker(res.data)
+                }); */
+            }
+        });
     }
     sendRequest() {
         axios({
-            method: 'post',
-            url: './listFarms',
+            method: "post",
+            url: "./listFarms"
         }).then(res => {
             this.setState({ farms: this.build(res.data) });
         });
@@ -226,24 +238,34 @@ class Login extends Component {
                 <I18n ns="farm">
                     {(t, { i18n }) => (
                         <div>
-                            <div className="col-md-12 text-center" data-aos="zoom-in">
+                            <Col
+                                md="12"
+                                className="text-center"
+                                data-aos="zoom-in"
+                            >
                                 <div className="tile">
                                     <h2>
-                                        <div className="tile-body">{t('welcome')}</div>
+                                        <div className="tile-body">
+                                            {t("welcome")}
+                                        </div>
                                     </h2>
                                 </div>
-                            </div>
-                            <div className="container" data-aos="zoom-in">
-                                <div className="row">
-                                    <div className="col-sm-10 col-md-11" style={{ cursor: 'pointer' }}>
-                                        <div className="row">
+                            </Col>
+                            <Container data-aos="zoom-in">
+                                <Row>
+                                    <Col
+                                        sm="10"
+                                        md="11"
+                                        style={{ cursor: "pointer" }}
+                                    >
+                                        <Row>
                                             <div className="col-md-6 mx-auto">
                                                 <div
                                                     className="widget-small primary coloured-icon mb-2"
                                                     data-toggle="modal"
                                                     data-target="#modalNuevaFinca"
                                                     style={{
-                                                        borderRadius: 1 + 'em',
+                                                        borderRadius: 1 + "em"
                                                     }}
                                                     onClick={this.toggleAddFarm}
                                                 >
@@ -251,10 +273,14 @@ class Login extends Component {
                                                         <i
                                                             className="icon fa fa-pencil-square fa-2x p-1"
                                                             style={{
-                                                                backgroundColor: '#ffd404',
-                                                                textTransform: 'unset',
-                                                                minWidth: 'unset',
-                                                                borderRadius: 0.8 + 'rem',
+                                                                backgroundColor:
+                                                                    "#ffd404",
+                                                                textTransform:
+                                                                    "unset",
+                                                                minWidth:
+                                                                    "unset",
+                                                                borderRadius:
+                                                                    0.8 + "rem"
                                                             }}
                                                         />
                                                     </a>
@@ -263,18 +289,25 @@ class Login extends Component {
                                                             <a
                                                                 className="fa-lg"
                                                                 style={{
-                                                                    display: 'contents',
+                                                                    display:
+                                                                        "contents"
                                                                 }}
                                                             >
-                                                                {t('registerFarm')}
+                                                                {t(
+                                                                    "registerFarm"
+                                                                )}
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-2 col-md-1" style={{ cursor: 'pointer' }}>
+                                        </Row>
+                                    </Col>
+                                    <Col
+                                        sm="2"
+                                        md="1"
+                                        style={{ cursor: "pointer" }}
+                                    >
                                         <div
                                             href="#"
                                             className="justify-content-end align-items-center d-flex"
@@ -283,76 +316,117 @@ class Login extends Component {
                                             <i
                                                 className="icon fa fa-refresh text-light  fa-2x p-1"
                                                 style={{
-                                                    backgroundColor: 'rgba(0, 150, 136, 0.5)',
-                                                    textTransform: 'unset',
-                                                    minWidth: 'unset',
-                                                    borderRadius: 0.8 + 'rem',
+                                                    backgroundColor:
+                                                        "rgba(0, 150, 136, 0.5)",
+                                                    textTransform: "unset",
+                                                    minWidth: "unset",
+                                                    borderRadius: 0.8 + "rem"
                                                 }}
                                             />
                                         </div>
-                                    </div>
-                                </div>
-                                <div id="root" data-aos="fade-up">
-                                    <div className="row">{this.state.farms}</div>
-                                </div>
-                            </div>
+                                    </Col>
+                                </Row>
+                                <Row data-aos="fade-up">{this.state.farms}</Row>
+                            </Container>
                         </div>
                     )}
                 </I18n>
                 <I18n ns="farm">
                     {(t, { i18n }) => (
-                    <React.Fragment>
-                        <Modal
-                        isOpen={this.state.modalConfigFarm}
-                            toggle={this.toggleConfigFarm}
-                            className={(this.props.className, 'modal-dialog-centered')}
-                        >
-                            <ModalHeader toggle={this.toggleConfigFarm}>Modal title</ModalHeader>
-                            <ModalBody>
-                                <ReactCSSTransitionGroup
-                                    transitionName="example"
-                                    transitionEnterTimeout={1000}
-                                    transitionLeaveTimeout={600}
-                                    >
-                                    {this.state.modalCharge}
-                                </ReactCSSTransitionGroup>
-                                {this.state.modalBodyConfigFarm}
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button color="primary" onClick={this.toggleConfigFarm}>
-                                    Do Something
-                                </Button>
-                                <Button color="secondary" onClick={this.toggleConfigFarm}>
-                                    Cancel
-                                </Button>
-                            </ModalFooter>
-                        </Modal>
-                        <Modal
-                        isOpen={this.state.modalAddFarm}
-                            toggle={this.toggleAddFarm}
-                            className={(this.props.className, 'modal-dialog-centered')}
+                        <React.Fragment>
+                            <Modal
+                                isOpen={this.state.modalConfigFarm}
+                                toggle={this.toggleConfigFarm}
+                                className={
+                                    (this.props.className,
+                                    "modal-dialog-centered")
+                                }
                             >
-                            <ModalHeader toggle={this.toggleAddFarm}>Registro de finca</ModalHeader>
-                            <ModalBody>
-                                <label>Nombre de la finca</label>
-                                <input
-                                    type="text"
-                                    name=""
-                                    id="nombreFinca"
-                                    placeholder="Ingresa el nombre de tu finca."
-                                    className="form-control input-sm"
+                                <ModalHeader
+                                    toggle={this.toggleConfigFarm}
+                                    className="text-uppercase"
+                                >
+                                    {this.state.modalConfigFarmTitle}
+                                </ModalHeader>
+                                <ModalBody>
+                                    <ReactCSSTransitionGroup
+                                        transitionName="example"
+                                        transitionEnterTimeout={500}
+                                        transitionLeaveTimeout={300}
+                                    >
+                                        {this.state.modalCharge}
+                                    </ReactCSSTransitionGroup>
+                                    <Container>
+                                        <h5 className="lead">Trabajadores</h5>
+                                        <hr className="my-3" />
+                                        <div className="mb-3">
+                                            <button
+                                                className="btn btn-secondary"
+                                                type="button"
+                                                data-toggle="modal"
+                                                data-target="#addTrabajador"
+                                            >
+                                                Agregar trabajador
+                                            </button>
+                                        </div>
+                                        <ReactCSSTransitionGroup
+                                            transitionName="show"
+                                            transitionEnterTimeout={1000}
+                                            transitionLeaveTimeout={600}
+                                        >
+                                            <div className="row">
+                                                {this.state.modalBodyConfigFarm}
+                                            </div>
+                                        </ReactCSSTransitionGroup>
+                                    </Container>
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button
+                                        color="primary"
+                                        onClick={this.toggleConfigFarm}
+                                    >
+                                        Do Something
+                                    </Button>
+                                    <Button
+                                        color="secondary"
+                                        onClick={this.toggleConfigFarm}
+                                    >
+                                        Cancel
+                                    </Button>
+                                </ModalFooter>
+                            </Modal>
+                            <Modal
+                                isOpen={this.state.modalAddFarm}
+                                toggle={this.toggleAddFarm}
+                                className={
+                                    (this.props.className,
+                                    "modal-dialog-centered")
+                                }
+                            >
+                                <ModalHeader toggle={this.toggleAddFarm}>
+                                    Registro de finca
+                                </ModalHeader>
+                                <ModalBody>
+                                    <label>Nombre de la finca</label>
+                                    <input
+                                        type="text"
+                                        name=""
+                                        id="nombreFinca"
+                                        placeholder="Ingresa el nombre de tu finca."
+                                        className="form-control input-sm"
                                     />
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button color="primary" onClick={this.toggleAddFarm}>
-                                    Guardar Cambios
-                                </Button>
-                                <Button color="secondary">
-                                    Cerrar
-                                </Button>
-                            </ModalFooter>
-                        </Modal>
-                    </React.Fragment>
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button
+                                        color="primary"
+                                        onClick={this.toggleAddFarm}
+                                    >
+                                        Guardar Cambios
+                                    </Button>
+                                    <Button color="secondary">Cerrar</Button>
+                                </ModalFooter>
+                            </Modal>
+                        </React.Fragment>
                     )}
                 </I18n>
             </React.Fragment>
