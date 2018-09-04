@@ -3,13 +3,27 @@ import classNames from 'classnames';
 import { TextCharge } from '../../components';
 import { AddFarm } from '../../components';
 
+const FarmsListBuild = response => (
+    <li>
+    <div
+        className="treeview-item"
+        rel="noopener"
+    >
+        <i className="icon fa fa-circle-o" />
+        {response.obj["0"]}
+    </div>
+</li>
+);
+
 class DefaultAside extends Component {
     constructor(props) {
         super(props);
         this.state = {
             activeTab: '1',
             personName: <TextCharge />,
-            treeview: 0,
+            description: <TextCharge />,
+            farmsList: <TextCharge />,
+            treeview: 3
         };
         this.toggle = this.toggle.bind(this);
         this.treeview = this.treeview.bind(this);
@@ -40,11 +54,20 @@ class DefaultAside extends Component {
         })
             .then(res => {
                 let user = res.data.user['0'];
+                let farms = res.data.farms;
                 this.setState({
                     personName: user['0'] + ' ' + user['1'],
+                    description: user['2'],
+                    farmsList: this.buildListFarms(farms)
                 });
             })
             .catch(error => {});
+    }
+
+    buildListFarms(response){
+        return response.map((farm, i) => (
+            <FarmsListBuild obj={farm} key={i}/>
+        ));
     }
 
     toggle(tab) {
@@ -76,7 +99,7 @@ class DefaultAside extends Component {
                             <div>
                                 <div className="app-sidebarUser-name">{this.state.personName}</div>
                             </div>
-                            <div className="app-sidebarUser-designation">{this.state.personName}</div>
+                            <div className="app-sidebarUser-designation">{this.state.description}</div>
                         </div>
                     </div>
                     <ul className="app-menu">
@@ -162,17 +185,7 @@ class DefaultAside extends Component {
                                 <i className="treeview-indicator fa fa-angle-right" />
                             </div>
                             <ul className="treeview-menu">
-                                <li>
-                                    <a
-                                        className="treeview-item"
-                                        href="welcome.php?fincaId=1"
-                                        target="_blank"
-                                        rel="noopener"
-                                    >
-                                        <i className="icon fa fa-circle-o" />
-                                        LA CAMPIÑA
-                                    </a>
-                                </li>
+                                {this.state.farmsList}
                                 <li>
                                     <div className="treeview-item" onClick={this.AddFarmModal}>
                                         <i className="icon fa fa-pencil-square"/>
