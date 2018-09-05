@@ -23,7 +23,7 @@ class DefaultLayout extends Component {
         this.sendRequest();
     }
 
-    async sendRequest() {
+    sendRequest() {
         return axios({
             method: 'post',
             url: './verifyAuth',
@@ -78,6 +78,7 @@ class DefaultLayout extends Component {
                                                     <route.component
                                                         {...props}
                                                         name={(document.title = t('routes.' + route.name))}
+                                                        farmAuth={this.props.farmAuth}
                                                     />
                                                 )}
                                             </I18n>

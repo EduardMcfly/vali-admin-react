@@ -40,6 +40,16 @@ function Loading() {
     );
 }
 
+const Farms = Loadable({
+    loader: () => import("./views/Farms"),
+    loading: Loading
+});
+
+const Dashboard = Loadable({
+    loader: () => import("./views/Dashboard"),
+    loading: Loading
+});
+
 const Breadcrumbs = Loadable({
     loader: () => import("./views/Base/Breadcrumbs"),
     loading: Loading
@@ -150,10 +160,6 @@ const Charts = Loadable({
     loading: Loading
 });
 
-const Farms = Loadable({
-    loader: () => import("./views/Farms"),
-    loading: Loading
-});
 
 const CoreUIIcons = Loadable({
     loader: () => import("./views/Icons/CoreUIIcons"),
@@ -219,6 +225,7 @@ const User = Loadable({
 const routes = [
     { path: "/", exact: true, name: "home", component: DefaultLayout },
     { path: "/farms", name: "farms", component: Farms },
+    { path: "/farm/:id", name: "farmsList", component: Dashboard },
     { path: "/theme", exact: true, name: "theme", component: Colors },
     { path: "/theme/colors", name: "colors", component: Colors },
     { path: "/theme/typography", name: "typography", component: Typography },

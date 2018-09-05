@@ -1,25 +1,26 @@
-import React, { Component } from 'react';
-import classNames from 'classnames';
-import { TextCharge } from '../../components';
-import { AddFarm } from '../../components';
+import React, { Component } from "react";
+import classNames from "classnames";
+import { TextCharge } from "../../components";
+import { AddFarm } from "../../components";
 
 const FarmsListBuild = response => (
     <li>
-    <div
-        className="treeview-item"
-        rel="noopener"
-    >
-        <i className="icon fa fa-circle-o" />
-        {response.obj["0"]}
-    </div>
-</li>
+        <a
+            href={"#/farm/" + response.obj[0]}
+            className="treeview-item"
+            rel="noopener"
+        >
+            <i className="icon fa fa-circle-o" />
+            {response.obj[1]}
+        </a>
+    </li>
 );
 
 class DefaultAside extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeTab: '1',
+            activeTab: "1",
             personName: <TextCharge />,
             description: <TextCharge />,
             farmsList: <TextCharge />,
@@ -38,42 +39,40 @@ class DefaultAside extends Component {
     treeview(tab) {
         if (this.state.treeview !== tab) {
             this.setState({
-                treeview: tab,
+                treeview: tab
             });
         } else {
             this.setState({
-                treeview: 0,
+                treeview: 0
             });
         }
     }
 
     sendInfoUser() {
         return axios({
-            method: 'post',
-            url: './infoUser',
+            method: "post",
+            url: "./infoUser"
         })
             .then(res => {
-                let user = res.data.user['0'];
+                let user = res.data.user["0"];
                 let farms = res.data.farms;
                 this.setState({
-                    personName: user['0'] + ' ' + user['1'],
-                    description: user['2'],
+                    personName: user["0"] + " " + user["1"],
+                    description: user["2"],
                     farmsList: this.buildListFarms(farms)
                 });
             })
             .catch(error => {});
     }
 
-    buildListFarms(response){
-        return response.map((farm, i) => (
-            <FarmsListBuild obj={farm} key={i}/>
-        ));
+    buildListFarms(response) {
+        return response.map((farm, i) => <FarmsListBuild obj={farm} key={i} />);
     }
 
     toggle(tab) {
         if (this.state.activeTab !== tab) {
             this.setState({
-                activeTab: tab,
+                activeTab: tab
             });
         }
     }
@@ -97,9 +96,13 @@ class DefaultAside extends Component {
                         </div>
                         <div className="c-pointer text-capitalize mx-2 text-truncate container">
                             <div>
-                                <div className="app-sidebarUser-name">{this.state.personName}</div>
+                                <div className="app-sidebarUser-name">
+                                    {this.state.personName}
+                                </div>
                             </div>
-                            <div className="app-sidebarUser-designation">{this.state.description}</div>
+                            <div className="app-sidebarUser-designation">
+                                {this.state.description}
+                            </div>
                         </div>
                     </div>
                     <ul className="app-menu">
@@ -108,32 +111,46 @@ class DefaultAside extends Component {
                                 this.treeview(1);
                             }}
                             className={
-                                'treeview ' +
+                                "treeview " +
                                 classNames({
-                                    'is-expanded': this.state.treeview == 1,
+                                    "is-expanded": this.state.treeview == 1
                                 })
                             }
                         >
-                            <div className="app-menuItem c-pointer" data-toggle="treeview">
+                            <div
+                                className="app-menuItem c-pointer"
+                                data-toggle="treeview"
+                            >
                                 <i className="app-menuIcon fa fa-laptop" />
-                                <span className="app-menuLabel">Registros de las vacas</span>
+                                <span className="app-menuLabel">
+                                    Registros de las vacas
+                                </span>
                                 <i className="treeview-indicator fa fa-angle-right" />
                             </div>
                             <ul className="treeview-menu">
                                 <li>
-                                    <a className="treeview-item" href="listaVacas/index.php?fincaId=1">
+                                    <a
+                                        className="treeview-item"
+                                        href="listaVacas/index.php?fincaId=1"
+                                    >
                                         <i className="icon fa fa-circle-o" />
                                         Vacas
                                     </a>
                                 </li>
                                 <li>
-                                    <a className="treeview-item" href="registroProductivo/index.php?fincaId=1">
+                                    <a
+                                        className="treeview-item"
+                                        href="registroProductivo/index.php?fincaId=1"
+                                    >
                                         <i className="icon fa fa-keyboard-o" />
                                         Registro Productivo
                                     </a>
                                 </li>
                                 <li>
-                                    <a className="treeview-item" href="listaVacas/index.php?cv=add&amp;fincaId=1">
+                                    <a
+                                        className="treeview-item"
+                                        href="listaVacas/index.php?cv=add&amp;fincaId=1"
+                                    >
                                         <i className="icon fa fa-pencil-square" />
                                         Registrar Vacas
                                     </a>
@@ -145,15 +162,20 @@ class DefaultAside extends Component {
                                 this.treeview(2);
                             }}
                             className={
-                                'treeview ' +
+                                "treeview " +
                                 classNames({
-                                    'is-expanded': this.state.treeview == 2,
+                                    "is-expanded": this.state.treeview == 2
                                 })
                             }
                         >
-                            <div className="app-menuItem c-pointer" data-toggle="treeview">
+                            <div
+                                className="app-menuItem c-pointer"
+                                data-toggle="treeview"
+                            >
                                 <i className="app-menuIcon fa  fa-th" />
-                                <span className="app-menuLabel">Registros de insumos</span>
+                                <span className="app-menuLabel">
+                                    Registros de insumos
+                                </span>
                                 <i className="treeview-indicator fa fa-angle-right" />
                             </div>
                             <ul className="treeview-menu">
@@ -173,22 +195,30 @@ class DefaultAside extends Component {
                                 this.treeview(3);
                             }}
                             className={
-                                'treeview ' +
+                                "treeview " +
                                 classNames({
-                                    'is-expanded': this.state.treeview == 3,
+                                    "is-expanded": this.state.treeview == 3
                                 })
                             }
                         >
-                            <div className="app-menuItem c-pointer" data-toggle="treeview">
+                            <div
+                                className="app-menuItem c-pointer"
+                                data-toggle="treeview"
+                            >
                                 <i className="app-menuIcon fa fa-dashboard" />
-                                <span className="app-menuLabel">Visualizar Fincas</span>
+                                <span className="app-menuLabel">
+                                    Visualizar Fincas
+                                </span>
                                 <i className="treeview-indicator fa fa-angle-right" />
                             </div>
                             <ul className="treeview-menu">
                                 {this.state.farmsList}
                                 <li>
-                                    <div className="treeview-item" onClick={this.AddFarmModal}>
-                                        <i className="icon fa fa-pencil-square"/>
+                                    <div
+                                        className="treeview-item"
+                                        onClick={this.AddFarmModal}
+                                    >
+                                        <i className="icon fa fa-pencil-square" />
                                         Registrar Finca
                                     </div>
                                 </li>

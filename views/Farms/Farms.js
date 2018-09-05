@@ -13,7 +13,7 @@ const FarmsBuild = response => (
             <div className="row container" style={{ wordBreak: 'break-word' }}>
                 <div className="info col-sm-9 col-md-9" data-aos="fade-up" data-aos-duration="500">
                     <h4>
-                        <a href={'./farm/' + response.obj[0]}>{response.obj[1]}</a>
+                        <a href={'#/farm/' + response.obj[0]}>{response.obj[1]}</a>
                     </h4>
                     <I18n ns="farm">
                         {(t, { i18n }) => (
@@ -95,10 +95,10 @@ class Login extends Component {
         this.AddFarmModal = this.AddFarmModal.bind(this);
         this.sendRequest();
     }
-    
+
     AddFarmModal() {
         this.farmAdd.toggleAddFarm();
-    }   
+    }
 
     toggleConfigFarm() {
         this.setState({
