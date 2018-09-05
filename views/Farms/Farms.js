@@ -75,7 +75,7 @@ const FarmsWorkerBuild = response => (
     </div>
 );
 
-class Login extends Component {
+class Farms extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -326,4 +326,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default Farms;
