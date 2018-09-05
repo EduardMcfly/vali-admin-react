@@ -100,7 +100,6 @@ class App extends Component {
         this.setState({ authenticated: false, login: false });
     }
     loginFarm(idFarm) {
-        console.log(idFarm);
         axios({
             method: "post",
             url: "./verifyFarmAuth/" + idFarm

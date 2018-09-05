@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import { Breadcrumb, Header, Aside } from '../../components';
 import { AppSidebarNav } from '@coreui/react';
 import { I18n } from 'react-i18next';
+import { log } from 'util';
 
 class DefaultLayout extends Component {
     constructor(props) {
@@ -59,7 +60,11 @@ class DefaultLayout extends Component {
                     <Header toggleAsideNav={this.toggleAsideNav} />
                 </div>
                 <div className="app-sidebarOverlay" onClick={this.hideAsideNav} data-toggle="sidebar" />
-                <Aside />
+                <Aside
+                    ref={props => {
+                        this.treeviewSetAside = props;
+                    }}
+                />
                 <AppSidebarNav navConfig={navigation} {...this.props} />
                 <main className="app-content">
                     <Breadcrumb appRoutes={routes} />
@@ -77,8 +82,18 @@ class DefaultLayout extends Component {
                                                 {t => (
                                                     <route.component
                                                         {...props}
-                                                        name={(document.title = t('routes.' + route.name))}
+                                                        Headtitle={(document.title = t('routes.' + route.name))}
                                                         farmAuth={this.props.farmAuth}
+                                                        treeview={
+                                                            typeof route.treeview !== 'undefined'
+                                                                ? route.treeview
+                                                                : 0
+                                                        }
+                                                        treeviewSet={
+                                                            typeof this.treeviewSetAside !== 'undefined'
+                                                                ? this.treeviewSetAside.treeviewShow
+                                                                : null
+                                                        }
                                                     />
                                                 )}
                                             </I18n>

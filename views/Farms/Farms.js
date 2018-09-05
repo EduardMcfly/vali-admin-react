@@ -93,7 +93,13 @@ class Farms extends Component {
         this.modalData = this.modalData.bind(this);
         this.sendRequest = this.sendRequest.bind(this);
         this.AddFarmModal = this.AddFarmModal.bind(this);
+    }
+    
+    componentWillMount() {
         this.sendRequest();
+    }
+    componentDidMount() {
+        this.props.treeviewSet(this.props.treeview);
     }
 
     AddFarmModal() {
@@ -102,7 +108,7 @@ class Farms extends Component {
 
     toggleConfigFarm() {
         this.setState({
-            modalConfigFarm: !this.state.modalConfigFarm
+            modalConfigFarm: !this.state.modalConfigFarm,
         });
     }
     toggleModalAnimation() {
