@@ -126,7 +126,6 @@ class Farms extends Component {
     }
 
     componentWillMount() {
-        this.props.treeviewSet(this.props.treeview);
         this.sendRequest();
     }
 

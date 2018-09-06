@@ -8,7 +8,7 @@ import navigation from "../../_nav";
 import routes from "../../routes";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import classNames from "classnames";
-import { Breadcrumb, Header, Aside } from "../../components";
+import { Breadcrumb, Header, Sidebar } from "../../components";
 import { AppSidebarNav } from "@coreui/react";
 import { I18n } from "react-i18next";
 import { log } from "util";
@@ -17,18 +17,11 @@ class DefaultLayout extends Component {
     constructor(props) {
         super(props);
         this.toggleLarge = this.toggleLarge.bind(this);
-        this.toggleAsideNav = this.toggleAsideNav.bind(this);
-        this.hideAsideNav = this.hideAsideNav.bind(this);
-        this.state = { asideNavToggle: false, treeviewTab: [0,0]};
+        this.toggleSidebarNav = this.toggleSidebarNav.bind(this);
+        this.hideSidebarNav = this.hideSidebarNav.bind(this);
+        this.state = { asideNavToggle: false};
         this.sendRequest = this.sendRequest.bind(this);
-        this.treeviewSet = this.treeviewSet.bind(this);
         this.sendRequest();
-    }
-
-    treeviewSet(tab) {
-        this.setState({
-            treeviewTab: tab
-        });
     }
 
     sendRequest() {
@@ -44,11 +37,11 @@ class DefaultLayout extends Component {
         });
     }
 
-    toggleAsideNav() {
+    toggleSidebarNav() {
         this.setState({ asideNavToggle: !this.state.asideNavToggle });
     }
 
-    hideAsideNav() {
+    hideSidebarNav() {
         if (this.state.asideNavToggle) {
             this.setState({ asideNavToggle: false });
         }
@@ -64,18 +57,16 @@ class DefaultLayout extends Component {
                 }
             >
                 <div className="app-header">
-                    <Header toggleAsideNav={this.toggleAsideNav} />
+                    <Header toggleSidebarNav={this.toggleSidebarNav} />
                 </div>
                 <div
                     className="app-sidebarOverlay"
-                    onClick={this.hideAsideNav}
+                    onClick={this.hideSidebarNav}
                     data-toggle="sidebar"
                 />
-                <Aside
-                    treeviewTab={this.state.treeviewTab}
-                    treeviewSet={this.treeviewSet}
+                <Sidebar
+                    {...this.props}
                 />
-                <AppSidebarNav navConfig={navigation} {...this.props} />
                 <main className="app-content">
                     <Breadcrumb appRoutes={routes} />
                     <Container fluid>

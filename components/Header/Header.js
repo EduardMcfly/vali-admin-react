@@ -30,7 +30,7 @@ class DefaultHeader extends Component {
                     className="app-sidebarToggle jqvmap-region"
                     data-toggle="sidebar"
                     aria-label="Hide Sidebar"
-                    onClick={this.props.toggleAsideNav}
+                    onClick={this.props.toggleSidebarNav}
                 />
                 <a className="app-headerLogo" href="#farms">
                     Cosva
