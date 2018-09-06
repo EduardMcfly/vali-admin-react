@@ -221,7 +221,7 @@ const routes = [
     { path: '/', exact: true, name: 'home', component: DefaultLayout },
     { path: '/andres', name: 'Andres', component: Andres },
     { path: '/farm/:id', name: 'farm', component: Farm },
-    { path: '/farms', name: 'farms', treeview: 3, component: Farms },
+    { path: '/farms', name: 'farms', treeview: {0:3}, component: Farms },
     { path: '/theme', exact: true, name: 'theme', component: Colors },
     { path: '/theme/colors', name: 'colors', component: Colors },
     { path: '/theme/typography', name: 'typography', component: Typography },

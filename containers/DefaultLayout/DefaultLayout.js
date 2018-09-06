@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { Container } from 'reactstrap';
+import React, { Component } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
+import { Container } from "reactstrap";
 
 // sidebar nav config
-import navigation from '../../_nav';
+import navigation from "../../_nav";
 // routes config
-import routes from '../../routes';
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import classNames from 'classnames';
-import { Breadcrumb, Header, Aside } from '../../components';
-import { AppSidebarNav } from '@coreui/react';
-import { I18n } from 'react-i18next';
-import { log } from 'util';
+import routes from "../../routes";
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import classNames from "classnames";
+import { Breadcrumb, Header, Aside } from "../../components";
+import { AppSidebarNav } from "@coreui/react";
+import { I18n } from "react-i18next";
+import { log } from "util";
 
 class DefaultLayout extends Component {
     constructor(props) {
@@ -19,21 +19,28 @@ class DefaultLayout extends Component {
         this.toggleLarge = this.toggleLarge.bind(this);
         this.toggleAsideNav = this.toggleAsideNav.bind(this);
         this.hideAsideNav = this.hideAsideNav.bind(this);
-        this.state = { asideNavToggle: false };
+        this.state = { asideNavToggle: false, treeviewTab: [0,0]};
         this.sendRequest = this.sendRequest.bind(this);
+        this.treeviewSet = this.treeviewSet.bind(this);
         this.sendRequest();
+    }
+
+    treeviewSet(tab) {
+        this.setState({
+            treeviewTab: tab
+        });
     }
 
     sendRequest() {
         return axios({
-            method: 'post',
-            url: './verifyAuth',
+            method: "post",
+            url: "./verifyAuth"
         });
     }
 
     toggleLarge() {
         this.setState({
-            large: !this.state.large,
+            large: !this.state.large
         });
     }
 
@@ -50,20 +57,23 @@ class DefaultLayout extends Component {
         return (
             <div
                 className={
-                    'app sidebar-mini rtl ' +
+                    "app sidebar-mini rtl " +
                     classNames({
-                        'sidenav-toggled': this.state.asideNavToggle === true,
+                        "sidenav-toggled": this.state.asideNavToggle === true
                     })
                 }
             >
                 <div className="app-header">
                     <Header toggleAsideNav={this.toggleAsideNav} />
                 </div>
-                <div className="app-sidebarOverlay" onClick={this.hideAsideNav} data-toggle="sidebar" />
+                <div
+                    className="app-sidebarOverlay"
+                    onClick={this.hideAsideNav}
+                    data-toggle="sidebar"
+                />
                 <Aside
-                    ref={props => {
-                        this.treeviewSetAside = props;
-                    }}
+                    treeviewTab={this.state.treeviewTab}
+                    treeviewSet={this.treeviewSet}
                 />
                 <AppSidebarNav navConfig={navigation} {...this.props} />
                 <main className="app-content">
@@ -82,17 +92,23 @@ class DefaultLayout extends Component {
                                                 {t => (
                                                     <route.component
                                                         {...props}
-                                                        Headtitle={(document.title = t('routes.' + route.name))}
-                                                        farmAuth={this.props.farmAuth}
+                                                        Headtitle={
+                                                            (document.title = t(
+                                                                "routes." +
+                                                                    route.name
+                                                            ))
+                                                        }
+                                                        farmAuth={
+                                                            this.props.farmAuth
+                                                        }
                                                         treeview={
-                                                            typeof route.treeview !== 'undefined'
+                                                            typeof route.treeview !==
+                                                            "undefined"
                                                                 ? route.treeview
                                                                 : 0
                                                         }
                                                         treeviewSet={
-                                                            typeof this.treeviewSetAside !== 'undefined'
-                                                                ? this.treeviewSetAside.treeviewShow
-                                                                : null
+                                                            this.treeviewSet
                                                         }
                                                     />
                                                 )}
@@ -105,11 +121,12 @@ class DefaultLayout extends Component {
                         </Switch>
                     </Container>
                 </main>
-                <Modal isOpen={this.props.modalToggle} className={'modal-lg '}>
+                <Modal isOpen={this.props.modalToggle} className={"modal-lg "}>
                     <ModalHeader>Inicia seccion por favor</ModalHeader>
                     <ModalBody>{this.props.modal}</ModalBody>
                     <ModalFooter>
-                        <Button color="primary">Do Something</Button> <Button color="secondary">Cancel</Button>
+                        <Button color="primary">Do Something</Button>{" "}
+                        <Button color="secondary">Cancel</Button>
                     </ModalFooter>
                 </Modal>
             </div>

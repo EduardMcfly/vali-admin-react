@@ -1,24 +1,45 @@
-import React, { Component } from 'react';
-import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { I18n, Trans } from 'react-i18next';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; // ES6
-import { ModalCharge, AddFarm } from '../../components';
+import React, { Component } from "react";
+import {
+    Container,
+    Row,
+    Col,
+    Button,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter
+} from "reactstrap";
+import { I18n, Trans } from "react-i18next";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group"; // ES6
+import { ModalCharge, AddFarm } from "../../components";
 
 const FarmsBuild = response => (
     <div className="col-md-6 col-lg-6" data-aos="flip-right">
-        <div className="widget-small primary coloured-icon" style={{ alignItems: 'center' }}>
+        <div
+            className="widget-small primary coloured-icon"
+            style={{ alignItems: "center" }}
+        >
             <a href="">
-                <i className="icon fa  fa-eye fa-3x" style={{ backgroundColor: response.colorRand }} />
+                <i
+                    className="icon fa  fa-eye fa-3x"
+                    style={{ backgroundColor: response.colorRand }}
+                />
             </a>
-            <div className="row container" style={{ wordBreak: 'break-word' }}>
-                <div className="info col-sm-9 col-md-9" data-aos="fade-up" data-aos-duration="500">
+            <div className="row container" style={{ wordBreak: "break-word" }}>
+                <div
+                    className="info col-sm-9 col-md-9"
+                    data-aos="fade-up"
+                    data-aos-duration="500"
+                >
                     <h4>
-                        <a href={'#/farm/' + response.obj[0]}>{response.obj[1]}</a>
+                        <a href={"#/farm/" + response.obj[0]}>
+                            {response.obj[1]}
+                        </a>
                     </h4>
                     <I18n ns="farm">
                         {(t, { i18n }) => (
                             <p>
-                                <b>{t('seeFarm')}.</b>
+                                <b>{t("seeFarm")}.</b>
                             </p>
                         )}
                     </I18n>
@@ -26,13 +47,15 @@ const FarmsBuild = response => (
                 <div className="col-sm-3 col-md-3">
                     <a
                         href="#"
-                        onClick={() => response.modalData(response.obj[0], response.obj[1])}
+                        onClick={() =>
+                            response.modalData(response.obj[0], response.obj[1])
+                        }
                         data-toggle="modal"
                         data-target="#modalConfigFinca"
                         style={{
-                            display: 'grid',
-                            alignContent: 'center',
-                            justifyContent: 'flex-end',
+                            display: "grid",
+                            alignContent: "center",
+                            justifyContent: "flex-end"
                         }}
                     >
                         <i className="fa fa-cogs fa-2x" aria-hidden="true" />
@@ -46,7 +69,10 @@ const FarmsWorkerBuild = response => (
     <div className="card border-dark mb-3 col-sm-6 col-md-6" idtrab="3">
         <div className="card-header row text-capitalize">
             <div className="col-md-12">
-                <i className="fa fa-user-circle-o fa-3x mr-2 imgUserNavBar" aria-hidden="true" />
+                <i
+                    className="fa fa-user-circle-o fa-3x mr-2 imgUserNavBar"
+                    aria-hidden="true"
+                />
             </div>
             <div className="col-md-12 mt-2  text-truncate">Juan Torres</div>
         </div>
@@ -65,7 +91,11 @@ const FarmsWorkerBuild = response => (
             <p className="card-text" />
             <li className="row descriptionUser">
                 <div className="description">Super Administrador.&nbsp;</div>
-                <i id="editableDateTxt" className="fa fa-pencil pl-2" aria-hidden="true" />
+                <i
+                    id="editableDateTxt"
+                    className="fa fa-pencil pl-2"
+                    aria-hidden="true"
+                />
             </li>
             <p />
         </div>
@@ -80,11 +110,11 @@ class Farms extends Component {
         super(props);
         this.state = {
             modalConfigFarm: false,
-            modalConfigFarmTitle: '',
+            modalConfigFarmTitle: "",
             modalCharge: true,
             nestedModalConfigFarm: false,
             closeAll: false,
-            modalAddFarm: false,
+            modalAddFarm: false
         };
         this.toggleModalAnimation = this.toggleModalAnimation.bind(this);
         this.toggleConfigFarmNested = this.toggleConfigFarmNested.bind(this);
@@ -94,12 +124,10 @@ class Farms extends Component {
         this.sendRequest = this.sendRequest.bind(this);
         this.AddFarmModal = this.AddFarmModal.bind(this);
     }
-    
+
     componentWillMount() {
-        this.sendRequest();
-    }
-    componentDidMount() {
         this.props.treeviewSet(this.props.treeview);
+        this.sendRequest();
     }
 
     AddFarmModal() {
@@ -108,7 +136,7 @@ class Farms extends Component {
 
     toggleConfigFarm() {
         this.setState({
-            modalConfigFarm: !this.state.modalConfigFarm,
+            modalConfigFarm: !this.state.modalConfigFarm
         });
     }
     toggleModalAnimation() {
@@ -118,34 +146,34 @@ class Farms extends Component {
     toggleConfigFarmNested() {
         this.setState({
             nestedModalConfigFarm: !this.state.nestedModalConfigFarm,
-            closeAll: false,
+            closeAll: false
         });
     }
 
     toggleAll() {
         this.setState({
             nestedModalConfigFarm: !this.state.nestedModalConfigFarm,
-            closeAll: true,
+            closeAll: true
         });
     }
 
     modalData(id, name) {
         this.setState({ modalConfigFarmTitle: name });
         axios({
-            method: 'post',
-            url: './farmModalConfig/' + id,
+            method: "post",
+            url: "./farmModalConfig/" + id
         }).then(res => {
-            if (typeof res.data.errors != 'undefined') {
-                if (typeof res.data.errors.permits != 'undefined') {
-                    swal('', res.data.errors.permits, 'warning');
+            if (typeof res.data.errors != "undefined") {
+                if (typeof res.data.errors.permits != "undefined") {
+                    swal("", res.data.errors.permits, "warning");
                     this.setState({
-                        modalConfigFarm: false,
+                        modalConfigFarm: false
                     });
                 }
             } else {
                 this.setState({
                     modalCharge: false,
-                    modalBodyConfigFarm: this.buildFarmWorker(res.data),
+                    modalBodyConfigFarm: this.buildFarmWorker(res.data)
                 });
             }
         });
@@ -155,25 +183,34 @@ class Farms extends Component {
 
     build(responses) {
         return responses[0].map((farm, i) => (
-            <FarmsBuild obj={farm} key={i} modalData={this.modalData} colorRand={colorRand()} />
+            <FarmsBuild
+                obj={farm}
+                key={i}
+                modalData={this.modalData}
+                colorRand={colorRand()}
+            />
         ));
     }
     buildFarmWorker(responses) {
         return responses.map((farm, i) => (
-            <FarmsWorkerBuild obj={farm} key={i} modalDataAddWorker={this.modalDataAddWorker} />
+            <FarmsWorkerBuild
+                obj={farm}
+                key={i}
+                modalDataAddWorker={this.modalDataAddWorker}
+            />
         ));
     }
     modalDataAddWorker(id, name) {
         this.setState({ modalConfigFarmTitle: name });
         axios({
-            method: 'post',
-            url: './farmModalConfig/' + id,
+            method: "post",
+            url: "./farmModalConfig/" + id
         }).then(res => {
-            if (typeof res.data.errors != 'undefined') {
-                if (typeof res.data.errors.permits != 'undefined') {
-                    swal('', res.data.errors.permits, 'warning');
+            if (typeof res.data.errors != "undefined") {
+                if (typeof res.data.errors.permits != "undefined") {
+                    swal("", res.data.errors.permits, "warning");
                     this.setState({
-                        modalConfigFarm: false,
+                        modalConfigFarm: false
                     });
                 }
             } else {
@@ -186,8 +223,8 @@ class Farms extends Component {
     }
     sendRequest() {
         axios({
-            method: 'post',
-            url: './listFarms',
+            method: "post",
+            url: "./listFarms"
         }).then(res => {
             this.setState({ farms: this.build(res.data) });
         });
@@ -203,16 +240,26 @@ class Farms extends Component {
                 <I18n ns="farm">
                     {(t, { i18n }) => (
                         <div>
-                            <Col md="12" className="text-center" data-aos="zoom-in">
+                            <Col
+                                md="12"
+                                className="text-center"
+                                data-aos="zoom-in"
+                            >
                                 <div className="tile">
                                     <h2>
-                                        <div className="tile-body">{t('welcome')}</div>
+                                        <div className="tile-body">
+                                            {t("welcome")}
+                                        </div>
                                     </h2>
                                 </div>
                             </Col>
                             <Container data-aos="zoom-in">
                                 <Row>
-                                    <Col sm="10" md="11" style={{ cursor: 'pointer' }}>
+                                    <Col
+                                        sm="10"
+                                        md="11"
+                                        style={{ cursor: "pointer" }}
+                                    >
                                         <Row>
                                             <div className="col-md-6 mx-auto">
                                                 <div
@@ -220,7 +267,7 @@ class Farms extends Component {
                                                     data-toggle="modal"
                                                     data-target="#modalNuevaFinca"
                                                     style={{
-                                                        borderRadius: 1 + 'em',
+                                                        borderRadius: 1 + "em"
                                                     }}
                                                     onClick={this.AddFarmModal}
                                                 >
@@ -228,10 +275,14 @@ class Farms extends Component {
                                                         <i
                                                             className="icon fa fa-pencil-square fa-2x p-1"
                                                             style={{
-                                                                backgroundColor: '#ffd404',
-                                                                textTransform: 'unset',
-                                                                minWidth: 'unset',
-                                                                borderRadius: 0.8 + 'rem',
+                                                                backgroundColor:
+                                                                    "#ffd404",
+                                                                textTransform:
+                                                                    "unset",
+                                                                minWidth:
+                                                                    "unset",
+                                                                borderRadius:
+                                                                    0.8 + "rem"
                                                             }}
                                                         />
                                                     </a>
@@ -240,10 +291,13 @@ class Farms extends Component {
                                                             <a
                                                                 className="fa-lg"
                                                                 style={{
-                                                                    display: 'contents',
+                                                                    display:
+                                                                        "contents"
                                                                 }}
                                                             >
-                                                                {t('registerFarm')}
+                                                                {t(
+                                                                    "registerFarm"
+                                                                )}
                                                             </a>
                                                         </div>
                                                     </div>
@@ -251,7 +305,11 @@ class Farms extends Component {
                                             </div>
                                         </Row>
                                     </Col>
-                                    <Col sm="2" md="1" style={{ cursor: 'pointer' }}>
+                                    <Col
+                                        sm="2"
+                                        md="1"
+                                        style={{ cursor: "pointer" }}
+                                    >
                                         <div
                                             href="#"
                                             className="justify-content-end align-items-center d-flex"
@@ -260,10 +318,11 @@ class Farms extends Component {
                                             <i
                                                 className="icon fa fa-refresh text-light  fa-2x p-1"
                                                 style={{
-                                                    backgroundColor: 'rgba(0, 150, 136, 0.5)',
-                                                    textTransform: 'unset',
-                                                    minWidth: 'unset',
-                                                    borderRadius: 0.8 + 'rem',
+                                                    backgroundColor:
+                                                        "rgba(0, 150, 136, 0.5)",
+                                                    textTransform: "unset",
+                                                    minWidth: "unset",
+                                                    borderRadius: 0.8 + "rem"
                                                 }}
                                             />
                                         </div>
@@ -280,9 +339,15 @@ class Farms extends Component {
                             <Modal
                                 isOpen={this.state.modalConfigFarm}
                                 toggle={this.toggleConfigFarm}
-                                className={(this.props.className, 'modal-dialog-centered')}
+                                className={
+                                    (this.props.className,
+                                    "modal-dialog-centered")
+                                }
                             >
-                                <ModalHeader toggle={this.toggleConfigFarm} className="text-uppercase">
+                                <ModalHeader
+                                    toggle={this.toggleConfigFarm}
+                                    className="text-uppercase"
+                                >
                                     {this.state.modalConfigFarmTitle}
                                 </ModalHeader>
                                 <ModalBody>
@@ -311,15 +376,23 @@ class Farms extends Component {
                                             transitionEnterTimeout={1000}
                                             transitionLeaveTimeout={600}
                                         >
-                                            <div className="row">{this.state.modalBodyConfigFarm}</div>
+                                            <div className="row">
+                                                {this.state.modalBodyConfigFarm}
+                                            </div>
                                         </ReactCSSTransitionGroup>
                                     </Container>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button color="primary" onClick={this.toggleConfigFarm}>
+                                    <Button
+                                        color="primary"
+                                        onClick={this.toggleConfigFarm}
+                                    >
                                         Do Something
                                     </Button>
-                                    <Button color="secondary" onClick={this.toggleConfigFarm}>
+                                    <Button
+                                        color="secondary"
+                                        onClick={this.toggleConfigFarm}
+                                    >
                                         Cancel
                                     </Button>
                                 </ModalFooter>

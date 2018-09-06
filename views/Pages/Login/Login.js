@@ -23,6 +23,8 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.sendRequest = this.sendRequest.bind(this);
+    }
+    componentWillMount(){
         this.sendRequest();
     }
 
