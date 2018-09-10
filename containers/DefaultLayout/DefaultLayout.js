@@ -56,7 +56,7 @@ class DefaultLayout extends Component {
                     })
                 }
             >
-                <div className="app-header">
+                <div className="app-header pr-1">
                     <Header toggleSidebarNav={this.toggleSidebarNav} />
                 </div>
                 <div

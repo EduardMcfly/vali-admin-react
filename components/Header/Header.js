@@ -1,18 +1,10 @@
-import React, { Component } from "react";
-import {
-    Badge,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
-    Nav,
-    NavItem,
-    NavLink
-} from "reactstrap";
-import PropTypes from "prop-types";
-import { I18n, Trans } from "react-i18next";
+import React, { Component } from 'react';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
+import PropTypes from 'prop-types';
+import { I18n, Trans } from 'react-i18next';
 
 const propTypes = {
-    children: PropTypes.node
+    children: PropTypes.node,
 };
 
 const defaultProps = {};
@@ -20,12 +12,29 @@ const defaultProps = {};
 class DefaultHeader extends Component {
     constructor(props) {
         super(props);
+
+        this.toggleUserDropDown = this.toggleUserDropDown.bind(this);
+        this.state = {
+            userDropdownOpen: false,
+        };
+    }
+
+    toggleUserDropDown() {
+        this.setState(prevState => ({
+            userDropdownOpen: !prevState.userDropdownOpen,
+        }));
     }
     render() {
         const { children, ...attributes } = this.props;
 
-        return <React.Fragment>
-                <div className="app-sidebarToggle jqvmap-region" data-toggle="sidebar" aria-label="Hide Sidebar" onClick={this.props.toggleSidebarNav} />
+        return (
+            <React.Fragment>
+                <div
+                    className="app-sidebarToggle jqvmap-region"
+                    data-toggle="sidebar"
+                    aria-label="Hide Sidebar"
+                    onClick={this.props.toggleSidebarNav}
+                />
                 <a className="app-headerLogo" href="#farms">
                     Cosva
                 </a>
@@ -41,9 +50,7 @@ class DefaultHeader extends Component {
                             <i className="fa fa-bell-o fa-lg" />
                         </a>
                         <ul className="app-notification dropdown-menu dropdown-menu-right">
-                            <li className="app-notificationTitle">
-                                You have 4 new notifications.
-                            </li>
+                            <li className="app-notificationTitle">You have 4 new notifications.</li>
                             <div className="app-notificationContent">
                                 <li>
                                     <a className="app-notificationItem" href="javascript:;">
@@ -54,12 +61,8 @@ class DefaultHeader extends Component {
                                             </span>
                                         </span>
                                         <div>
-                                            <p className="app-notificationMessage">
-                                                Lisa sent you a mail
-                                            </p>
-                                            <p className="app-notificationMeta">
-                                                2 min ago
-                                            </p>
+                                            <p className="app-notificationMessage">Lisa sent you a mail</p>
+                                            <p className="app-notificationMeta">2 min ago</p>
                                         </div>
                                     </a>
                                 </li>
@@ -72,12 +75,8 @@ class DefaultHeader extends Component {
                                             </span>
                                         </span>
                                         <div>
-                                            <p className="app-notificationMessage">
-                                                Mail server not working
-                                            </p>
-                                            <p className="app-notificationMeta">
-                                                5 min ago
-                                            </p>
+                                            <p className="app-notificationMessage">Mail server not working</p>
+                                            <p className="app-notificationMeta">5 min ago</p>
                                         </div>
                                     </a>
                                 </li>
@@ -90,12 +89,8 @@ class DefaultHeader extends Component {
                                             </span>
                                         </span>
                                         <div>
-                                            <p className="app-notificationMessage">
-                                                Transaction complete
-                                            </p>
-                                            <p className="app-notificationMeta">
-                                                2 days ago
-                                            </p>
+                                            <p className="app-notificationMessage">Transaction complete</p>
+                                            <p className="app-notificationMeta">2 days ago</p>
                                         </div>
                                     </a>
                                 </li>
@@ -109,12 +104,8 @@ class DefaultHeader extends Component {
                                                 </span>
                                             </span>
                                             <div>
-                                                <p className="app-notificationMessage">
-                                                    Lisa sent you a mail
-                                                </p>
-                                                <p className="app-notificationMeta">
-                                                    2 min ago
-                                                </p>
+                                                <p className="app-notificationMessage">Lisa sent you a mail</p>
+                                                <p className="app-notificationMeta">2 min ago</p>
                                             </div>
                                         </a>
                                     </li>
@@ -127,13 +118,8 @@ class DefaultHeader extends Component {
                                                 </span>
                                             </span>
                                             <div>
-                                                <p className="app-notificationMessage">
-                                                    Mail server not
-                                                    working
-                                                </p>
-                                                <p className="app-notificationMeta">
-                                                    5 min ago
-                                                </p>
+                                                <p className="app-notificationMessage">Mail server not working</p>
+                                                <p className="app-notificationMeta">5 min ago</p>
                                             </div>
                                         </a>
                                     </li>
@@ -146,12 +132,8 @@ class DefaultHeader extends Component {
                                                 </span>
                                             </span>
                                             <div>
-                                                <p className="app-notificationMessage">
-                                                    Transaction complete
-                                                </p>
-                                                <p className="app-notificationMeta">
-                                                    2 days ago
-                                                </p>
+                                                <p className="app-notificationMessage">Transaction complete</p>
+                                                <p className="app-notificationMeta">2 days ago</p>
                                             </div>
                                         </a>
                                     </li>
@@ -162,7 +144,7 @@ class DefaultHeader extends Component {
                             </li>
                         </ul>
                     </li>
-                    <li className="dropdown">
+                    {/* <li className="dropdown">
                         <a className="app-navItem" href="#" data-toggle="dropdown" aria-label="Open Profile Menu">
                             <i className="fa fa-user fa-lg" />
                         </a>
@@ -200,9 +182,34 @@ class DefaultHeader extends Component {
                                     </li>
                                 </ul>}
                         </I18n>
-                    </li>
+                    </li> */}
+                    <Dropdown isOpen={this.state.userDropdownOpen} toggle={this.toggleUserDropDown}>
+                        <DropdownToggle tag="div" className={'app-navItem'} aria-expanded={this.state.userDropdownOpen}>
+                            <i className="fa fa-user fa-lg" />
+                        </DropdownToggle>
+                        <I18n ns="header">
+                            {(t, { i18n }) => (
+                                <DropdownMenu>
+                                    <DropdownItem onClick={() => i18n.changeLanguage('es')}>
+                                        <i className="fa fa-language fa-lg" />
+                                        Español
+                                    </DropdownItem>
+                                    <DropdownItem onClick={() => i18n.changeLanguage('en')}>
+                                        <i className="fa fa-language fa-lg" />
+                                        English
+                                    </DropdownItem>
+                                    <DropdownItem divider />
+                                    <DropdownItem>
+                                        <i className="fa fa-sign-out fa-lg" />
+                                        {t('exit')}
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            )}
+                        </I18n>
+                    </Dropdown>
                 </ul>
-            </React.Fragment>;
+            </React.Fragment>
+        );
     }
 }
 
