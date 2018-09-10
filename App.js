@@ -31,7 +31,8 @@ class App extends Component {
             authenticated: true,
             login: false,
             CSRF: false,
-            loginFarm: true
+            loginFarm: false,
+            farmAuthenticated: false
         };
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
@@ -40,6 +41,7 @@ class App extends Component {
         this.varifyAuthFarm = this.varifyAuthFarm.bind(this);
         this.csrf = this.csrf.bind(this);
         this.axios = this.axios.bind(this);
+        this.updateComponents = this.updateComponents.bind(this);
         this.axios();
     }
     axios() {
@@ -69,14 +71,6 @@ class App extends Component {
                         "undefined"
                     ) {
                         self.csrf(error.response.data.token);
-                        /*  swal({
-                            title: 'Success!',
-                            text: error.response.data.errors.expired,
-                            type: 'error',
-                            confirmButtonColor: '#DD6B55',
-                            confirmButtonText: error.response.data.accept,
-                        }).then(function() {
-                        }); */
                     }
                 }
                 return Promise.reject(error.response);
@@ -92,6 +86,9 @@ class App extends Component {
             this.setState({ CSRF: true });
             this.csrfTime = true;
         }
+    }
+    updateComponents() {
+        this.forceUpdate();
     }
     login() {
         this.setState({ authenticated: true, login: true });
@@ -182,6 +179,7 @@ class App extends Component {
                                     loginFarm: this.loginFarm,
                                     logoutFarm: this.logoutFarm
                                 }}
+                                updateAll={this.updateComponents}
                             />
                         )}
                         redirectTo="/login"

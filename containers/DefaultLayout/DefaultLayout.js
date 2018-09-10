@@ -19,7 +19,7 @@ class DefaultLayout extends Component {
         this.toggleLarge = this.toggleLarge.bind(this);
         this.toggleSidebarNav = this.toggleSidebarNav.bind(this);
         this.hideSidebarNav = this.hideSidebarNav.bind(this);
-        this.state = { asideNavToggle: false};
+        this.state = { asideNavToggle: false };
         this.sendRequest = this.sendRequest.bind(this);
         this.sendRequest();
     }
@@ -64,9 +64,7 @@ class DefaultLayout extends Component {
                     onClick={this.hideSidebarNav}
                     data-toggle="sidebar"
                 />
-                <Sidebar
-                    {...this.props}
-                />
+                <Sidebar {...this.props} />
                 <main className="app-content">
                     <Breadcrumb appRoutes={routes} />
                     <Container fluid>
@@ -91,6 +89,9 @@ class DefaultLayout extends Component {
                                                         }
                                                         farmAuth={
                                                             this.props.farmAuth
+                                                        }
+                                                        updateAll={
+                                                            this.props.updateAll
                                                         }
                                                         treeview={
                                                             typeof route.treeview !==

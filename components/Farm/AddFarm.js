@@ -1,13 +1,7 @@
-import React, { Component } from 'react';
-import {
-    Button,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    ModalFooter
-} from 'reactstrap';
-import { I18n, Trans } from 'react-i18next';
-import update from 'immutability-helper';
+import React, { Component } from "react";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { I18n, Trans } from "react-i18next";
+import update from "immutability-helper";
 
 class Addfarm extends Component {
     constructor(props) {
@@ -15,57 +9,57 @@ class Addfarm extends Component {
         this.loginSubmit = this.loginSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.state = {
-            email: '',
-            password: '',
-            errors: {
-                inputs: { email: false, password: false },
-                messages: { email: '', password: '' },
-            },
-            modalAddFarm:false
+            farm: "",
+            modalAddFarm: false
         };
-        this.toggleAddFarm = this.toggleAddFarm.bind(this);
+        this.hideAddFarm = this.hideAddFarm.bind(this);
+        this.showAddFarm = this.showAddFarm.bind(this);
+        this.saveFarm = this.saveFarm.bind(this);
     }
 
     loginSubmit() {
         return axios({
-            method: 'post',
-            url: './login',
-            data: { email: this.state.email, password: this.state.password },
+            method: "post",
+            url: "./login",
+            data: { email: this.state.email, password: this.state.password }
         })
             .then(res => {
-                if (typeof res.data.success !== 'undefined' || typeof res.data.auth !== 'undefined') {
+                if (
+                    typeof res.data.success !== "undefined" ||
+                    typeof res.data.auth !== "undefined"
+                ) {
                     this.props.userAuth.login();
                 }
-                if (typeof res.data.errors !== 'undefined') {
+                if (typeof res.data.errors !== "undefined") {
                     var errors = res.data.errors;
                     this.setState({
                         errors: {
                             inputs: { email: false, password: false },
-                            messages: { email: '', password: '' },
-                        },
+                            messages: { email: "", password: "" }
+                        }
                     });
-                    if (typeof errors.email !== 'undefined') {
-                        this.errorsChange('email', errors.email);
+                    if (typeof errors.email !== "undefined") {
+                        this.errorsChange("email", errors.email);
                     }
-                    if (typeof errors.password !== 'undefined') {
-                        this.errorsChange('password', errors.password);
+                    if (typeof errors.password !== "undefined") {
+                        this.errorsChange("password", errors.password);
                     }
                 }
             })
             .catch(res => {
-                if (typeof res.data.errors !== 'undefined') {
+                if (typeof res.data.errors !== "undefined") {
                     var errors = res.data.errors;
                     this.setState({
                         errors: {
                             inputs: { email: false, password: false },
-                            messages: { email: '', password: '' },
-                        },
+                            messages: { email: "", password: "" }
+                        }
                     });
-                    if (typeof errors.email !== 'undefined') {
-                        this.errorsChange('email', errors.email);
+                    if (typeof errors.email !== "undefined") {
+                        this.errorsChange("email", errors.email);
                     }
-                    if (typeof errors.password !== 'undefined') {
-                        this.errorsChange('password', errors.password);
+                    if (typeof errors.password !== "undefined") {
+                        this.errorsChange("password", errors.password);
                     }
                 }
             });
@@ -75,51 +69,77 @@ class Addfarm extends Component {
         this.setState({
             errors: update(this.state.errors, {
                 inputs: { $merge: { [position]: true } },
-                messages: { $merge: { [position]: message } },
-            }),
+                messages: { $merge: { [position]: message } }
+            })
         });
     }
 
     handleInputChange(event) {
+        var re = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/g;
+        var OK = re.exec(event.target.value);
+        console.log(OK);
         const name = event.target.name;
-        const value = event.target.value;
-        this.setState({
-            modalAddFarm: false,
-        });
-        this.toggleAddFarm = this.toggleAddFarm.bind(this);
+        const value = OK;
+        this.setState({ [name]: event.target.value });
     }
 
-    toggleAddFarm() {
+    hideAddFarm() {
         this.setState({
-            modalAddFarm: !this.state.modalAddFarm,
+            modalAddFarm: false
         });
+    }
+    showAddFarm() {
+        this.setState({
+            modalAddFarm: true
+        });
+    }
+    saveFarm() {
+        axios({
+            method: "post",
+            url: "./login",
+            data: {
+                email: this.state.email,
+                password: this.state.password
+            }
+        });
+        console.log(this);
     }
     render() {
         return (
-            <I18n ns="login">
+            <I18n ns="farm">
                 {(t, { i18n }) => (
                     <React.Fragment>
                         <Modal
                             isOpen={this.state.modalAddFarm}
-                            toggle={this.toggleAddFarm}
-                            className={(this.props.className, 'modal-dialog-centered')}
+                            toggle={this.hideAddFarm}
+                            className={
+                                (this.props.className, "modal-dialog-centered")
+                            }
                         >
-                            <ModalHeader toggle={this.toggleAddFarm}>Registro de finca</ModalHeader>
+                            <ModalHeader toggle={this.hideAddFarm}>
+                                {t("registerFarm.title")}
+                            </ModalHeader>
                             <ModalBody>
-                                <label>Nombre de la finca</label>
+                                <label>{t("registerFarm.name")}</label>
                                 <input
                                     type="text"
-                                    name=""
-                                    id="nombreFinca"
-                                    placeholder="Ingresa el nombre de tu finca."
+                                    placeholder={t("registerFarm.input") + "."}
+                                    value={this.state.farm}
                                     className="form-control input-sm"
+                                    name="farm"
+                                    onChange={this.handleInputChange}
                                 />
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="primary" onClick={this.toggleAddFarm}>
+                                <Button color="primary" onClick={this.saveFarm}>
                                     Guardar Cambios
                                 </Button>
-                                <Button color="secondary">Cerrar</Button>
+                                <Button
+                                    color="secondary"
+                                    onClick={this.hideAddFarm}
+                                >
+                                    Cerrar
+                                </Button>
                             </ModalFooter>
                         </Modal>
                     </React.Fragment>

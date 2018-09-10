@@ -24,35 +24,20 @@ class DefaultHeader extends Component {
     render() {
         const { children, ...attributes } = this.props;
 
-        return (
-            <React.Fragment>
-                <div
-                    className="app-sidebarToggle jqvmap-region"
-                    data-toggle="sidebar"
-                    aria-label="Hide Sidebar"
-                    onClick={this.props.toggleSidebarNav}
-                />
+        return <React.Fragment>
+                <div className="app-sidebarToggle jqvmap-region" data-toggle="sidebar" aria-label="Hide Sidebar" onClick={this.props.toggleSidebarNav} />
                 <a className="app-headerLogo" href="#farms">
                     Cosva
                 </a>
                 <ul className="app-nav">
                     <li className="app-search">
-                        <input
-                            className="app-searchInput"
-                            type="search"
-                            placeholder="Search"
-                        />
-                        <button className="app-searchButton">
+                        <input className="app-searchInput" type="search" placeholder="Search" aria-label="Search" />
+                        <button type="button" className="app-searchButton">
                             <i className="fa fa-search" />
                         </button>
                     </li>
                     <li className="dropdown">
-                        <a
-                            className="app-navItem"
-                            href="#"
-                            data-toggle="dropdown"
-                            aria-label="Show notifications"
-                        >
+                        <a className="app-navItem" href="#" data-toggle="dropdown" aria-label="Show notifications">
                             <i className="fa fa-bell-o fa-lg" />
                         </a>
                         <ul className="app-notification dropdown-menu dropdown-menu-right">
@@ -61,10 +46,7 @@ class DefaultHeader extends Component {
                             </li>
                             <div className="app-notificationContent">
                                 <li>
-                                    <a
-                                        className="app-notificationItem"
-                                        href="javascript:;"
-                                    >
+                                    <a className="app-notificationItem" href="javascript:;">
                                         <span className="app-notificationIcon">
                                             <span className="fa-stack fa-lg">
                                                 <i className="fa fa-circle fa-stack-2x text-primary" />
@@ -82,10 +64,7 @@ class DefaultHeader extends Component {
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        className="app-notificationItem"
-                                        href="javascript:;"
-                                    >
+                                    <a className="app-notificationItem" href="javascript:;">
                                         <span className="app-notificationIcon">
                                             <span className="fa-stack fa-lg">
                                                 <i className="fa fa-circle fa-stack-2x text-danger" />
@@ -103,10 +82,7 @@ class DefaultHeader extends Component {
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        className="app-notificationItem"
-                                        href="javascript:;"
-                                    >
+                                    <a className="app-notificationItem" href="javascript:;">
                                         <span className="app-notificationIcon">
                                             <span className="fa-stack fa-lg">
                                                 <i className="fa fa-circle fa-stack-2x text-success" />
@@ -125,10 +101,7 @@ class DefaultHeader extends Component {
                                 </li>
                                 <div className="app-notificationContent">
                                     <li>
-                                        <a
-                                            className="app-notificationItem"
-                                            href="javascript:;"
-                                        >
+                                        <a className="app-notificationItem" href="javascript:;">
                                             <span className="app-notificationIcon">
                                                 <span className="fa-stack fa-lg">
                                                     <i className="fa fa-circle fa-stack-2x text-primary" />
@@ -146,10 +119,7 @@ class DefaultHeader extends Component {
                                         </a>
                                     </li>
                                     <li>
-                                        <a
-                                            className="app-notificationItem"
-                                            href="javascript:;"
-                                        >
+                                        <a className="app-notificationItem" href="javascript:;">
                                             <span className="app-notificationIcon">
                                                 <span className="fa-stack fa-lg">
                                                     <i className="fa fa-circle fa-stack-2x text-danger" />
@@ -158,7 +128,8 @@ class DefaultHeader extends Component {
                                             </span>
                                             <div>
                                                 <p className="app-notificationMessage">
-                                                    Mail server not working
+                                                    Mail server not
+                                                    working
                                                 </p>
                                                 <p className="app-notificationMeta">
                                                     5 min ago
@@ -167,10 +138,7 @@ class DefaultHeader extends Component {
                                         </a>
                                     </li>
                                     <li>
-                                        <a
-                                            className="app-notificationItem"
-                                            href="javascript:;"
-                                        >
+                                        <a className="app-notificationItem" href="javascript:;">
                                             <span className="app-notificationIcon">
                                                 <span className="fa-stack fa-lg">
                                                     <i className="fa fa-circle fa-stack-2x text-success" />
@@ -195,73 +163,46 @@ class DefaultHeader extends Component {
                         </ul>
                     </li>
                     <li className="dropdown">
-                        <a
-                            className="app-navItem"
-                            href="#"
-                            data-toggle="dropdown"
-                            aria-label="Open Profile Menu"
-                        >
+                        <a className="app-navItem" href="#" data-toggle="dropdown" aria-label="Open Profile Menu">
                             <i className="fa fa-user fa-lg" />
                         </a>
                         <I18n ns="header">
-                            {(t, { i18n }) => (
-                                <ul className="dropdown-menu settings-menu dropdown-menu-right">
+                            {(t, { i18n }) => <ul className="dropdown-menu settings-menu dropdown-menu-right">
                                     <li>
-                                        <a
-                                            className="dropdown-item"
-                                            href="{{ route('login') }}"
-                                        >
+                                        <a className="dropdown-item" href="{{ route('login') }}">
                                             <i className="fa fa-cog fa-lg" />
                                             {t("config")}
                                         </a>
                                     </li>
                                     <li>
-                                        <a
-                                            className="dropdown-item"
-                                            href="{{ route('login') }}"
-                                        >
+                                        <a className="dropdown-item" href="{{ route('login') }}">
                                             <i className="fa fa-user fa-lg" />
                                             {t("profile")}
                                         </a>
                                     </li>
                                     <li>
-                                        <button
-                                            className="dropdown-item"
-                                            onClick={() =>
-                                                i18n.changeLanguage("es")
-                                            }
-                                        >
+                                        <button className="dropdown-item" onClick={() => i18n.changeLanguage("es")}>
                                             <i className="fa fa-language fa-lg" />
                                             Español
                                         </button>
                                     </li>
                                     <li>
-                                        <button
-                                            className="dropdown-item"
-                                            onClick={() =>
-                                                i18n.changeLanguage("en")
-                                            }
-                                        >
+                                        <button className="dropdown-item" onClick={() => i18n.changeLanguage("en")}>
                                             <i className="fa fa-language fa-lg" />
                                             English
                                         </button>
                                     </li>
                                     <li>
-                                        <a
-                                            className="dropdown-item"
-                                            href="{{ route('logout') }}"
-                                        >
+                                        <a className="dropdown-item" href="{{ route('logout') }}">
                                             <i className="fa fa-sign-out fa-lg" />
                                             {t("exit")}
                                         </a>
                                     </li>
-                                </ul>
-                            )}
+                                </ul>}
                         </I18n>
                     </li>
                 </ul>
-            </React.Fragment>
-        );
+            </React.Fragment>;
     }
 }
 

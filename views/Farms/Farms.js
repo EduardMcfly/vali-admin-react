@@ -121,16 +121,17 @@ class Farms extends Component {
         this.toggleConfigFarm = this.toggleConfigFarm.bind(this);
         this.toggleAll = this.toggleAll.bind(this);
         this.modalData = this.modalData.bind(this);
-        this.sendRequest = this.sendRequest.bind(this);
+        this.getListFarms = this.getListFarms.bind(this);
+        this.UpdateListFarms = this.UpdateListFarms.bind(this);
         this.AddFarmModal = this.AddFarmModal.bind(this);
     }
 
     componentWillMount() {
-        this.sendRequest();
+        this.getListFarms();
     }
 
     AddFarmModal() {
-        this.farmAdd.toggleAddFarm();
+        this.farmAdd.showAddFarm();
     }
 
     toggleConfigFarm() {
@@ -220,30 +221,26 @@ class Farms extends Component {
             }
         });
     }
-    sendRequest() {
+    getListFarms() {
         axios({
             method: "post",
             url: "./listFarms"
         }).then(res => {
             this.setState({ farms: this.build(res.data) });
+
         });
     }
+    UpdateListFarms() {
+        this.props.updateAll();
+    }
     render() {
-        return (
-            <React.Fragment>
-                <AddFarm
-                    ref={farm => {
+        return <React.Fragment>
+                <AddFarm ref={farm => {
                         this.farmAdd = farm;
-                    }}
-                />
+                    }} />
                 <I18n ns="farm">
-                    {(t, { i18n }) => (
-                        <div>
-                            <Col
-                                md="12"
-                                className="text-center"
-                                data-aos="zoom-in"
-                            >
+                    {(t, { i18n }) => <div>
+                            <Col md="12" className="text-center" data-aos="zoom-in">
                                 <div className="tile">
                                     <h2>
                                         <div className="tile-body">
@@ -254,49 +251,17 @@ class Farms extends Component {
                             </Col>
                             <Container data-aos="zoom-in">
                                 <Row>
-                                    <Col
-                                        sm="10"
-                                        md="11"
-                                        style={{ cursor: "pointer" }}
-                                    >
+                                    <Col sm="10" md="11" style={{ cursor: "pointer" }}>
                                         <Row>
                                             <div className="col-md-6 mx-auto">
-                                                <div
-                                                    className="widget-small primary coloured-icon mb-2"
-                                                    data-toggle="modal"
-                                                    data-target="#modalNuevaFinca"
-                                                    style={{
-                                                        borderRadius: 1 + "em"
-                                                    }}
-                                                    onClick={this.AddFarmModal}
-                                                >
+                                                <div className="widget-small primary coloured-icon mb-2" data-toggle="modal" data-target="#modalNuevaFinca" style={{ borderRadius: 1 + "em" }} onClick={this.AddFarmModal}>
                                                     <a className="my-auto">
-                                                        <i
-                                                            className="icon fa fa-pencil-square fa-2x p-1"
-                                                            style={{
-                                                                backgroundColor:
-                                                                    "#ffd404",
-                                                                textTransform:
-                                                                    "unset",
-                                                                minWidth:
-                                                                    "unset",
-                                                                borderRadius:
-                                                                    0.8 + "rem"
-                                                            }}
-                                                        />
+                                                        <i className="icon fa fa-pencil-square fa-2x p-1" style={{ backgroundColor: "#ffd404", textTransform: "unset", minWidth: "unset", borderRadius: 0.8 + "rem" }} />
                                                     </a>
                                                     <div className="row container">
                                                         <div className="info col-sm-9 col-md-9 mx-auto my-auto text-center">
-                                                            <a
-                                                                className="fa-lg"
-                                                                style={{
-                                                                    display:
-                                                                        "contents"
-                                                                }}
-                                                            >
-                                                                {t(
-                                                                    "registerFarm"
-                                                                )}
+                                                            <a className="fa-lg" style={{ display: "contents" }}>
+                                                                {t("registerFarm.title")}
                                                             </a>
                                                         </div>
                                                     </div>
@@ -304,103 +269,60 @@ class Farms extends Component {
                                             </div>
                                         </Row>
                                     </Col>
-                                    <Col
-                                        sm="2"
-                                        md="1"
-                                        style={{ cursor: "pointer" }}
-                                    >
-                                        <div
-                                            href="#"
-                                            className="justify-content-end align-items-center d-flex"
-                                            onClick={this.sendRequest}
-                                        >
-                                            <i
-                                                className="icon fa fa-refresh text-light  fa-2x p-1"
-                                                style={{
-                                                    backgroundColor:
-                                                        "rgba(0, 150, 136, 0.5)",
-                                                    textTransform: "unset",
-                                                    minWidth: "unset",
-                                                    borderRadius: 0.8 + "rem"
-                                                }}
-                                            />
+                                    <Col sm="2" md="1" style={{ cursor: "pointer" }}>
+                                        <div href="#" className="justify-content-end align-items-center d-flex" onClick={this.UpdateListFarms}>
+                                            <i className="icon fa fa-refresh text-light  fa-2x p-1" style={{ backgroundColor: "rgba(0, 150, 136, 0.5)", textTransform: "unset", minWidth: "unset", borderRadius: 0.8 + "rem" }} />
                                         </div>
                                     </Col>
                                 </Row>
-                                <Row data-aos="fade-up">{this.state.farms}</Row>
+                                <Row data-aos="fade-up">
+                                    {this.state.farms}
+                                </Row>
                             </Container>
-                        </div>
-                    )}
+                        </div>}
                 </I18n>
                 <I18n ns="farm">
-                    {(t, { i18n }) => (
-                        <React.Fragment>
-                            <Modal
-                                isOpen={this.state.modalConfigFarm}
-                                toggle={this.toggleConfigFarm}
-                                className={
-                                    (this.props.className,
-                                    "modal-dialog-centered")
-                                }
-                            >
-                                <ModalHeader
-                                    toggle={this.toggleConfigFarm}
-                                    className="text-uppercase"
-                                >
+                    {(t, { i18n }) => <React.Fragment>
+                            <Modal isOpen={this.state.modalConfigFarm} toggle={this.toggleConfigFarm} className={(this.props.className, "modal-dialog-centered")}>
+                                <ModalHeader toggle={this.toggleConfigFarm} className="text-uppercase">
                                     {this.state.modalConfigFarmTitle}
                                 </ModalHeader>
                                 <ModalBody>
-                                    <ReactCSSTransitionGroup
-                                        transitionName="example"
-                                        transitionEnterTimeout={500}
-                                        transitionLeaveTimeout={300}
-                                    >
+                                    <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
                                         {this.state.modalCharge}
                                     </ReactCSSTransitionGroup>
                                     <Container>
-                                        <h5 className="lead">Trabajadores</h5>
+                                        <h5 className="lead">
+                                            Trabajadores
+                                        </h5>
                                         <hr className="my-3" />
                                         <div className="mb-3">
-                                            <button
-                                                className="btn btn-secondary"
-                                                type="button"
-                                                data-toggle="modal"
-                                                data-target="#addTrabajador"
-                                            >
+                                            <button className="btn btn-secondary" type="button" data-toggle="modal" data-target="#addTrabajador">
                                                 Agregar trabajador
                                             </button>
                                         </div>
-                                        <ReactCSSTransitionGroup
-                                            transitionName="show"
-                                            transitionEnterTimeout={1000}
-                                            transitionLeaveTimeout={600}
-                                        >
+                                        <ReactCSSTransitionGroup transitionName="show" transitionEnterTimeout={1000} transitionLeaveTimeout={600}>
                                             <div className="row">
-                                                {this.state.modalBodyConfigFarm}
+                                                {
+                                                    this.state
+                                                        .modalBodyConfigFarm
+                                                }
                                             </div>
                                         </ReactCSSTransitionGroup>
                                     </Container>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button
-                                        color="primary"
-                                        onClick={this.toggleConfigFarm}
-                                    >
+                                    <Button color="primary" onClick={this.toggleConfigFarm}>
                                         Do Something
                                     </Button>
-                                    <Button
-                                        color="secondary"
-                                        onClick={this.toggleConfigFarm}
-                                    >
+                                    <Button color="secondary" onClick={this.toggleConfigFarm}>
                                         Cancel
                                     </Button>
                                 </ModalFooter>
                             </Modal>
-                        </React.Fragment>
-                    )}
+                        </React.Fragment>}
                 </I18n>
-            </React.Fragment>
-        );
+            </React.Fragment>;
     }
 }
 

@@ -5,9 +5,8 @@ import App from './App';
 import './i18n';
 require("./libreries");
 
-// disable ServiceWorker
-// import registerServiceWorker from './registerServiceWorker';
+import registerServiceWorker from './registerServiceWorker';
+registerServiceWorker();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 // disable ServiceWorker
-// registerServiceWorker();
