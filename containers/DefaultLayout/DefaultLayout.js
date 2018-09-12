@@ -2,16 +2,11 @@ import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { Container } from "reactstrap";
 
-// sidebar nav config
-import navigation from "../../_nav";
 // routes config
 import routes from "../../routes";
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import classNames from "classnames";
 import { Breadcrumb, Header, Sidebar } from "../../components";
-import { AppSidebarNav } from "@coreui/react";
 import { I18n } from "react-i18next";
-import { log } from "util";
 
 class DefaultLayout extends Component {
     constructor(props) {
@@ -22,6 +17,7 @@ class DefaultLayout extends Component {
         this.state = { asideNavToggle: false };
         this.sendRequest = this.sendRequest.bind(this);
         this.sendRequest();
+
     }
 
     sendRequest() {
@@ -57,7 +53,7 @@ class DefaultLayout extends Component {
                 }
             >
                 <div className="app-header pr-1">
-                    <Header toggleSidebarNav={this.toggleSidebarNav} />
+                    <Header toggleSidebarNav={this.toggleSidebarNav} userAuthLogout={this.props.userAuth.logout} />
                 </div>
                 <div
                     className="app-sidebarOverlay"
@@ -65,7 +61,7 @@ class DefaultLayout extends Component {
                     data-toggle="sidebar"
                 />
                 <Sidebar {...this.props} />
-                <main className="app-content">
+                <main className="app-content" style={{ overflow:"hidden" }}>
                     <Breadcrumb appRoutes={routes} />
                     <Container fluid>
                         <Switch>
@@ -113,14 +109,6 @@ class DefaultLayout extends Component {
                         </Switch>
                     </Container>
                 </main>
-                <Modal isOpen={this.props.modalToggle} className={"modal-lg "}>
-                    <ModalHeader>Inicia seccion por favor</ModalHeader>
-                    <ModalBody>{this.props.modal}</ModalBody>
-                    <ModalFooter>
-                        <Button color="primary">Do Something</Button>{" "}
-                        <Button color="secondary">Cancel</Button>
-                    </ModalFooter>
-                </Modal>
             </div>
         );
     }

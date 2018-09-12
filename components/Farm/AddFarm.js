@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { I18n, Trans } from "react-i18next";
+import { I18n } from "react-i18next";
 import update from "immutability-helper";
 
 class Addfarm extends Component {
