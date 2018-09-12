@@ -6,26 +6,33 @@ import {
     CardGroup,
     Col,
     Container,
-    Form,
-    Input,
-    InputGroup,
-    InputGroupAddon,
-    InputGroupText,
     Row,
-    FormFeedback
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle
 } from "reactstrap";
-import { I18n, Trans } from "react-i18next";
+import { I18n } from "react-i18next";
 import Link from "react-router-dom/Link";
-import { log } from "util";
 import { LoginComponent } from "../../../components";
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.sendRequest = this.sendRequest.bind(this);
+        this.toggleEllipsisDropDown = this.toggleEllipsisDropDown.bind(this);
+        this.state = {
+            userDropdownOpen: false
+        };
     }
-    componentWillMount(){
+    componentWillMount() {
         this.sendRequest();
+    }
+
+    toggleEllipsisDropDown() {
+        this.setState(prevState => ({
+            userDropdownOpen: !prevState.userDropdownOpen
+        }));
     }
 
     sendRequest() {
@@ -62,50 +69,46 @@ class Login extends Component {
                                 Cosva
                             </a>
                             <ul className="app-nav">
-                                <li className="dropdown">
-                                    <a
-                                        className="app-navItem"
-                                        href="#"
-                                        data-toggle="dropdown"
-                                        aria-label="Open Profile Menu"
+                                <Dropdown
+                                    isOpen={this.state.userDropdownOpen}
+                                    toggle={this.toggleEllipsisDropDown}
+                                >
+                                    <DropdownToggle
+                                        tag="div"
+                                        className={"app-navItem c-pointer"}
+                                        aria-expanded={
+                                            this.state.userDropdownOpen
+                                        }
                                     >
-                                        <i className="fa fa-ellipsis-v fa-2x" />
-                                    </a>
-                                    <ul className="dropdown-menu settings-menu dropdown-menu-right">
-                                        <li>
-                                            <button
-                                                className="dropdown-item"
-                                                onClick={() =>
-                                                    i18n.changeLanguage("es")
-                                                }
-                                            >
-                                                <i className="fa fa-language fa-lg" />
-                                                Español
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button
-                                                className="dropdown-item"
-                                                onClick={() =>
-                                                    i18n.changeLanguage("en")
-                                                }
-                                            >
-                                                |{" "}
-                                                <i className="fa fa-language fa-lg" />
-                                                English
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <a
-                                                className="dropdown-item"
-                                                href="{{ route('logout') }}"
-                                            >
-                                                <i className="fa fa-sign-out fa-lg" />
-                                                {t("exit")}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
+                                        <i className="fa fa-ellipsis-v  fa-2x" />
+                                    </DropdownToggle>
+                                    <I18n ns="header">
+                                        {(t, { i18n }) => (
+                                            <DropdownMenu>
+                                                <DropdownItem
+                                                    onClick={() =>
+                                                        i18n.changeLanguage(
+                                                            "es"
+                                                        )
+                                                    }
+                                                >
+                                                    <i className="fa fa-language fa-lg" />
+                                                    Español
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                    onClick={() =>
+                                                        i18n.changeLanguage(
+                                                            "en"
+                                                        )
+                                                    }
+                                                >
+                                                    <i className="fa fa-language fa-lg" />
+                                                    English
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        )}
+                                    </I18n>
+                                </Dropdown>
                             </ul>
                         </header>
                     )}
@@ -140,13 +143,17 @@ class Login extends Component {
                                                             labore et dolore
                                                             magna aliqua.
                                                         </p>
-                                                        <Button
-                                                            color="primary"
-                                                            className="mt-3"
-                                                            active
+                                                        <Link
+                                                            to={"/register"}
                                                         >
-                                                            Register Now!
-                                                        </Button>
+                                                            <Button
+                                                                color="primary"
+                                                                className="mt-3"
+                                                                active
+                                                            >
+                                                                Register Now!
+                                                            </Button>
+                                                        </Link>
                                                     </div>
                                                 </CardBody>
                                             </Card>

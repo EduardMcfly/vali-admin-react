@@ -4,7 +4,7 @@ import { TextCharge } from "..";
 import { Badge, Nav, NavItem, NavLink as RsNavLink } from "reactstrap";
 import classNames from "classnames";
 import { AddFarm } from "..";
-import { I18n, Trans } from "react-i18next";
+import { I18n } from "react-i18next";
 import nav from "./_nav";
 
 class Sidebar extends Component {

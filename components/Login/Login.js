@@ -11,8 +11,9 @@ import {
     Card,
     FormFeedback
 } from "reactstrap";
-import { I18n, Trans } from "react-i18next";
+import { I18n } from "react-i18next";
 import update from "immutability-helper";
+import Link from "react-router-dom/Link";
 
 class LoginComponent extends Component {
     constructor(props) {
@@ -145,6 +146,11 @@ class LoginComponent extends Component {
                                         name="password"
                                         value={this.state.password}
                                         onChange={this.handleInputChange}
+                                        onKeyDown={e => {
+                                            if (e.keyCode === 13) {
+                                                this.loginSubmit();
+                                            }
+                                        }}
                                     />
                                     <FormFeedback>
                                         {this.state.errors.messages.password}
@@ -159,12 +165,14 @@ class LoginComponent extends Component {
                                         >
                                             {t("loginTitle")}
                                         </Button>
-                                        <Button
-                                            color="info"
-                                            className="mt-3 w-100 px-4 text-truncate d-md-none d-sm-block"
-                                        >
-                                            {t("registerTitle")}
-                                        </Button>
+                                        <Link to={"/register"}>
+                                            <Button
+                                                color="info"
+                                                className="mt-3 w-100 px-4 text-truncate d-md-none d-sm-block"
+                                            >
+                                                {t("registerTitle")}
+                                            </Button>
+                                        </Link>
                                     </Col>
                                     <Col sm="12" lg="6" className="text-right">
                                         <Button
