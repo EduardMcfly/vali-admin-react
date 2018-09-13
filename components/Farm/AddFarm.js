@@ -1,108 +1,75 @@
-import React, { Component } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { I18n } from "react-i18next";
-import update from "immutability-helper";
+import React, { Component } from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter,FormFeedback } from 'reactstrap';
+import { I18n } from 'react-i18next';
+import update from 'immutability-helper';
+import { log } from 'util';
 
 class Addfarm extends Component {
     constructor(props) {
         super(props);
-        this.loginSubmit = this.loginSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.state = {
-            farm: "",
-            modalAddFarm: false
+            farm: '',
+            modalAddFarm: false,
+            errors: {
+                inputs: { farmName: false },
+                messages: { farmName: '' },
+            },
         };
         this.hideAddFarm = this.hideAddFarm.bind(this);
         this.showAddFarm = this.showAddFarm.bind(this);
         this.saveFarm = this.saveFarm.bind(this);
     }
 
-    loginSubmit() {
-        return axios({
-            method: "post",
-            url: "./login",
-            data: { email: this.state.email, password: this.state.password }
-        })
-            .then(res => {
-                if (
-                    typeof res.data.success !== "undefined" ||
-                    typeof res.data.auth !== "undefined"
-                ) {
-                    this.props.userAuth.login();
-                }
-                if (typeof res.data.errors !== "undefined") {
-                    var errors = res.data.errors;
-                    this.setState({
-                        errors: {
-                            inputs: { email: false, password: false },
-                            messages: { email: "", password: "" }
-                        }
-                    });
-                    if (typeof errors.email !== "undefined") {
-                        this.errorsChange("email", errors.email);
-                    }
-                    if (typeof errors.password !== "undefined") {
-                        this.errorsChange("password", errors.password);
-                    }
-                }
-            })
-            .catch(res => {
-                if (typeof res.data.errors !== "undefined") {
-                    var errors = res.data.errors;
-                    this.setState({
-                        errors: {
-                            inputs: { email: false, password: false },
-                            messages: { email: "", password: "" }
-                        }
-                    });
-                    if (typeof errors.email !== "undefined") {
-                        this.errorsChange("email", errors.email);
-                    }
-                    if (typeof errors.password !== "undefined") {
-                        this.errorsChange("password", errors.password);
-                    }
-                }
-            });
-    }
-
     errorsChange(position, message) {
         this.setState({
             errors: update(this.state.errors, {
                 inputs: { $merge: { [position]: true } },
-                messages: { $merge: { [position]: message } }
-            })
+                messages: { $merge: { [position]: message } },
+            }),
         });
     }
 
     handleInputChange(event) {
-        var re = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/g;
-        var OK = re.exec(event.target.value);
-        console.log(OK);
-        const name = event.target.name;
-        const value = OK;
-        this.setState({ [name]: event.target.value });
+        var re = /^[0-9-a-zA-Z\u00C0-\u017F^\s]+(?:(?:)+)*$/g;
+        if (true || event.target.value.length < 1) {
+            const name = event.target.name;
+            const value = event.target.value;
+            this.setState({ [name]: value });
+        }
     }
 
     hideAddFarm() {
         this.setState({
-            modalAddFarm: false
+            modalAddFarm: false,
         });
     }
     showAddFarm() {
         this.setState({
-            modalAddFarm: true
+            modalAddFarm: true,
         });
     }
     saveFarm() {
         axios({
-            method: "post",
-            url: "./login",
+            method: 'post',
+            url: './addFarm',
             data: {
-                email: this.state.email,
-                password: this.state.password
-            }
-        });
-        console.log(this);
+                name: this.state.farm,
+            },
+        })
+            .then(res => {
+                if (typeof res.data.success !== 'undefined') {
+                    this.props.getlistFarms();
+                    this.hideAddFarm();
+                }
+            })
+            .catch(error => {
+                if (typeof error.data.errors !== 'undefined') {
+                    if (typeof error.data.errors.name !== 'undefined') {
+                        this.errorsChange('farmName', error.data.errors.name);
+                    }
+                }
+            });
     }
     render() {
         return (
@@ -112,32 +79,29 @@ class Addfarm extends Component {
                         <Modal
                             isOpen={this.state.modalAddFarm}
                             toggle={this.hideAddFarm}
-                            className={
-                                (this.props.className, "modal-dialog-centered")
-                            }
+                            className={(this.props.className, 'modal-dialog-centered')}
                         >
-                            <ModalHeader toggle={this.hideAddFarm}>
-                                {t("registerFarm.title")}
-                            </ModalHeader>
+                            <ModalHeader toggle={this.hideAddFarm}>{t('registerFarm.title')}</ModalHeader>
                             <ModalBody>
-                                <label>{t("registerFarm.name")}</label>
+                                <label>{t('registerFarm.name')}</label>
                                 <input
                                     type="text"
-                                    placeholder={t("registerFarm.input") + "."}
+                                    placeholder={t('registerFarm.input') + '.'}
                                     value={this.state.farm}
-                                    className="form-control input-sm"
+                                    className={
+                                        'form-control input-sm ' +
+                                        (this.state.errors.inputs.farmName ? 'is-invalid' : '')
+                                    }
                                     name="farm"
                                     onChange={this.handleInputChange}
                                 />
+                                 <FormFeedback>{this.state.errors.messages.farmName}</FormFeedback>
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="primary" onClick={this.saveFarm}>
                                     Guardar Cambios
                                 </Button>
-                                <Button
-                                    color="secondary"
-                                    onClick={this.hideAddFarm}
-                                >
+                                <Button color="secondary" onClick={this.hideAddFarm}>
                                     Cerrar
                                 </Button>
                             </ModalFooter>
