@@ -20,10 +20,14 @@ class Sidebar extends Component {
         this.activeRoute = this.activeRoute.bind(this);
         this.hideMobile = this.hideMobile.bind(this);
         this.AddFarmModal = this.AddFarmModal.bind(this);
-        this.sendInfoUser = this.sendInfoUser.bind(this);
+        this.getInfoUser = this.getInfoUser.bind(this);
+        this.getlistFarms = this.getlistFarms.bind(this);
         this.treeview = this.treeview.bind(this);
         this.farmsListBuild = this.farmsListBuild.bind(this);
-        this.sendInfoUser();
+    }
+    componentDidMount() {
+        this.getInfoUser();
+        this.getlistFarms();
     }
 
     treeview(tab) {
@@ -38,25 +42,41 @@ class Sidebar extends Component {
         this.farmAdd.showAddFarm();
     }
 
-    sendInfoUser() {
-        return axios({
+    getInfoUser() {
+        axios({
             method: "post",
             url: "./infoUser"
         })
             .then(res => {
                 let user = res.data.user["0"];
-                let farms = res.data.farms;
                 this.setState({
                     personName: user["0"] + " " + user["1"],
-                    description: user["2"],
-                    farmsList: this.buildListFarms(farms)
+                    description: user["2"]
                 });
             })
             .catch(error => {
                 if (typeof error.data.errors !== "undefined") {
                     setTimeout(() => {
                         if (typeof error.data.errors.expired === "undefined") {
-                            this.sendInfoUser();
+                            this.getInfoUser();
+                        }
+                    }, 5000);
+                }
+            });
+    }
+
+    getlistFarms() {
+        axios({ method: "post", url: "./listFarms" })
+            .then(res => {
+                this.setState({
+                    farmsList: this.buildListFarms(res.data[0])
+                });
+            })
+            .catch(error => {
+                if (typeof error.data.errors !== "undefined") {
+                    setTimeout(() => {
+                        if (typeof error.data.errors.expired === "undefined") {
+                            this.getlistFarms();
                         }
                     }, 5000);
                 }
@@ -69,7 +89,9 @@ class Sidebar extends Component {
 
     activeRoute(routeName, props) {
         // return this.props.location.pathname.indexOf(routeName) > -1 ? 'nav-item nav-dropdown open' : 'nav-item nav-dropdown';
-        return props.location.pathname.indexOf(routeName) > -1 ? "treeview is-expanded" : "treeview";
+        return props.location.pathname.indexOf(routeName) > -1
+            ? "treeview is-expanded"
+            : "treeview";
     }
 
     farmsListBuild(response, key) {
@@ -352,9 +374,8 @@ class Sidebar extends Component {
                         className={"treeview is-expanded"}
                         style={{ borderBottom: "3px solid rgb(0, 125, 113)" }}
                     >
-                        <a
-                            href={"#/farms"}
-                            className="app-menuItem c-pointer"
+                        <div
+                            className="app-menuItem"
                             data-toggle="treeview"
                             style={{
                                 borderLeftColor: "transparent",
@@ -362,16 +383,28 @@ class Sidebar extends Component {
                             }}
                         >
                             <i className="app-menuIcon fa fa-dashboard" />
-                            <span className="app-menuLabel">
-                                <I18n ns="sideBar">
-                                    {(t, { i18n }) => (
-                                        <React.Fragment>
-                                            {t("farmsTreeview")}
-                                        </React.Fragment>
-                                    )}
-                                </I18n>
-                            </span>
-                        </a>
+                            <a
+                                href={"#/farms"}
+                                className="app-menuLabel"
+                                style={{ color: "#FFF" }}
+                            >
+                                <span>
+                                    <I18n ns="sideBar">
+                                        {(t, { i18n }) => (
+                                            <React.Fragment>
+                                                {t("farmsTreeview")}
+                                            </React.Fragment>
+                                        )}
+                                    </I18n>
+                                </span>
+                            </a>
+                            <div className="ml-4">
+                                <i
+                                    className="icon fa fa-refresh text-light fa-1x c-pointer"
+                                    onClick={this.getlistFarms}
+                                />
+                            </div>
+                        </div>
                         <ul className="treeview-menu">
                             {this.state.farmsList}
                             <li>

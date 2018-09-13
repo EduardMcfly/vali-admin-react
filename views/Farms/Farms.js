@@ -5,9 +5,13 @@ import {
     Col,
     Button,
     Modal,
-    ModalHeader,
+    ModalFooter,
     ModalBody,
-    ModalFooter
+    ModalHeader,
+    Card,
+    CardHeader,
+    CardBody,
+    CardFooter
 } from "reactstrap";
 import { I18n } from "react-i18next";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group"; // ES6
@@ -16,9 +20,7 @@ import Link from "react-router-dom/Link";
 
 const FarmsBuild = response => (
     <div className="col-md-6 col-lg-6" data-aos="flip-right">
-        <div
-            className="widget-small primary coloured-icon align-items-center"
-        >
+        <div className="widget-small primary coloured-icon align-items-center">
             <Link to={"/farm/" + response.obj[0]}>
                 <i
                     className="icon fa  fa-eye fa-3x"
@@ -28,27 +30,9 @@ const FarmsBuild = response => (
             <Container>
                 <Row style={{ wordBreak: "break-word" }}>
                     <Col
-                        sm="3"
-                        md="1"
-                        className={"order-sm-2 p-0 p-sm-2 p-lg-3"}
-                    >
-                        <div className="d-flex justify-content-end">
-                            <i
-                                className="fa fa-cogs fa-2x btn-link c-pointer"
-                                aria-hidden="true"
-                                onClick={() =>
-                                    response.modalData(
-                                        response.obj[0],
-                                        response.obj[1]
-                                    )
-                                }
-                            />
-                        </div>
-                    </Col>
-                    <Col
-                        sm="9"
-                        md="11"
-                        className={"info order-sm-1"}
+                        sm="12"
+                        md="12"
+                        className={"px-2 info"}
                         data-aos="fade-up"
                         data-aos-duration="500"
                     >
@@ -65,49 +49,68 @@ const FarmsBuild = response => (
                             )}
                         </I18n>
                     </Col>
+                    <Col
+                        xs="auto"
+                        className={
+                            "p-0 p-sm-2 p-lg-3 d-flex align-items-center"
+                        }
+                    >
+                        <i
+                            className="fa fa-cogs fa-2x btn-link c-pointer"
+                            aria-hidden="true"
+                            onClick={() =>
+                                response.modalData(
+                                    response.obj[0],
+                                    response.obj[1]
+                                )
+                            }
+                        />
+                    </Col>
                 </Row>
             </Container>
         </div>
     </div>
 );
 const FarmsWorkerBuild = response => (
-    <div className="card border-dark mb-3 col-sm-6 col-md-6" idtrab="3">
-        <div className="card-header row text-capitalize">
-            <div className="col-md-12 d-flex justify-content-center">
-                <i
-                    className="fa fa-user-circle-o fa-3x mr-2 imgUserNavBar"
-                    aria-hidden="true"
-                />
-            </div>
-            <div className="col-md-12 mt-2  text-truncate">Juan Torres</div>
-        </div>
-        <div className="card-body text-dark">
-            <h5 className="card-title">Información</h5>
-            <p className="card-text" />
-            <li className="row descriptionUser">
-                <div className="description">
-                    <div>
-                        <b>Telefono:</b> 3218019886
-                    </div>
+    <Col sm="6">
+        <Card className="border-dark mb-3">
+            <CardHeader className="text-capitalize">
+                <Row>
+                    <Col md="12" className="d-flex justify-content-center">
+                        <i
+                            className="fa fa-user-circle-o fa-5x mr-2 imgUserNavBar"
+                            aria-hidden="true"
+                        />
+                    </Col>
+                    <Col md="12" className="mt-2 text-truncate">
+                        {response.obj.name + " " + response.obj.lastName}
+                    </Col>
+                </Row>
+            </CardHeader>
+            <CardBody className="text-dark">
+                <h5 className="card-title">Información</h5>
+                <p className="card-text" />
+                <div>
+                    <b>Telefono:</b> {response.obj.number}
                 </div>
-            </li>
-            <p />
-            <h5 className="card-title">Cargo</h5>
-            <p className="card-text" />
-            <li className="row descriptionUser">
-                <div className="description">Super Administrador.&nbsp;</div>
-                <i
-                    id="editableDateTxt"
-                    className="fa fa-pencil pl-2"
-                    aria-hidden="true"
-                />
-            </li>
-            <p />
-        </div>
-        <div id="delete" className="card-footer text-center">
-            <i className="fa fa-trash fa-2x" aria-hidden="true" />
-        </div>
-    </div>
+                <p />
+                <h5 className="card-title">Cargo</h5>
+                <p className="card-text" />
+                <div className="d-inline-block">
+                    Super Administrador.
+                    <i
+                        id="editableDateTxt"
+                        className="fa fa-pencil pl-2"
+                        aria-hidden="true"
+                    />
+                </div>
+                <p />
+            </CardBody>
+            <CardFooter className="text-center">
+                <i className="fa fa-trash fa-2x" aria-hidden="true" />
+            </CardFooter>
+        </Card>
+    </Col>
 );
 
 class Farms extends Component {
@@ -119,7 +122,8 @@ class Farms extends Component {
             modalCharge: true,
             nestedModalConfigFarm: false,
             closeAll: false,
-            modalAddFarm: false
+            modalAddFarm: false,
+            farms: false
         };
         this.toggleModalAnimation = this.toggleModalAnimation.bind(this);
         this.toggleConfigFarmNested = this.toggleConfigFarmNested.bind(this);
@@ -127,7 +131,7 @@ class Farms extends Component {
         this.toggleAll = this.toggleAll.bind(this);
         this.modalData = this.modalData.bind(this);
         this.getListFarms = this.getListFarms.bind(this);
-        this.UpdateListFarms = this.UpdateListFarms.bind(this);
+        this.updateListFarms = this.updateListFarms.bind(this);
         this.AddFarmModal = this.AddFarmModal.bind(this);
     }
 
@@ -198,14 +202,12 @@ class Farms extends Component {
     }
     buildFarmWorker(responses) {
         return responses.map((farm, i) => (
-            <FarmsWorkerBuild
-                obj={farm}
-                key={i}
-                modalDataAddWorker={this.modalDataAddWorker}
-            />
+            <FarmsWorkerBuild obj={farm} key={i} />
         ));
     }
     modalDataAddWorker(id, name) {
+        console.log("modalDataAddWorker");
+
         this.setState({ modalConfigFarmTitle: name });
         axios({
             method: "post",
@@ -219,10 +221,6 @@ class Farms extends Component {
                     });
                 }
             } else {
-                /* this.setState({
-                    modalCharge: false,
-                    modalBodyConfigFarm: this.buildFarmWorker(res.data)
-                }); */
             }
         });
     }
@@ -230,12 +228,20 @@ class Farms extends Component {
         axios({
             method: "post",
             url: "./listFarms"
-        }).then(res => {
-            this.setState({ farms: this.build(res.data) });
-        });
+        })
+            .then(res => {
+                this.setState({ farms: this.build(res.data) });
+            })
+            .catch(res => {
+                setTimeout(() => {
+                    if (this.state.farms === false && res.status === 500) {
+                        this.getListFarms();
+                    }
+                }, 5000);
+            });
     }
-    UpdateListFarms() {
-        this.props.updateAll();
+    updateListFarms() {
+        this.props.updateFarms();
     }
     render() {
         return (
@@ -269,11 +275,9 @@ class Farms extends Component {
                                         style={{ cursor: "pointer" }}
                                     >
                                         <Row>
-                                            <div className="col-md-6 mx-auto">
+                                            <Col md="6" className="mx-auto">
                                                 <div
                                                     className="widget-small primary coloured-icon mb-2"
-                                                    data-toggle="modal"
-                                                    data-target="#modalNuevaFinca"
                                                     style={{
                                                         borderRadius: 1 + "em"
                                                     }}
@@ -294,8 +298,8 @@ class Farms extends Component {
                                                             }}
                                                         />
                                                     </a>
-                                                    <div className="row container">
-                                                        <div className="info col-sm-9 col-md-9 mx-auto my-auto text-center">
+                                                    <Container className="d-flex align-items-center">
+                                                        <div className="info text-center text-truncate">
                                                             <a
                                                                 className="fa-lg"
                                                                 style={{
@@ -308,16 +312,16 @@ class Farms extends Component {
                                                                 )}
                                                             </a>
                                                         </div>
-                                                    </div>
+                                                    </Container>
                                                 </div>
-                                            </div>
+                                            </Col>
                                         </Row>
                                     </Col>
                                     <Col sm="2" md="1">
                                         <div className="justify-content-end align-items-center d-flex m-1">
                                             <i
                                                 className="icon fa fa-refresh text-light  fa-2x p-1"
-                                                onClick={this.UpdateListFarms}
+                                                onClick={()=>{this.updateListFarms(),this.getListFarms()}}
                                                 style={{
                                                     backgroundColor:
                                                         "rgba(0, 150, 136, 0.5)",
@@ -343,7 +347,7 @@ class Farms extends Component {
                                 toggle={this.toggleConfigFarm}
                                 className={
                                     (this.props.className,
-                                    "modal-dialog-centered")
+                                    "modal-dialog-centered modal-lg")
                                 }
                             >
                                 <ModalHeader
@@ -364,23 +368,18 @@ class Farms extends Component {
                                         <h5 className="lead">Trabajadores</h5>
                                         <hr className="my-3" />
                                         <div className="mb-3">
-                                            <button
-                                                className="btn btn-secondary"
-                                                type="button"
-                                                data-toggle="modal"
-                                                data-target="#addTrabajador"
-                                            >
+                                            <Button color="secondary">
                                                 Agregar trabajador
-                                            </button>
+                                            </Button>
                                         </div>
                                         <ReactCSSTransitionGroup
                                             transitionName="show"
                                             transitionEnterTimeout={1000}
                                             transitionLeaveTimeout={600}
                                         >
-                                            <div className="row">
+                                            <Row>
                                                 {this.state.modalBodyConfigFarm}
-                                            </div>
+                                            </Row>
                                         </ReactCSSTransitionGroup>
                                     </Container>
                                 </ModalBody>

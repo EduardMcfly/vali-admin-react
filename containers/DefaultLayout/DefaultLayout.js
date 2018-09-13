@@ -60,20 +60,14 @@ class DefaultLayout extends Component {
                     onClick={this.hideSidebarNav}
                     data-toggle="sidebar"
                 />
-                <Sidebar {...this.props} />
+                <Sidebar {...this.props} ref={(sideBar) => { this.sideBar = sideBar; }}/>
+                {console.log(this)}
                 <main className="app-content" style={{ overflow:"hidden" }}>
                     <Breadcrumb appRoutes={routes} />
                     <Container fluid>
                         <Switch>
                             {routes.map((route, idx) => {
-                                return route.component ? (
-                                    <Route
-                                        key={idx}
-                                        path={route.path}
-                                        exact={route.exact}
-                                        name={route.name}
-                                        render={props => (
-                                            <I18n ns="general">
+                                return route.component ? <Route key={idx} path={route.path} exact={route.exact} name={route.name} render={props => <I18n ns="general">
                                                 {t => (
                                                     <route.component
                                                         {...props}
@@ -84,10 +78,17 @@ class DefaultLayout extends Component {
                                                             ))
                                                         }
                                                         farmAuth={
-                                                            this.props.farmAuth
+                                                            this
+                                                                .props
+                                                                .farmAuth
                                                         }
                                                         updateAll={
-                                                            this.props.updateAll
+                                                            this
+                                                                .props
+                                                                .updateAll
+                                                        }
+                                                        updateFarms={
+                                                            this.sideBar.getlistFarms
                                                         }
                                                         treeview={
                                                             typeof route.treeview !==
@@ -96,14 +97,12 @@ class DefaultLayout extends Component {
                                                                 : 0
                                                         }
                                                         treeviewSet={
-                                                            this.treeviewSet
+                                                            this
+                                                                .treeviewSet
                                                         }
                                                     />
                                                 )}
-                                            </I18n>
-                                        )}
-                                    />
-                                ) : null;
+                                            </I18n>} /> : null;
                             })}
                             <Redirect from="/" to="/home" />
                         </Switch>
