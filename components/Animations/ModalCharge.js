@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Col, Row, Container } from "reactstrap";
 import { I18n } from "react-i18next";
-import update from "immutability-helper";
 
 const ModalCharge = response => (
     <div className="align-items-center d-flex">

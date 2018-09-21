@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { Container } from 'reactstrap';
+import React, { Component } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
+import { Container } from "reactstrap";
 
 // routes config
-import routes from '../../routes';
-import classNames from 'classnames';
-import { Breadcrumb, Header, Sidebar } from '../../components';
-import { I18n } from 'react-i18next';
+import routes from "../../routes";
+import classNames from "classnames";
+import { Breadcrumb, Header, Sidebar } from "../../components";
+import { I18n } from "react-i18next";
 
 class DefaultLayout extends Component {
     constructor(props) {
@@ -21,14 +21,14 @@ class DefaultLayout extends Component {
 
     sendRequest() {
         return axios({
-            method: 'post',
-            url: './verifyAuth',
+            method: "post",
+            url: "./verifyAuth"
         });
     }
 
     toggleLarge() {
         this.setState({
-            large: !this.state.large,
+            large: !this.state.large
         });
     }
 
@@ -45,23 +45,31 @@ class DefaultLayout extends Component {
         return (
             <div
                 className={
-                    'app sidebar-mini rtl ' +
+                    "app sidebar-mini rtl " +
                     classNames({
-                        'sidenav-toggled': this.state.asideNavToggle === true,
+                        "sidenav-toggled": this.state.asideNavToggle === true
                     })
                 }
             >
                 <div className="app-header pr-1">
-                    <Header toggleSidebarNav={this.toggleSidebarNav} userAuthLogout={this.props.userAuth.logout} />
+                    <Header
+                        toggleSidebarNav={this.toggleSidebarNav}
+                        userAuthLogout={this.props.userAuth.logout}
+                    />
                 </div>
-                <div className="app-sidebarOverlay" onClick={this.hideSidebarNav} data-toggle="sidebar" />
+                <div
+                    className="app-sidebarOverlay"
+                    onClick={this.hideSidebarNav}
+                    data-toggle="sidebar"
+                />
                 <Sidebar
                     {...this.props}
                     ref={sideBar => {
                         this.sideBar = sideBar;
                     }}
                 />
-                <main className="app-content" style={{ overflow: 'hidden' }}>
+                {console.log(this)}
+                <main className="app-content" style={{ overflow: "hidden" }}>
                     <Breadcrumb appRoutes={routes} />
                     <Container fluid>
                         <Switch>
@@ -77,16 +85,30 @@ class DefaultLayout extends Component {
                                                 {t => (
                                                     <route.component
                                                         {...props}
-                                                        Headtitle={(document.title = t('routes.' + route.name))}
-                                                        farmAuth={this.props.farmAuth}
-                                                        updateAll={this.props.updateAll}
-                                                        updateFarms={
-                                                            this.sideBar.getlistFarms
+                                                        Headtitle={
+                                                            (document.title = t(
+                                                                "routes." +
+                                                                    route.name
+                                                            ))
                                                         }
+                                                        farmAuth={
+                                                            this.props.farmAuth
+                                                        }
+                                                        updateAll={
+                                                            this.props.updateAll
+                                                        }
+                                                        updateFarms={() => {
+                                                            this.sideBar.getlistFarms();
+                                                        }}
                                                         treeview={
-                                                            typeof route.treeview !== 'undefined' ? route.treeview : 0
+                                                            typeof route.treeview !==
+                                                            "undefined"
+                                                                ? route.treeview
+                                                                : 0
                                                         }
-                                                        treeviewSet={this.treeviewSet}
+                                                        treeviewSet={
+                                                            this.treeviewSet
+                                                        }
                                                     />
                                                 )}
                                             </I18n>

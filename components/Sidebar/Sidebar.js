@@ -27,7 +27,7 @@ class Sidebar extends Component {
         this.getlistFarms();
     }
 
-    
+
     treeview(tab) {
         if (this.state.treeviewTab !== tab) {
             this.setState({ treeviewTab: tab });
