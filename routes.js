@@ -57,90 +57,6 @@ const Typography = Loadable({
     loading: Loading,
 });
 
-const Cards = Loadable({
-    loader: () => import('./views/Base/Cards'),
-    loading: Loading,
-});
-
-const Forms = Loadable({
-    loader: () => import('./views/Base/Forms'),
-    loading: Loading,
-});
-
-const Switches = Loadable({
-    loader: () => import('./views/Base/Switches'),
-    loading: Loading,
-});
-
-const Tables = Loadable({
-    loader: () => import('./views/Base/Tables'),
-    loading: Loading,
-});
-
-const Tabs = Loadable({
-    loader: () => import('./views/Base/Tabs'),
-    loading: Loading,
-});
-
-const Breadcrumbs = Loadable({
-    loader: () => import('./views/Base/Breadcrumbs'),
-    loading: Loading,
-});
-
-const Carousels = Loadable({
-    loader: () => import('./views/Base/Carousels'),
-    loading: Loading,
-});
-
-const Collapses = Loadable({
-    loader: () => import('./views/Base/Collapses'),
-    loading: Loading,
-});
-
-const Dropdowns = Loadable({
-    loader: () => import('./views/Base/Dropdowns'),
-    loading: Loading,
-});
-
-const Jumbotrons = Loadable({
-    loader: () => import('./views/Base/Jumbotrons'),
-    loading: Loading,
-});
-
-const ListGroups = Loadable({
-    loader: () => import('./views/Base/ListGroups'),
-    loading: Loading,
-});
-
-const Navbars = Loadable({
-    loader: () => import('./views/Base/Navbars'),
-    loading: Loading,
-});
-
-const Navs = Loadable({
-    loader: () => import('./views/Base/Navs'),
-    loading: Loading,
-});
-
-const Paginations = Loadable({
-    loader: () => import('./views/Base/Paginations'),
-    loading: Loading,
-});
-
-const Popovers = Loadable({
-    loader: () => import('./views/Base/Popovers'),
-    loading: Loading,
-});
-
-const ProgressBar = Loadable({
-    loader: () => import('./views/Base/ProgressBar'),
-    loading: Loading,
-});
-const Tooltips = Loadable({
-    loader: () => import('./views/Base/Tooltips'),
-    loading: Loading,
-});
-
 const Buttons = Loadable({
     loader: () => import('./views/Buttons/Buttons'),
     loading: Loading,
@@ -226,28 +142,6 @@ const routes = [
     { path: "/theme", exact: true, name: "theme", component: Colors },
     { path: "/theme/colors", name: "colors", component: Colors },
     { path: "/theme/typography", name: "typography", component: Typography },
-    { path: "/base", exact: true, name: "base", component: Cards },
-    { path: "/base/cards", name: "cards", component: Cards },
-    { path: "/base/forms", name: "forms", component: Forms },
-    { path: "/base/switches", name: "switches", component: Switches },
-    { path: "/base/tables", name: "tables", component: Tables },
-    { path: "/base/tabs", name: "tabs", component: Tabs },
-    { path: "/base/breadcrumbs", name: "breadcrumbs", component: Breadcrumbs },
-    { path: "/base/carousels", name: "carousel", component: Carousels },
-    { path: "/base/collapses", name: "collapse", component: Collapses },
-    { path: "/base/dropdowns", name: "dropdowns", component: Dropdowns },
-    { path: "/base/jumbotrons", name: "jumbotrons", component: Jumbotrons },
-    { path: "/base/list-groups", name: "list Groups", component: ListGroups },
-    { path: "/base/navbars", name: "navbars", component: Navbars },
-    { path: "/base/navs", name: "navs", component: Navs },
-    { path: "/base/paginations", name: "paginations", component: Paginations },
-    { path: "/base/popovers", name: "popovers", component: Popovers },
-    {
-        path: "/base/progress-bar",
-        name: "progress Bar",
-        component: ProgressBar
-    },
-    { path: "/base/tooltips", name: "tooltips", component: Tooltips },
     { path: "/buttons", exact: true, name: "buttons", component: Buttons },
     { path: "/buttons/buttons", name: "buttons", component: Buttons },
     {
