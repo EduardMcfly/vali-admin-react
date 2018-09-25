@@ -10,7 +10,6 @@ import nav from './_nav';
 class Sidebar extends Component {
     constructor(props) {
         super(props);
-        console.log(this);
         this.state = {
             personName: <TextCharge />,
             description: <TextCharge />,
@@ -18,7 +17,6 @@ class Sidebar extends Component {
             treeviewTab: 0,
         };
         this.activeRoute = this.activeRoute.bind(this);
-        this.hideMobile = this.hideMobile.bind(this);
         this.getInfoUser = this.getInfoUser.bind(this);
         this.getlistFarms = this.getlistFarms.bind(this);
         this.treeview = this.treeview.bind(this);
@@ -93,12 +91,6 @@ class Sidebar extends Component {
                 {response[1]}
             </NavLink>
         );
-    }
-
-    hideMobile() {
-        if (document.body.classList.contains('sidebar-mobile-show')) {
-            document.body.classList.toggle('sidebar-mobile-show');
-        }
     }
 
     // todo Sidebar nav secondLevel
@@ -189,7 +181,6 @@ class Sidebar extends Component {
                                         to={url}
                                         activeClassName="active"
                                         className={classes.link}
-                                        onClick={this.hideMobile}
                                     >
                                         <i className={classes.icon} />
                                         {t(item.name)}
@@ -221,7 +212,6 @@ class Sidebar extends Component {
                                         to={url}
                                         activeClassName="active"
                                         className={classes.link}
-                                        onClick={this.hideMobile}
                                     >
                                         <i className={classes.icon} />
                                         <span className="app-menuLabel">
