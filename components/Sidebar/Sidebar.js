@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
-import { TextCharge } from '..';
-import { Badge, NavLink as RsNavLink } from 'reactstrap';
-import classNames from 'classnames';
-import { AddFarm } from '..';
-import { I18n } from 'react-i18next';
-import nav from './_nav';
+import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
+import { TextCharge } from "..";
+import { Badge, NavLink as RsNavLink } from "reactstrap";
+import classNames from "classnames";
+import { AddFarm } from "..";
+import { I18n } from "react-i18next";
+import nav from "./_nav";
 
 class Sidebar extends Component {
     constructor(props) {
@@ -14,7 +14,7 @@ class Sidebar extends Component {
             personName: <TextCharge />,
             description: <TextCharge />,
             farmsList: <TextCharge />,
-            treeviewTab: 0,
+            treeviewTab: 0
         };
         this.activeRoute = this.activeRoute.bind(this);
         this.getInfoUser = this.getInfoUser.bind(this);
@@ -24,7 +24,6 @@ class Sidebar extends Component {
         this.getInfoUser();
         this.getlistFarms();
     }
-
 
     treeview(tab) {
         if (this.state.treeviewTab !== tab) {
@@ -36,20 +35,24 @@ class Sidebar extends Component {
 
     getInfoUser() {
         axios({
-            method: 'post',
-            url: './infoUser',
+            method: "post",
+            url: "./infoUser"
         })
             .then(res => {
-                let user = res.data.user['0'];
+                if (AxiosStore.validate("infoUser")) {
+                    var user = AxiosStore.get("infoUser");
+                } else {
+                    var user = AxiosStore.set("infoUser", res.data.user["0"]);
+                }
                 this.setState({
-                    personName: user['0'] + ' ' + user['1'],
-                    description: user['2'],
+                    personName: user["0"] + " " + user["1"],
+                    description: user["2"]
                 });
             })
             .catch(error => {
-                if (typeof error.data.errors !== 'undefined') {
+                if (typeof error.data.errors !== "undefined") {
                     setTimeout(() => {
-                        if (typeof error.data.errors.expired === 'undefined') {
+                        if (typeof error.data.errors.expired === "undefined") {
                             this.getInfoUser();
                         }
                     }, 5000);
@@ -58,16 +61,21 @@ class Sidebar extends Component {
     }
 
     getlistFarms() {
-        axios({ method: 'post', url: './listFarms' })
+        axios({ method: "post", url: "./listFarms" })
             .then(res => {
+                if (AxiosStore.validate("listFarms")) {
+                    var listFarms = AxiosStore.get("listFarms");
+                } else {
+                    var listFarms = AxiosStore.set("listFarms", res.data[0]);
+                }
                 this.setState({
-                    farmsList: this.buildListFarms(res.data[0]),
+                    farmsList: this.buildListFarms(listFarms)
                 });
             })
             .catch(error => {
-                if (typeof error.data.errors !== 'undefined') {
+                if (typeof error.data.errors !== "undefined") {
                     setTimeout(() => {
-                        if (typeof error.data.errors.expired === 'undefined') {
+                        if (typeof error.data.errors.expired === "undefined") {
                             this.getlistFarms();
                         }
                     }, 5000);
@@ -81,23 +89,24 @@ class Sidebar extends Component {
 
     activeRoute(routeName, props) {
         // return this.props.location.pathname.indexOf(routeName) > -1 ? 'nav-item nav-dropdown open' : 'nav-item nav-dropdown';
-        return props.location.pathname.indexOf(routeName) > -1 ? 'treeview is-expanded' : 'treeview';
+        return props.location.pathname.indexOf(routeName) > -1
+            ? "treeview is-expanded"
+            : "treeview";
     }
 
     farmsListBuild(response, key) {
         return (
-            <NavLink key={key} to={'/farm/' + response[0]} activeClassName="active" className={'treeview-item'}>
-                <i className={'icon fa fa-circle-o'} />
+            <NavLink
+                key={key}
+                to={"/farm/" + response[0]}
+                activeClassName="active"
+                className={"treeview-item"}
+            >
+                <i className={"icon fa fa-circle-o"} />
                 {response[1]}
             </NavLink>
         );
     }
-
-    // todo Sidebar nav secondLevel
-    // secondLevelActive(routeName) {
-    //   return this.props.location.pathname.indexOf(routeName) > -1 ? "nav nav-second-level collapse in" : "nav nav-second-level collapse";
-    // }
-
     render() {
         const props = this.props;
 
@@ -116,13 +125,17 @@ class Sidebar extends Component {
         // simple wrapper for nav-title item
         const wrapper = item => {
             return item.wrapper && item.wrapper.element
-                ? React.createElement(item.wrapper.element, item.wrapper.attributes, item.name)
+                ? React.createElement(
+                      item.wrapper.element,
+                      item.wrapper.attributes,
+                      item.name
+                  )
                 : item.name;
         };
 
         // nav list section title
         const title = (title, key) => {
-            const classes = classNames('app-menuItem p-1 pl-2', title.class);
+            const classes = classNames("app-menuItem p-1 pl-2", title.class);
             return (
                 <li key={key} className="treeview">
                     <div key={key} className={classes}>
@@ -134,20 +147,20 @@ class Sidebar extends Component {
 
         // nav list divider
         const divider = (divider, key) => {
-            const classes = classNames('divider', divider.class);
+            const classes = classNames("divider", divider.class);
             return <li key={key} className={classes} />;
         };
 
         // nav label with nav link
         const navLabel = (item, key) => {
             const classes = {
-                item: classNames('hidden-cn', item.class),
-                link: classNames('nav-label', item.class ? item.class : ''),
+                item: classNames("hidden-cn", item.class),
+                link: classNames("nav-label", item.class ? item.class : ""),
                 icon: classNames(
-                    !item.icon ? 'fa fa-circle' : item.icon,
-                    item.label.variant ? `text-${item.label.variant}` : '',
-                    item.label.class ? item.label.class : ''
-                ),
+                    !item.icon ? "fa fa-circle" : item.icon,
+                    item.label.variant ? `text-${item.label.variant}` : "",
+                    item.label.class ? item.label.class : ""
+                )
             };
             return navLink(item, key, classes);
         };
@@ -156,22 +169,28 @@ class Sidebar extends Component {
         const navItem = (item, key) => {
             const classes = {
                 item: classNames(item.class),
-                link: classNames('treeview-item', item.variant ? `treeview-item-${item.variant}` : ''),
-                icon: classNames('app-menuIcon fa ' + item.icon),
+                link: classNames(
+                    "treeview-item",
+                    item.variant ? `treeview-item-${item.variant}` : ""
+                ),
+                icon: classNames("app-menuIcon fa " + item.icon)
             };
             return navLink(item, key, classes);
         };
 
         // nav link
         const navLink = (item, key, classes) => {
-            const url = item.url ? item.url : '';
+            const url = item.url ? item.url : "";
             return (
                 <li key={key}>
                     <I18n ns="sideBar">
                         {(t, { i18n }) => (
                             <React.Fragment>
                                 {isExternal(url) ? (
-                                    <RsNavLink href={url} className={classes.link}>
+                                    <RsNavLink
+                                        href={url}
+                                        className={classes.link}
+                                    >
                                         <i className={classes.icon} />
                                         {t(item.name)}
                                         {badge(item.badge)}
@@ -195,16 +214,21 @@ class Sidebar extends Component {
         };
         // nav link
         const navLinkOnly = (item, key, classes) => {
-            const url = item.url ? item.url : '';
+            const url = item.url ? item.url : "";
             return (
                 <li key={key}>
                     <I18n ns="sideBar">
                         {(t, { i18n }) => (
                             <React.Fragment>
                                 {isExternal(url) ? (
-                                    <RsNavLink href={url} className={classes.link}>
+                                    <RsNavLink
+                                        href={url}
+                                        className={classes.link}
+                                    >
                                         <i className={classes.icon} />
-                                        <span className="app-menuLabel">{t(item.name)}</span>
+                                        <span className="app-menuLabel">
+                                            {t(item.name)}
+                                        </span>
                                         {badge(item.badge)}
                                     </RsNavLink>
                                 ) : (
@@ -231,8 +255,11 @@ class Sidebar extends Component {
         const navItemOnly = (item, key) => {
             const classes = {
                 item: classNames(item.class),
-                link: classNames('app-menuItem', item.variant ? `treeview-item-${item.variant}` : ''),
-                icon: classNames('app-menuIcon fa ' + item.icon),
+                link: classNames(
+                    "app-menuItem",
+                    item.variant ? `treeview-item-${item.variant}` : ""
+                ),
+                icon: classNames("app-menuIcon fa " + item.icon)
             };
             return navLinkOnly(item, key, classes);
         };
@@ -245,7 +272,8 @@ class Sidebar extends Component {
                     className={
                         this.activeRoute(item.url, props) +
                         classNames({
-                            ' is-expanded': this.state.treeviewTab === item.treeview,
+                            " is-expanded":
+                                this.state.treeviewTab === item.treeview
                         })
                     }
                     onClick={() => {
@@ -253,10 +281,14 @@ class Sidebar extends Component {
                     }}
                 >
                     <div className="app-menuItem c-pointer">
-                        <i className={'app-menuIcon fa ' + item.icon} />
+                        <i className={"app-menuIcon fa " + item.icon} />
 
                         <I18n ns="sideBar">
-                            {(t, { i18n }) => <span className="app-menuLabel">{t(item.name)}</span>}
+                            {(t, { i18n }) => (
+                                <span className="app-menuLabel">
+                                    {t(item.name)}
+                                </span>
+                            )}
                         </I18n>
                         <i className="treeview-indicator fa fa-angle-right" />
                     </div>
@@ -285,8 +317,8 @@ class Sidebar extends Component {
         };
 
         const isExternal = url => {
-            const link = url ? url.substring(0, 4) : '';
-            return link === 'http';
+            const link = url ? url.substring(0, 4) : "";
+            return link === "http";
         };
 
         // sidebar-nav root
@@ -308,13 +340,15 @@ class Sidebar extends Component {
                     </div>
                     <div className="c-pointer text-capitalize mx-2 text-truncate container">
                         <div>
-                            <div className="app-sidebarUser-name">{this.state.personName}</div>
+                            <div className="app-sidebarUser-name">
+                                {this.state.personName}
+                            </div>
                         </div>
                         <div
                             className="app-sidebarUser-designation"
                             style={{
-                                textDecorationLine: 'overline',
-                                fontStyle: 'italic',
+                                textDecorationLine: "overline",
+                                fontStyle: "italic"
                             }}
                         >
                             {this.state.description}
@@ -323,20 +357,31 @@ class Sidebar extends Component {
                 </div>
 
                 <ul className="app-menu">
-                    <li className={'treeview is-expanded'} style={{ borderBottom: '3px solid rgb(0, 125, 113)' }}>
+                    <li
+                        className={"treeview is-expanded"}
+                        style={{ borderBottom: "3px solid rgb(0, 125, 113)" }}
+                    >
                         <div
                             className="app-menuItem"
                             data-toggle="treeview"
                             style={{
-                                borderLeftColor: 'transparent',
-                                background: 'rgba(0, 0, 0, 0.25)',
+                                borderLeftColor: "transparent",
+                                background: "rgba(0, 0, 0, 0.25)"
                             }}
                         >
                             <i className="app-menuIcon fa fa-dashboard" />
-                            <a href={'#/farms'} className="app-menuLabel" style={{ color: '#FFF' }}>
+                            <a
+                                href={"#/farms"}
+                                className="app-menuLabel"
+                                style={{ color: "#FFF" }}
+                            >
                                 <span>
                                     <I18n ns="sideBar">
-                                        {(t, { i18n }) => <React.Fragment>{t('farmsTreeview')}</React.Fragment>}
+                                        {(t, { i18n }) => (
+                                            <React.Fragment>
+                                                {t("farmsTreeview")}
+                                            </React.Fragment>
+                                        )}
                                     </I18n>
                                 </span>
                             </a>
@@ -358,7 +403,11 @@ class Sidebar extends Component {
                                 >
                                     <i className="icon fa fa-pencil-square" />
                                     <I18n ns="sideBar">
-                                        {(t, { i18n }) => <React.Fragment>{t('farmsRegister')}</React.Fragment>}
+                                        {(t, { i18n }) => (
+                                            <React.Fragment>
+                                                {t("farmsRegister")}
+                                            </React.Fragment>
+                                        )}
                                     </I18n>
                                 </div>
                             </li>

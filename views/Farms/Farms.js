@@ -25,7 +25,7 @@ class Farms extends Component {
             nestedModalConfigFarm: false,
             closeAll: false,
             modalAddFarm: false,
-            farms: false
+            listFarms: false
         };
         this.toggleModalAnimation = this.toggleModalAnimation.bind(this);
         this.toggleConfigFarmNested = this.toggleConfigFarmNested.bind(this);
@@ -98,7 +98,7 @@ class Farms extends Component {
     }
 
     build(responses) {
-        return responses[0].map((farm, i) => (
+        return responses.map((farm, i) => (
             <FarmsBuild
                 obj={farm}
                 key={i}
@@ -133,11 +133,19 @@ class Farms extends Component {
             url: "./listFarms"
         })
             .then(res => {
-                this.setState({ farms: this.build(res.data) });
+                if (AxiosStore.validate("listFarms")) {
+                    var listFarms = AxiosStore.get("listFarms");
+                } else {
+                    var listFarms = AxiosStore.set("listFarms", res.data[0]);
+                }
+                this.setState({
+                    listFarms: this.build(listFarms)
+                });
             })
             .catch(res => {
+                console.log(res);
                 setTimeout(() => {
-                    if (this.state.farms === false && res.status === 500) {
+                    if (this.state.listFarms === false && res.status === 500) {
                         this.getListFarms();
                     }
                 }, 5000);
@@ -239,7 +247,9 @@ class Farms extends Component {
                                         </div>
                                     </Col>
                                 </Row>
-                                <Row data-aos="fade-up">{this.state.farms}</Row>
+                                <Row data-aos="fade-up">
+                                    {this.state.listFarms}
+                                </Row>
                             </Container>
                         </React.Fragment>
                     )}

@@ -15,15 +15,6 @@ class DefaultLayout extends Component {
         this.toggleSidebarNav = this.toggleSidebarNav.bind(this);
         this.hideSidebarNav = this.hideSidebarNav.bind(this);
         this.state = { asideNavToggle: false };
-        this.sendRequest = this.sendRequest.bind(this);
-        this.sendRequest();
-    }
-
-    sendRequest() {
-        return axios({
-            method: "post",
-            url: "./verifyAuth"
-        });
     }
 
     toggleLarge() {
@@ -55,6 +46,7 @@ class DefaultLayout extends Component {
                     <Header
                         toggleSidebarNav={this.toggleSidebarNav}
                         userAuthLogout={this.props.userAuth.logout}
+                        {...this.props}
                     />
                 </div>
                 <div
@@ -68,7 +60,6 @@ class DefaultLayout extends Component {
                         this.sideBar = sideBar;
                     }}
                 />
-                {console.log(this)}
                 <main className="app-content" style={{ overflow: "hidden" }}>
                     <Breadcrumb appRoutes={routes} />
                     <Container fluid>

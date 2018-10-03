@@ -1,4 +1,4 @@
 import { AuthUser } from "./Auth";
 import { AuthFarm } from "./Farm";
 
-export { AuthUser, AuthFarm };
+export { AuthUser, AuthFarm};

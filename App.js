@@ -1,27 +1,29 @@
 import React, { Component } from "react";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 // Styles
-// CoreUI Icons Set
+// Import Font Awesome Icons Set
+import "font-awesome/css/font-awesome.min.css";
+/* // CoreUI Icons Set
 import "@coreui/icons/css/coreui-icons.min.css";
 // Import Flag Icons Set
 import "flag-icon-css/css/flag-icon.min.css";
-// Import Font Awesome Icons Set
-import "font-awesome/css/font-awesome.min.css";
 // Import Simple Line Icons Set
 import "simple-line-icons/css/simple-line-icons.css";
-// Import Main styles for this application
+// Import Main styles for this application */
 /* import './scss/style.css'; */
 import "../sass/app.css";
+
+import i18next from "./i18n";
 
 // Containers
 import { DefaultLayout } from "./containers";
 import { AuthUser, AuthFarm } from "./controllers";
 // Pages
 import { Login, Page404, Page500, Register, Home } from "./views/Pages";
-import { log } from "util";
 import { setTimeout } from "timers";
 
 // import { renderRoutes } from 'react-router-config';
+// for current language
 
 class App extends Component {
     constructor(props) {
@@ -29,11 +31,11 @@ class App extends Component {
         this.csrfTime = false;
         this.state = {
             authenticated: true,
-            login: false,
             CSRF: false,
             loginFarm: false,
             farmAuthenticated: false
         };
+        this.authenticatedState = this.authenticatedState.bind(this);
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
         this.loginFarm = this.loginFarm.bind(this);
@@ -43,9 +45,19 @@ class App extends Component {
         this.axios = this.axios.bind(this);
         this.updateComponents = this.updateComponents.bind(this);
         this.axios();
+        this.sendRequest();
     }
+
+    sendRequest() {
+        return axios({
+            method: "post",
+            url: "./verifyAuth"
+        });
+    }
+
     axios() {
         var self = this;
+        var count = true;
         axios.interceptors.response.use(
             function(response) {
                 if (typeof response.data.auth !== "undefined") {
@@ -58,6 +70,20 @@ class App extends Component {
                 return response;
             },
             function(error) {
+                if (!navigator.onLine) {
+                    if (count) {
+                        swal({
+                            type: "error",
+                            title: i18next.t("offline"),
+                            showConfirmButton: false
+                        });
+                        setTimeout(() => {
+                            count = true;
+                        }, 4000);
+                        count = false;
+                    }
+                    return { data: i18next.t("offline") };
+                }
                 if (typeof error.response.data.auth !== "undefined") {
                     if (!error.response.data.auth) {
                         if (self.state.authenticated) {
@@ -90,11 +116,14 @@ class App extends Component {
     updateComponents() {
         this.forceUpdate();
     }
+    authenticatedState() {
+        return this.state.authenticated;
+    }
     login() {
-        this.setState({ authenticated: true, login: true });
+        this.setState({ authenticated: true });
     }
     logout() {
-        this.setState({ authenticated: false, login: false });
+        this.setState({ authenticated: false });
     }
     loginFarm(idFarm) {
         axios({
@@ -121,73 +150,17 @@ class App extends Component {
         }
     }
     render() {
-        return (
-            <HashRouter>
+        return <HashRouter>
                 <Switch>
-                    <AuthUser
-                        exact
-                        path="/login"
-                        name="Login Page"
-                        component={props => (
-                            <Login
-                                {...props}
-                                userAuth={{
-                                    login: this.login,
-                                    logout: this.logout
-                                }}
-                            />
-                        )}
-                        redirectTo="/farms"
-                        authenticated={!this.state.login}
-                    />
-                    <Route
-                        exact
-                        path="/register"
-                        name="Register Page"
-                        component={Register}
-                    />
-                    <Route
-                        exact
-                        path="/404"
-                        name="Page 404"
-                        component={Page404}
-                    />
-                    <Route
-                        exact
-                        path="/404"
-                        name="Page 404"
-                        component={Page404}
-                    />
-                    <Route
-                        exact
-                        path="/500"
-                        name="Page 500"
-                        component={Page500}
-                    />
+                    <AuthUser exact path="/login" name="Login Page" component={props => <Login {...props} userAuth={{ login: this.login, logout: this.logout }} />} redirectTo="/farms" authenticated={!this.state.authenticated} />
+                    <Route exact path="/register" name="Register Page" component={Register} />
+                    <Route exact path="/404" name="Page 404" component={Page404} />
+                    <Route exact path="/404" name="Page 404" component={Page404} />
+                    <Route exact path="/500" name="Page 500" component={Page500} />
                     <Route exact path="/home" name="Home" component={Home} />
-                    <AuthUser
-                        path="/"
-                        name="root"
-                        component={props => (
-                            <DefaultLayout
-                                {...props}
-                                userAuth={{
-                                    login: this.login,
-                                    logout: this.logout
-                                }}
-                                farmAuth={{
-                                    loginFarm: this.loginFarm,
-                                    logoutFarm: this.logoutFarm
-                                }}
-                                updateAll={this.updateComponents}
-                            />
-                        )}
-                        redirectTo="/login"
-                        authenticated={this.state.authenticated}
-                    />
+                    <AuthUser path="/" name="root" component={props => <DefaultLayout {...props} userAuth={{ login: this.login, logout: this.logout, authenticatedState: this.authenticatedState }} farmAuth={{ loginFarm: this.loginFarm, logoutFarm: this.logoutFarm }} updateAll={this.updateComponents} />} redirectTo="/login" authenticated={this.state.authenticated} />
                 </Switch>
-            </HashRouter>
-        );
+            </HashRouter>;
     }
 }
 

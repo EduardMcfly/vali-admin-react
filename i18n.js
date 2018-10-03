@@ -1,25 +1,22 @@
-import i18n from 'i18next';
-import Backend from 'i18next-xhr-backend';
-import LanguageDetector from 'i18next-browser-languagedetector';
-import { reactI18nextModule } from 'react-i18next';
+import i18n from "i18next";
+import XHR from "i18next-xhr-backend";
+import Backend from "i18next-chained-backend";
+import LanguageDetector from "i18next-browser-languagedetector";
+import { reactI18nextModule } from "react-i18next";
 
 i18n.use(Backend)
+    .use(XHR)
     .use(LanguageDetector)
     .use(reactI18nextModule)
     .init({
-        fallbackLng: 'en',
+        fallbackLng: ["es"],
         // have a common namespace used around the full app
-        ns: ["translations"],
-        defaultNS: "translations",
+        ns: ["general"],
+        defaultNS: "general",
         backend: {
             loadPath: "./locales/{{lng}}/{{ns}}.json"
         },
         debug: false,
-
-        interpolation: {
-            escapeValue: true // not needed for react!!
-        },
-
         react: {
             wait: true
         }
@@ -28,8 +25,8 @@ i18n.on("languageChanged", function(lng) {
     axios({
         method: "post",
         url: "./changLang",
-        data: {lang:lng}
+        data: { lang: lng }
     });
+    document.children["0"].dir = i18n.dir(lng);
 });
-
 export default i18n;
