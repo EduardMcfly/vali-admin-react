@@ -1,11 +1,18 @@
-import React, { Component } from 'react';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
-import PropTypes from 'prop-types';
-import { I18n } from 'react-i18next';
-import HeaderDropdown from './HeaderComponents/HeaderDropdown';
+import React, { Component } from "react";
+import {
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle
+} from "reactstrap";
+import PropTypes from "prop-types";
+import { I18n } from "react-i18next";
+import Link from "react-router-dom/Link";
+import { HeaderSearch, HeaderDropdown } from "./components";
+import { AutenticateRender } from "../../controllers";
 
 const propTypes = {
-    children: PropTypes.node,
+    children: PropTypes.node
 };
 
 const defaultProps = {};
@@ -15,13 +22,13 @@ class DefaultHeader extends Component {
         super(props);
         this.toggleUserDropDown = this.toggleUserDropDown.bind(this);
         this.state = {
-            userDropdownOpen: false,
+            userDropdownOpen: false
         };
     }
 
     toggleUserDropDown() {
         this.setState(prevState => ({
-            userDropdownOpen: !prevState.userDropdownOpen,
+            userDropdownOpen: !prevState.userDropdownOpen
         }));
     }
 
@@ -30,15 +37,31 @@ class DefaultHeader extends Component {
 
         return (
             <React.Fragment>
-                <div
-                    className="app-sidebarToggle jqvmap-region"
-                    data-toggle="sidebar"
-                    aria-label="Hide Sidebar"
-                    onClick={this.props.toggleSidebarNav}
+                <AutenticateRender
+                    authenticatedState={this.props.userAuth.authenticatedState()}
+                    children={
+                        <React.Fragment>
+                            <div
+                                className="app-sidebarToggle jqvmap-region"
+                                data-toggle="sidebar"
+                                aria-label="Hide Sidebar"
+                                onClick={this.props.toggleSidebarNav}
+                            />
+                            <HeaderSearch {...this.props} />
+                        </React.Fragment>
+                    }
                 />
-                <a className="app-headerLogo" href="#farms">
+
+                <Link
+                    className="app-headerLogo"
+                    to={
+                        this.props.userAuth.authenticatedState()
+                            ? "/farm"
+                            : "/home"
+                    }
+                >
                     Cosva
-                </a>
+                </Link>
                 <HeaderDropdown {...this.props} />
             </React.Fragment>
         );

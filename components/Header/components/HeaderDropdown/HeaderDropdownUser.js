@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 import { I18n } from 'react-i18next';
-import { AutenticateRender } from '../../../controllers';
+import { AutenticateRender } from '../../../../controllers';
 
 class HeaderDropdownUser extends Component {
     constructor(props) {

@@ -60,6 +60,9 @@ if (token) {
 var store = require('store');
 window.AxiosStore = {
     validate: (position = false) => {
+        if (store.get(position)==null) {
+            return false
+        }
         return !navigator.onLine;
     },
     set: (position, data) => {

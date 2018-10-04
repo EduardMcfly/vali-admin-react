@@ -1,4 +1,4 @@
-import ModalCharge from "./ModalCharge";
+import CircleCharge from "./CircleCharge";
 import TextCharge from "./TextCharge";
 
-export { ModalCharge,TextCharge };
+export { CircleCharge,TextCharge };

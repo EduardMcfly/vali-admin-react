@@ -1,135 +1,111 @@
-import React from 'react';
-import Loadable from 'react-loadable';
-import { I18n, Trans } from 'react-i18next';
-import DefaultLayout from './containers/DefaultLayout';
+import React from "react";
+import Loadable from "react-loadable";
+import { I18n, Trans } from "react-i18next";
+import DefaultLayout from "./containers/DefaultLayout";
+import { CircleCharge } from "./components";
 
 function Loading() {
-    return (
-        <div className="overlay container justify-content-center d-flex">
-            <div className="row text-center">
-                <div className="col-12">
-                    <div className="m-loader mr-2 mx-auto" style={{ width: '50%' }}>
-                        <svg className="m-circular" viewBox="25 25 50 50">
-                            <circle
-                                className="path"
-                                cx="50"
-                                cy="50"
-                                r="20"
-                                fill="none"
-                                strokeWidth="4"
-                                strokeMiterlimit="10"
-                            />
-                        </svg>
-                    </div>
-                </div>
-                <div className="col-12">
-                    <h3 className="l-text">
-                        <I18n ns="general">{(t, { i18n }) => t('charging')}</I18n>.
-                    </h3>
-                </div>
-            </div>
-        </div>
-    );
+    return <CircleCharge />;
 }
 
 const Farm = Loadable({
-    loader: () => import('./views/Farm'),
-    loading: Loading,
+    loader: () => import("./views/Farm"),
+    loading: Loading
 });
 
 const Andres = Loadable({
-    loader: () => import('./views/Andres'),
-    loading: Loading,
+    loader: () => import("./views/Andres"),
+    loading: Loading
 });
 
 const Farms = Loadable({
-    loader: () => import('./views/Farms'),
-    loading: Loading,
+    loader: () => import("./views/Farms"),
+    loading: Loading
 });
 
 const Colors = Loadable({
-    loader: () => import('./views/Theme/Colors'),
-    loading: Loading,
+    loader: () => import("./views/Theme/Colors"),
+    loading: Loading
 });
 
 const Typography = Loadable({
-    loader: () => import('./views/Theme/Typography'),
-    loading: Loading,
+    loader: () => import("./views/Theme/Typography"),
+    loading: Loading
 });
 
 const Buttons = Loadable({
-    loader: () => import('./views/Buttons/Buttons'),
-    loading: Loading,
+    loader: () => import("./views/Buttons/Buttons"),
+    loading: Loading
 });
 
 const ButtonDropdowns = Loadable({
-    loader: () => import('./views/Buttons/ButtonDropdowns'),
-    loading: Loading,
+    loader: () => import("./views/Buttons/ButtonDropdowns"),
+    loading: Loading
 });
 
 const ButtonGroups = Loadable({
-    loader: () => import('./views/Buttons/ButtonGroups'),
-    loading: Loading,
+    loader: () => import("./views/Buttons/ButtonGroups"),
+    loading: Loading
 });
 
 const BrandButtons = Loadable({
-    loader: () => import('./views/Buttons/BrandButtons'),
-    loading: Loading,
+    loader: () => import("./views/Buttons/BrandButtons"),
+    loading: Loading
 });
 
 const CoreUIIcons = Loadable({
-    loader: () => import('./views/Icons/CoreUIIcons'),
-    loading: Loading,
+    loader: () => import("./views/Icons/CoreUIIcons"),
+    loading: Loading
 });
 
 const Flags = Loadable({
-    loader: () => import('./views/Icons/Flags'),
-    loading: Loading,
+    loader: () => import("./views/Icons/Flags"),
+    loading: Loading
 });
 
 const FontAwesome = Loadable({
-    loader: () => import('./views/Icons/FontAwesome'),
-    loading: Loading,
+    loader: () => import("./views/Icons/FontAwesome"),
+    loading: Loading
 });
 
 const SimpleLineIcons = Loadable({
-    loader: () => import('./views/Icons/SimpleLineIcons'),
-    loading: Loading,
+    loader: () => import("./views/Icons/SimpleLineIcons"),
+    loading: Loading
 });
 
 const Alerts = Loadable({
-    loader: () => import('./views/Notifications/Alerts'),
-    loading: Loading,
+    loader: () => import("./views/Notifications/Alerts"),
+    loading: Loading
 });
 
 const Badges = Loadable({
-    loader: () => import('./views/Notifications/Badges'),
-    loading: Loading,
+    loader: () => import("./views/Notifications/Badges"),
+    loading: Loading
 });
 
 const Modals = Loadable({
-    loader: () => import('./views/Notifications/Modals'),
-    loading: Loading,
+    loader: () => import("./views/Notifications/Modals"),
+    loading: Loading
 });
 
 const Widgets = Loadable({
-    loader: () => import('./views/Widgets/Widgets'),
-    loading: Loading,
+    loader: () => import("./views/Widgets/Widgets"),
+    loading: Loading
 });
 
 const Charts = Loadable({
-    loader: () => import('./views/Charts'),
-    loading: Loading,
+    loader: () => import("./views/Charts"),
+    loading: Loading
 });
 
 const Users = Loadable({
-    loader: () => import('./views/Users/Users'),
-    loading: Loading,
+    loader: () => import("./views/Users/Users"),
+    loading: Loading
 });
 
 const User = Loadable({
-    loader: () => import('./views/Users/User'),
-    loading: Loading,
+    loader: () => import("./views/Users/User"),
+    loading: Loading
 });
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config

@@ -6,15 +6,33 @@
  */
 
 export default function timerConverter(time) {
-    var time = Number(time);
-    var d = Math.floor((time / 3600) * 24);
-    var h = Math.floor(time / 3600);
-    var m = Math.floor((time % 3600) / 60);
-    var s = Math.floor((time % 3600) % 60);
+    var t = Number(time);
 
-    var dDisplay = d > 0 ? ['day', d] : false;
-    var hDisplay = h > 0 ? ['hour', h] : false;
-    var mDisplay = m > 0 ? ['minute', m] : false;
-    var sDisplay = s > 0 ? ['second', s] : false;
-    return dDisplay ? dDisplay : hDisplay ? hDisplay : mDisplay ? mDisplay : sDisplay;
+    function mF(data) {
+        return Math.floor(data);
+    }
+    function vD(time) {
+        return mF(time) > 0 ? mF(time) : false;
+    }
+    var timer = {
+        d: () => {
+            return ["day", mF(vD(t / 3600) * 24)];
+        },
+        h: () => {
+            return ["hour", mF(vD(t / 3600))];
+        },
+        m: () => {
+            return ["minute", mF(vD(t % 3600) / 60)];
+        },
+        s: () => {
+            return ["second", mF(vD(t % 3600) % 60)];
+        }
+    };
+    return timer.d()[1]
+        ? timer.d()
+        : timer.h()[1]
+            ? timer.h()
+            : timer.m()[1]
+                ? timer.m()
+                : timer.s();
 }

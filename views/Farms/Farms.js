@@ -11,7 +11,7 @@ import {
 } from "reactstrap";
 import { I18n } from "react-i18next";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group"; // ES6
-import { ModalCharge, AddFarm } from "../../components";
+import { CircleCharge, AddFarm } from "../../components";
 import FarmWorker from "./FarmWorker";
 import FarmsBuild from "./FarmsBuild";
 
@@ -54,7 +54,7 @@ class Farms extends Component {
         this.setState({
             modalBodyConfigFarm: (
                 <Container>
-                    <ModalCharge />
+                    <CircleCharge grid={true} />
                 </Container>
             )
         });
