@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
+import React, { Component } from 'react';
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 // Styles
 // Import Font Awesome Icons Set
-import "font-awesome/css/font-awesome.min.css";
+import 'font-awesome/css/font-awesome.min.css';
 /* // CoreUI Icons Set
 import "@coreui/icons/css/coreui-icons.min.css";
 // Import Flag Icons Set
@@ -11,16 +11,16 @@ import "flag-icon-css/css/flag-icon.min.css";
 import "simple-line-icons/css/simple-line-icons.css";
 // Import Main styles for this application */
 /* import './scss/style.css'; */
-import "../sass/app.css";
+import '../sass/app.css';
 
-import i18next from "./i18n";
+import i18next from './i18n';
 
 // Containers
-import { DefaultLayout } from "./containers";
-import { AuthUser, AuthFarm } from "./controllers";
+import { DefaultLayout } from './containers';
+import { AuthUser, AuthFarm } from './controllers';
 // Pages
-import { Login, Page404, Page500, Register, Home } from "./views/Pages";
-import { setTimeout } from "timers";
+import { Login, Page404, Page500, Register, Home } from './views/Pages';
+import { setTimeout } from 'timers';
 
 // import { renderRoutes } from 'react-router-config';
 // for current language
@@ -33,7 +33,7 @@ class App extends Component {
             authenticated: true,
             CSRF: false,
             loginFarm: false,
-            farmAuthenticated: false
+            farmAuthenticated: false,
         };
         this.authenticatedState = this.authenticatedState.bind(this);
         this.login = this.login.bind(this);
@@ -50,8 +50,8 @@ class App extends Component {
 
     sendRequest() {
         return axios({
-            method: "post",
-            url: "./verifyAuth"
+            method: 'post',
+            url: './verifyAuth',
         });
     }
 
@@ -60,7 +60,7 @@ class App extends Component {
         var count = true;
         axios.interceptors.response.use(
             function(response) {
-                if (typeof response.data.auth !== "undefined") {
+                if (typeof response.data.auth !== 'undefined') {
                     if (!response.data.auth) {
                         if (self.state.authenticated) {
                             self.logout();
@@ -73,29 +73,26 @@ class App extends Component {
                 if (!navigator.onLine) {
                     if (count) {
                         swal({
-                            type: "error",
-                            title: i18next.t("offline"),
-                            showConfirmButton: false
+                            type: 'error',
+                            title: i18next.t('offline'),
+                            showConfirmButton: false,
                         });
                         setTimeout(() => {
                             count = true;
                         }, 4000);
                         count = false;
                     }
-                    return { data: i18next.t("offline") };
+                    return { data: i18next.t('offline') };
                 }
-                if (typeof error.response.data.auth !== "undefined") {
+                if (typeof error.response.data.auth !== 'undefined') {
                     if (!error.response.data.auth) {
                         if (self.state.authenticated) {
                             self.logout();
                         }
                     }
                 }
-                if (typeof error.response.data.errors !== "undefined") {
-                    if (
-                        typeof error.response.data.errors.expired !==
-                        "undefined"
-                    ) {
+                if (typeof error.response.data.errors !== 'undefined') {
+                    if (typeof error.response.data.errors.expired !== 'undefined') {
                         self.csrf(error.response.data.token);
                     }
                 }
@@ -104,7 +101,7 @@ class App extends Component {
         );
     }
     csrf(token) {
-        window.axios.defaults.headers.common["X-CSRF-TOKEN"] = token;
+        window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
         if (!this.csrfTime) {
             setTimeout(() => {
                 this.csrfTime = false;
@@ -127,8 +124,8 @@ class App extends Component {
     }
     loginFarm(idFarm) {
         axios({
-            method: "post",
-            url: "./verifyFarmAuth/" + idFarm
+            method: 'post',
+            url: './verifyFarmAuth/' + idFarm,
         })
             .then(result => {
                 this.setState({ loginFarm: true });
@@ -139,7 +136,7 @@ class App extends Component {
         this.setState({ loginFarm: false });
     }
     varifyAuthFarm(pathName) {
-        if (pathName === "/farms" && this.state.loginFarm === false) {
+        if (pathName === '/farms' && this.state.loginFarm === false) {
             return true;
         } else if (this.state.loginFarm === true) {
             return true;
@@ -150,17 +147,48 @@ class App extends Component {
         }
     }
     render() {
-        return <HashRouter>
+        return (
+            <HashRouter>
                 <Switch>
-                    <AuthUser exact path="/login" name="Login Page" component={props => <Login {...props} userAuth={{ login: this.login, logout: this.logout }} />} redirectTo="/farms" authenticated={!this.state.authenticated} />
+                    <AuthUser
+                        exact
+                        path="/login"
+                        name="Login Page"
+                        component={props => (
+                            <Login
+                                {...props}
+                                userAuth={{ login: this.login, authenticatedState: this.authenticatedState }}
+                            />
+                        )}
+                        redirectTo="/farms"
+                        authenticated={!this.state.authenticated}
+                    />
                     <Route exact path="/register" name="Register Page" component={Register} />
                     <Route exact path="/404" name="Page 404" component={Page404} />
                     <Route exact path="/404" name="Page 404" component={Page404} />
                     <Route exact path="/500" name="Page 500" component={Page500} />
                     <Route exact path="/home" name="Home" component={Home} />
-                    <AuthUser path="/" name="root" component={props => <DefaultLayout {...props} userAuth={{ login: this.login, logout: this.logout, authenticatedState: this.authenticatedState }} farmAuth={{ loginFarm: this.loginFarm, logoutFarm: this.logoutFarm }} updateAll={this.updateComponents} />} redirectTo="/login" authenticated={this.state.authenticated} />
+                    <AuthUser
+                        path="/"
+                        name="root"
+                        component={props => (
+                            <DefaultLayout
+                                {...props}
+                                userAuth={{
+                                    login: this.login,
+                                    logout: this.logout,
+                                    authenticatedState: this.authenticatedState,
+                                }}
+                                farmAuth={{ loginFarm: this.loginFarm, logoutFarm: this.logoutFarm }}
+                                updateAll={this.updateComponents}
+                            />
+                        )}
+                        redirectTo="/login"
+                        authenticated={this.state.authenticated}
+                    />
                 </Switch>
-            </HashRouter>;
+            </HashRouter>
+        );
     }
 }
 

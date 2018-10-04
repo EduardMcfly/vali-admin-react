@@ -1,3 +1,4 @@
-import  AuthUser from './User';
+import AuthUser from './User';
+import AutenticateRender from './AutenticateRender';
 
-export { AuthUser };
+export { AuthUser, AutenticateRender };

@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./i18n";
 require("./libreries");
+require("./appTools/index");
 
 import registerServiceWorker from "./registerServiceWorker";
 

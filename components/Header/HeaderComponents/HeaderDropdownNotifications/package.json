@@ -1,0 +1,6 @@
+{
+  "name": "Header Dropdown Notifications",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./HeaderDropdownNotifications.js"
+}
