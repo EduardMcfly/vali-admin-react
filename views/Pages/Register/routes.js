@@ -1,6 +1,4 @@
-import React from "react";
 import Loadable from "react-loadable";
-import { I18n, Trans } from "react-i18next";
 import { CircleCharge } from "../../../components";
 
 function Loading() {
@@ -19,7 +17,7 @@ const Token = Loadable({
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
-    { path: "/register", exact: true, name: "Andres", component: Register },
+    { path: "/register", exact: true, name: "register", component: Register },
     { path: "/register/token", name: "token", component: Token }
 ];
 
