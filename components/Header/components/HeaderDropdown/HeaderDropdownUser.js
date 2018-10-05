@@ -14,9 +14,9 @@ class HeaderDropdownUser extends Component {
     }
 
     logoutSession() {
-        axios({ method: 'get', url: './logout' })
-            .then(result => {
-                if (!AxiosStore.validate()) {
+        axios({ method: 'post', url: './logout' })
+            .then(res => {
+                if (typeof res.data.success !== 'undefined') {
                     this.props.userAuthLogout();
                 }
             })

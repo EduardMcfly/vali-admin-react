@@ -1,17 +1,5 @@
 import React, { Component } from 'react';
-import {
-    Button,
-    Card,
-    CardBody,
-    CardGroup,
-    Col,
-    Container,
-    Row,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
-} from 'reactstrap';
+import { Button, Card, CardBody, CardGroup, Col, Container, Row } from 'reactstrap';
 import { I18n } from 'react-i18next';
 import Link from 'react-router-dom/Link';
 import { LoginComponent, Header } from '../../../components';
@@ -24,8 +12,6 @@ class Login extends Component {
         this.state = {
             userDropdownOpen: false,
         };
-    }
-    componentWillMount() {
         this.sendRequest();
     }
 

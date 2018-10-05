@@ -40,11 +40,10 @@ class LoginComponent extends Component {
             data: { email: this.state.email, password: this.state.password },
         })
             .then(res => {
-                this.setState({ sendLogin: false });
-                if (typeof res.data.success !== 'undefined' || typeof res.data.auth !== 'undefined') {
+                if (typeof res.data.success !== 'undefined') {
                     this.props.userAuth.login();
-                }
-                if (typeof res.data.errors !== 'undefined') {
+                } else if (typeof res.data.errors !== 'undefined') {
+                    this.setState({ sendLogin: false });
                     var errors = res.data.errors;
                     this.setState({
                         errors: {

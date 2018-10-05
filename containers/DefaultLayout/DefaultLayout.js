@@ -74,8 +74,8 @@ class DefaultLayout extends Component {
                                                     return (
                                                         <route.component
                                                             {...props}
-                                                            farmAuth={this.props.farmAuth}
-                                                            updateAll={this.props.updateAll}
+                                                            farmAuth={() => this.props.farmAuth}
+                                                            updateAll={() => this.props.updateAll}
                                                             updateFarms={() => {
                                                                 this.sideBar.getlistFarms();
                                                             }}

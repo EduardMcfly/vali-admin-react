@@ -37,12 +37,12 @@ class Register extends Component {
                                         <p className="text-muted">{t('registerSubtitle')}</p>
                                         <InputGroup className="mb-3">
                                             <InputGroupAddon addonType="prepend">
-                                                <InputGroupText>@</InputGroupText>
+                                                <InputGroupText><i class="fa fa-user"></i></InputGroupText>
                                             </InputGroupAddon>
                                             <Input type="text" placeholder="Email" autoComplete="email" />
                                         </InputGroup>
                                         <Button color="success" block>
-                                            {t('registerTitle')}
+                                            {t('confirmEmail')}
                                         </Button>
                                     </div>
                                     <Row className={'my-2'}>
