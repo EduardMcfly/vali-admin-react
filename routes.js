@@ -1,6 +1,5 @@
 import React from "react";
 import Loadable from "react-loadable";
-import { I18n, Trans } from "react-i18next";
 import DefaultLayout from "./containers/DefaultLayout";
 import { CircleCharge } from "./components";
 

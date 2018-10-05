@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import {
     Container
 } from 'reactstrap';
+import routes from './routes';
 import { I18n } from 'react-i18next';
 import { Redirect, Route, Switch } from 'react-router-dom';
 // routes config
-import routes from './routes';
 import { Header } from '../../../components';
 
 class Register extends Component {
@@ -16,7 +16,7 @@ class Register extends Component {
         return (
             <div className="app flex-row align-items-center">
                 <div className="app-header pr-1">
-                    <Header {...this.props} />
+                <Header {...this.props} />
                 </div>
                 <Container>
                     <div className="app-content ml-0" style={{ minHeight: 'unset' }}>
