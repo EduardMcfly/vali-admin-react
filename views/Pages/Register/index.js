@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import {
-    Container
-} from 'reactstrap';
-import routes from './routes';
-import { I18n } from 'react-i18next';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import React, { Component } from "react";
+import { Container } from "reactstrap";
+import routes from "./routes";
+import { I18n } from "react-i18next";
+import { Redirect, Route, Switch } from "react-router-dom";
+
 // routes config
-import { Header } from '../../../components';
+import { Header, SwitchWithSlide } from "../../../components";
 
 class Register extends Component {
     constructor(props) {
@@ -16,11 +15,14 @@ class Register extends Component {
         return (
             <div className="app flex-row align-items-center">
                 <div className="app-header pr-1">
-                <Header {...this.props} />
+                    <Header {...this.props} />
                 </div>
                 <Container>
-                    <div className="app-content ml-0" style={{ minHeight: 'unset' }}>
-                        <Switch>
+                    <div
+                        className="app-content ml-0"
+                        style={{ minHeight: "unset" }}
+                    >
+                        <SwitchWithSlide>
                             {routes.map((route, idx) => {
                                 return route.component ? (
                                     <Route
@@ -31,7 +33,9 @@ class Register extends Component {
                                         render={props => (
                                             <I18n ns="general">
                                                 {t => {
-                                                    document.title = t('routes.' + route.name)
+                                                    document.title = t(
+                                                        "routes." + route.name
+                                                    );
                                                     return (
                                                         <route.component
                                                             {...props}
@@ -44,7 +48,7 @@ class Register extends Component {
                                 ) : null;
                             })}
                             <Redirect from="/" to="/home" />
-                        </Switch>
+                        </SwitchWithSlide>
                     </div>
                 </Container>
             </div>

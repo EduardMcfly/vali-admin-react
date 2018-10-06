@@ -30,7 +30,7 @@ class Register extends Component {
             <I18n ns="register">
                 {(t, { i18n }) => (
                     <Row className="justify-content-center">
-                        <Col md="6">
+                        <Col md="9">
                             <Card className="mx-4">
                                 <CardBody className="p-4">
                                     <Form>
@@ -82,6 +82,9 @@ class Register extends Component {
                                                 <span>twitter</span>
                                             </Button>
                                         </Col>
+                                        <Link to={"/register"}>
+                                            Register
+                                        </Link>
                                     </Row>
                                 </CardFooter>
                             </Card>

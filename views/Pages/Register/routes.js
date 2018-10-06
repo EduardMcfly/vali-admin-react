@@ -1,10 +1,9 @@
 import { CircleCharge } from "../../../components";
-import { Register, Token} from "./views";
+import { Register, Token } from "./views";
 
 function Loading() {
     return CircleCharge;
 }
-
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [

@@ -5,7 +5,7 @@ import { Container } from 'reactstrap';
 // routes config
 import routes from '../../routes';
 import classNames from 'classnames';
-import { Breadcrumb, Header, Sidebar } from '../../components';
+import { Breadcrumb, Header, Sidebar, SwitchWithSlide } from '../../components';
 import { I18n } from 'react-i18next';
 
 class DefaultLayout extends Component {
@@ -59,7 +59,7 @@ class DefaultLayout extends Component {
                 <main className="app-content" style={{ overflow: 'hidden' }}>
                     <Breadcrumb appRoutes={routes} />
                     <Container fluid>
-                        <Switch>
+                        <SwitchWithSlide>
                             {routes.map((route, idx) => {
                                 return route.component ? (
                                     <Route
@@ -88,7 +88,7 @@ class DefaultLayout extends Component {
                                 ) : null;
                             })}
                             <Redirect from="/" to="/home" />
-                        </Switch>
+                        </SwitchWithSlide>
                     </Container>
                 </main>
             </div>
