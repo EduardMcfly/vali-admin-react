@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { Container } from 'reactstrap';
+import React, { Component } from "react";
+import { Redirect, Route } from "react-router-dom";
+import { Container } from "reactstrap";
 
 // routes config
-import routes from '../../routes';
-import classNames from 'classnames';
-import { Breadcrumb, Header, Sidebar, SwitchWithSlide } from '../../components';
-import { I18n } from 'react-i18next';
+import { routes } from "../../routes/index";
+import classNames from "classnames";
+import { Breadcrumb, Header, Sidebar, SwitchWithSlide } from "../../components";
+import { I18n } from "react-i18next";
 
 class DefaultLayout extends Component {
     constructor(props) {
@@ -19,7 +19,7 @@ class DefaultLayout extends Component {
 
     toggleLarge() {
         this.setState({
-            large: !this.state.large,
+            large: !this.state.large
         });
     }
 
@@ -35,12 +35,12 @@ class DefaultLayout extends Component {
     render() {
         return (
             <div
-                className={
-                    'app sidebar-mini rtl ' +
-                    classNames({
-                        'sidenav-toggled': this.state.asideNavToggle === true,
-                    })
-                }
+                className={classNames(
+                    {
+                        "sidenav-toggled": this.state.asideNavToggle
+                    },
+                    "app sidebar-mini rtl"
+                )}
             >
                 <div className="app-header pr-1">
                     <Header
@@ -49,14 +49,18 @@ class DefaultLayout extends Component {
                         {...this.props}
                     />
                 </div>
-                <div className="app-sidebarOverlay" onClick={this.hideSidebarNav} data-toggle="sidebar" />
+                <div
+                    className="app-sidebarOverlay"
+                    onClick={this.hideSidebarNav}
+                    data-toggle="sidebar"
+                />
                 <Sidebar
                     {...this.props}
                     ref={sideBar => {
                         this.sideBar = sideBar;
                     }}
                 />
-                <main className="app-content" style={{ overflow: 'hidden' }}>
+                <main className="app-content">
                     <Breadcrumb appRoutes={routes} />
                     <Container fluid>
                         <SwitchWithSlide>
@@ -70,13 +74,21 @@ class DefaultLayout extends Component {
                                         render={props => (
                                             <I18n ns="general">
                                                 {t => {
-                                                    document.title = t('routes.' + route.name);
+                                                    document.title = t(
+                                                        "routes." + route.name
+                                                    );
                                                     return (
                                                         <route.component
                                                             {...props}
-                                                            farmAuth={() => this.props.farmAuth}
-                                                            updateAll={() => this.props.updateAll}
-                                                            updateFarms={() => {
+                                                            farmAuth={async () =>
+                                                                this.props
+                                                                    .farmAuth
+                                                            }
+                                                            updateAll={async () =>
+                                                                this.props
+                                                                    .updateAll
+                                                            }
+                                                            updateFarms={async () => {
                                                                 this.sideBar.getlistFarms();
                                                             }}
                                                         />

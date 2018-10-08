@@ -37,21 +37,6 @@ class DefaultHeader extends Component {
 
         return (
             <React.Fragment>
-                <AutenticateRender
-                    authenticatedState={this.props.userAuth.authenticatedState()}
-                    children={
-                        <React.Fragment>
-                            <div
-                                className="app-sidebarToggle jqvmap-region"
-                                data-toggle="sidebar"
-                                aria-label="Hide Sidebar"
-                                onClick={this.props.toggleSidebarNav}
-                            />
-                            <HeaderSearch {...this.props} />
-                        </React.Fragment>
-                    }
-                />
-
                 <Link
                     className="app-headerLogo"
                     to={
@@ -62,6 +47,27 @@ class DefaultHeader extends Component {
                 >
                     Cosva
                 </Link>
+                <AutenticateRender
+                    authenticatedState={this.props.userAuth.authenticatedState()}
+                    children={
+                        <React.Fragment>
+                            <div
+                                className="app-sidebarToggle jqvmap-region"
+                                data-toggle="sidebar"
+                                aria-label="Hide Sidebar"
+                                onClick={this.props.toggleSidebarNav}
+                            />
+                        </React.Fragment>
+                    }
+                />
+                <AutenticateRender
+                    authenticatedState={this.props.userAuth.authenticatedState()}
+                    children={
+                        <React.Fragment>
+                            <HeaderSearch {...this.props} />
+                        </React.Fragment>
+                    }
+                />
                 <HeaderDropdown {...this.props} />
             </React.Fragment>
         );

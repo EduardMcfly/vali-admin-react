@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import { Row, Col } from 'reactstrap'
-import { rgbToHex } from '@coreui/coreui/dist/js/coreui-utilities'
 
 class ThemeView extends Component {
   constructor(props) {
@@ -28,7 +27,7 @@ class ThemeView extends Component {
         <tbody>
         <tr>
           <td className="text-muted">HEX:</td>
-          <td className="font-weight-bold">{ rgbToHex(this.state.bgColor) }</td>
+          <td className="font-weight-bold"></td>
         </tr>
         <tr>
           <td className="text-muted">RGB:</td>

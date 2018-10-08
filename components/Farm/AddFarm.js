@@ -1,20 +1,26 @@
-import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter,FormFeedback } from 'reactstrap';
-import { I18n } from 'react-i18next';
-import update from 'immutability-helper';
-import { log } from 'util';
+import React, { Component } from "react";
+import {
+    Button,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    FormFeedback
+} from "reactstrap";
+import { I18n } from "react-i18next";
+import update from "immutability-helper";
 
 class Addfarm extends Component {
     constructor(props) {
         super(props);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.state = {
-            farm: '',
+            farm: "",
             modalAddFarm: false,
             errors: {
                 inputs: { farmName: false },
-                messages: { farmName: '' },
-            },
+                messages: { farmName: "" }
+            }
         };
         this.hideAddFarm = this.hideAddFarm.bind(this);
         this.showAddFarm = this.showAddFarm.bind(this);
@@ -25,8 +31,8 @@ class Addfarm extends Component {
         this.setState({
             errors: update(this.state.errors, {
                 inputs: { $merge: { [position]: true } },
-                messages: { $merge: { [position]: message } },
-            }),
+                messages: { $merge: { [position]: message } }
+            })
         });
     }
 
@@ -41,32 +47,32 @@ class Addfarm extends Component {
 
     hideAddFarm() {
         this.setState({
-            modalAddFarm: false,
+            modalAddFarm: false
         });
     }
     showAddFarm() {
         this.setState({
-            modalAddFarm: true,
+            modalAddFarm: true
         });
     }
     saveFarm() {
         axios({
-            method: 'post',
-            url: './addFarm',
+            method: "post",
+            url: "./addFarm",
             data: {
-                name: this.state.farm,
-            },
+                name: this.state.farm
+            }
         })
             .then(res => {
-                if (typeof res.data.success !== 'undefined') {
+                if (typeof res.data.success !== "undefined") {
                     this.props.getlistFarms();
                     this.hideAddFarm();
                 }
             })
             .catch(error => {
-                if (typeof error.data.errors !== 'undefined') {
-                    if (typeof error.data.errors.name !== 'undefined') {
-                        this.errorsChange('farmName', error.data.errors.name);
+                if (typeof error.data.errors !== "undefined") {
+                    if (typeof error.data.errors.name !== "undefined") {
+                        this.errorsChange("farmName", error.data.errors.name);
                     }
                 }
             });
@@ -79,29 +85,40 @@ class Addfarm extends Component {
                         <Modal
                             isOpen={this.state.modalAddFarm}
                             toggle={this.hideAddFarm}
-                            className={(this.props.className, 'modal-dialog-centered')}
+                            className={
+                                (this.props.className, "modal-dialog-centered")
+                            }
                         >
-                            <ModalHeader toggle={this.hideAddFarm}>{t('registerFarm.title')}</ModalHeader>
+                            <ModalHeader toggle={this.hideAddFarm}>
+                                {t("registerFarm.title")}
+                            </ModalHeader>
                             <ModalBody>
-                                <label>{t('registerFarm.name')}</label>
+                                <label>{t("registerFarm.name")}</label>
                                 <input
                                     type="text"
-                                    placeholder={t('registerFarm.input') + '.'}
+                                    placeholder={t("registerFarm.input") + "."}
                                     value={this.state.farm}
                                     className={
-                                        'form-control input-sm ' +
-                                        (this.state.errors.inputs.farmName ? 'is-invalid' : '')
+                                        "form-control input-sm " +
+                                        (this.state.errors.inputs.farmName
+                                            ? "is-invalid"
+                                            : "")
                                     }
                                     name="farm"
                                     onChange={this.handleInputChange}
                                 />
-                                 <FormFeedback>{this.state.errors.messages.farmName}</FormFeedback>
+                                <FormFeedback>
+                                    {this.state.errors.messages.farmName}
+                                </FormFeedback>
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="primary" onClick={this.saveFarm}>
                                     Guardar Cambios
                                 </Button>
-                                <Button color="secondary" onClick={this.hideAddFarm}>
+                                <Button
+                                    color="secondary"
+                                    onClick={this.hideAddFarm}
+                                >
                                     Cerrar
                                 </Button>
                             </ModalFooter>

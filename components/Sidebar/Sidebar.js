@@ -71,6 +71,7 @@ class Sidebar extends Component {
                 this.setState({
                     farmsList: this.buildListFarms(listFarms)
                 });
+                this.farmsList = this.buildListFarms(listFarms);
             })
             .catch(error => {
                 if (typeof error.data.errors !== "undefined") {

@@ -15,10 +15,6 @@ import {
 } from "reactstrap";
 import { I18n } from "react-i18next";
 import Link from "react-router-dom/Link";
-import { Redirect, Route, Switch } from "react-router-dom";
-// routes config
-import routes from "../../../../routes";
-import { Header } from "../../../../components";
 
 class Register extends Component {
     constructor(props) {

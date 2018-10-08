@@ -73,7 +73,7 @@ const animateSwitch = (CustomSwitch, AnimatorComponent) => ({
     children
 }) => (
     <Route
-        render={({ location }) => (
+        render={({ location,history }) => (
             <AnimatorComponent
                 uniqKey={location.pathname}
                 updateStep={updateStep}
