@@ -21,6 +21,9 @@ class Sidebar extends Component {
         this.getlistFarms = this.getlistFarms.bind(this);
         this.treeview = this.treeview.bind(this);
         this.farmsListBuild = this.farmsListBuild.bind(this);
+    }
+
+    componentDidMount() {
         this.getInfoUser();
         this.getlistFarms();
     }
@@ -33,7 +36,7 @@ class Sidebar extends Component {
         }
     }
 
-    getInfoUser() {
+    async getInfoUser() {
         axios({
             method: "post",
             url: "./infoUser"
@@ -60,7 +63,7 @@ class Sidebar extends Component {
             });
     }
 
-    getlistFarms() {
+    async getlistFarms() {
         axios({ method: "post", url: "./listFarms" })
             .then(res => {
                 if (AxiosStore.validate("listFarms")) {
@@ -270,22 +273,23 @@ class Sidebar extends Component {
             return (
                 <li
                     key={key}
-                    className={
-                        this.activeRoute(item.url, props) +
-                        classNames({
-                            " is-expanded":
+                    className={classNames(
+                        {
+                            "is-expanded":
                                 this.state.treeviewTab === item.treeview
-                        })
-                    }
-                    onClick={() => {
+                        },
+                        this.activeRoute(item.url, props)
+                    )}
+                    onClick={async () => {
                         this.treeview(item.treeview);
                     }}
                 >
                     <div className="app-menuItem c-pointer">
-                        <i className={"app-menuIcon fa " + item.icon} />
-
+                        <i
+                            className={classNames("app-menuIcon fa", item.icon)}
+                        />
                         <I18n ns="sideBar">
-                            {(t, { i18n }) => (
+                            {t => (
                                 <span className="app-menuLabel">
                                     {t(item.name)}
                                 </span>
@@ -404,7 +408,7 @@ class Sidebar extends Component {
                                 >
                                     <i className="icon fa fa-pencil-square" />
                                     <I18n ns="sideBar">
-                                        {(t, { i18n }) => (
+                                        {t => (
                                             <React.Fragment>
                                                 {t("farmsRegister")}
                                             </React.Fragment>

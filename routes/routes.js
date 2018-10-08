@@ -1,10 +1,9 @@
-import React from "react";
 import Loadable from "react-loadable";
 import DefaultLayout from "../containers/DefaultLayout";
 import { CircleCharge } from "../components";
 
 function Loading() {
-    return <CircleCharge />;
+    return CircleCharge;
 }
 
 const Farm = Loadable({

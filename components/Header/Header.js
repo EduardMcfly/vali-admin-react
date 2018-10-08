@@ -37,16 +37,6 @@ class DefaultHeader extends Component {
 
         return (
             <React.Fragment>
-                <Link
-                    className="app-headerLogo"
-                    to={
-                        this.props.userAuth.authenticatedState()
-                            ? "/farm"
-                            : "/home"
-                    }
-                >
-                    Cosva
-                </Link>
                 <AutenticateRender
                     authenticatedState={this.props.userAuth.authenticatedState()}
                     children={
@@ -60,15 +50,27 @@ class DefaultHeader extends Component {
                         </React.Fragment>
                     }
                 />
-                <AutenticateRender
-                    authenticatedState={this.props.userAuth.authenticatedState()}
-                    children={
-                        <React.Fragment>
-                            <HeaderSearch {...this.props} />
-                        </React.Fragment>
+                <Link
+                    className="app-headerLogo"
+                    to={
+                        this.props.userAuth.authenticatedState()
+                            ? "/farm"
+                            : "/home"
                     }
-                />
-                <HeaderDropdown {...this.props} />
+                >
+                    Cosva
+                </Link>
+                <ul className="app-nav">
+                    <AutenticateRender
+                        authenticatedState={this.props.userAuth.authenticatedState()}
+                        children={
+                            <React.Fragment>
+                                <HeaderSearch {...this.props} />
+                            </React.Fragment>
+                        }
+                    />
+                    <HeaderDropdown {...this.props} />
+                </ul>
             </React.Fragment>
         );
     }

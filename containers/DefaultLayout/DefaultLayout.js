@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { Container } from "reactstrap";
-
-// routes config
-import { routes } from "../../routes/index";
 import classNames from "classnames";
-import { Breadcrumb, Header, Sidebar, SwitchWithSlide } from "../../components";
 import { I18n } from "react-i18next";
+
+/**
+ * Routes
+ * @return Array
+ */
+import { routes } from "../../routes/index";
+import { Breadcrumb, Header, Sidebar, SwitchWithSlide } from "../../components";
 
 class DefaultLayout extends Component {
     constructor(props) {
@@ -64,10 +67,10 @@ class DefaultLayout extends Component {
                     <Breadcrumb appRoutes={routes} />
                     <Container fluid>
                         <SwitchWithSlide>
-                            {routes.map((route, idx) => {
+                            {routes.map((route, id) => {
                                 return route.component ? (
                                     <Route
-                                        key={idx}
+                                        key={id}
                                         path={route.path}
                                         exact={route.exact}
                                         name={route.name}

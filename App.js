@@ -22,7 +22,6 @@ import { AuthUser, AuthFarm } from "./controllers";
 import { Login, Page404, Page500, Register, Home } from "./views/Pages";
 import { setTimeout } from "timers";
 
-// import { renderRoutes } from 'react-router-config';
 // for current language
 
 class App extends Component {

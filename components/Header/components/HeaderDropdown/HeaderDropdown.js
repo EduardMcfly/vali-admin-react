@@ -18,10 +18,10 @@ class HeaderDropdown extends Component {
 
     render() {
         return (
-            <ul className="app-nav">
+            <React.Fragment>
                 <HeaderDropdownNotifications {...this.props} />
                 <HeaderDropdownUser {...this.props} />
-            </ul>
+            </React.Fragment>
         );
     }
 }
