@@ -1,10 +1,10 @@
-import Breadcrumb from "./Breadcrumb";
-import LoginComponent from "./Login";
-import { AddFarm } from "./Farm";
-import Footer from "./Footer";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-import { CircleCharge, TextCharge, SwitchWithSlide } from "./Animations";
+import Breadcrumb from './Breadcrumb';
+import LoginComponent from './Login';
+import { AddFarm } from './Farm';
+import Footer from './Footer';
+import Header from './Header';
+import Sidebar from './Sidebar';
+import { CircleCharge, TextCharge, SwitchWithSlide, GridCharge } from './Animations';
 
 export {
     Breadcrumb,
@@ -16,5 +16,6 @@ export {
     CircleCharge,
     TextCharge,
     CircleAnimation,
-    SwitchWithSlide
+    SwitchWithSlide,
+    GridCharge,
 };

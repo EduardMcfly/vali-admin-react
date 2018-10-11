@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route,Switch } from "react-router-dom";
 import { Container } from "reactstrap";
 import classNames from "classnames";
 import { I18n } from "react-i18next";
@@ -66,7 +66,7 @@ class DefaultLayout extends Component {
                 <main className="app-content">
                     <Breadcrumb appRoutes={routes} />
                     <Container fluid>
-                        <SwitchWithSlide>
+                        <Switch>
                             {routes.map((route, id) => {
                                 return route.component ? (
                                     <Route
@@ -103,7 +103,7 @@ class DefaultLayout extends Component {
                                 ) : null;
                             })}
                             <Redirect from="/" to="/home" />
-                        </SwitchWithSlide>
+                        </Switch>
                     </Container>
                 </main>
             </div>
