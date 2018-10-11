@@ -12,6 +12,7 @@ class Sidebar extends Component {
         super(props);
         this.state = {
             personName: <TextCharge />,
+            isMounted: false,
             description: <TextCharge />,
             farmsList: <TextCharge />,
             treeviewTab: 0
@@ -24,8 +25,13 @@ class Sidebar extends Component {
     }
 
     componentDidMount() {
+        this.setState({ isMounted: true });
         this.getInfoUser();
         this.getlistFarms();
+    }
+
+    componentWillUnmount() {
+        this.setState({ isMounted: false });
     }
 
     treeview(tab) {
@@ -47,10 +53,12 @@ class Sidebar extends Component {
                 } else {
                     var user = AxiosStore.set("infoUser", res.data.user["0"]);
                 }
-                this.setState({
-                    personName: user["0"] + " " + user["1"],
-                    description: user["2"]
-                });
+                if (this.state.isMounted) {
+                    this.setState({
+                        personName: user["0"] + " " + user["1"],
+                        description: user["2"]
+                    });
+                }
             })
             .catch(error => {
                 if (typeof error.data.errors !== "undefined") {
@@ -71,10 +79,11 @@ class Sidebar extends Component {
                 } else {
                     var listFarms = AxiosStore.set("listFarms", res.data[0]);
                 }
-                this.setState({
-                    farmsList: this.buildListFarms(listFarms)
-                });
-                this.farmsList = this.buildListFarms(listFarms);
+                if (this.state.isMounted) {
+                    this.setState({
+                        farmsList: this.buildListFarms(listFarms)
+                    });
+                }
             })
             .catch(error => {
                 if (typeof error.data.errors !== "undefined") {

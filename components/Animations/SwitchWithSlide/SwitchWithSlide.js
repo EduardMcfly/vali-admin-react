@@ -68,22 +68,22 @@ class SlideOut extends React.Component {
     }
 }
 
-const animateSwitch = (CustomSwitch, AnimatorComponent) => ({
+const animateSwitch = (Switch, AnimatorComponent) => ({
     updateStep,
     children
-}) => (
-    <Route
-        render={({ location,history }) => (
-            <AnimatorComponent
-                uniqKey={location.pathname}
-                updateStep={updateStep}
-            >
-                <CustomSwitch location={location}>{children}</CustomSwitch>
-            </AnimatorComponent>
-        )}
-    />
-);
+}) => {
+    return (
+        <Route
+            render={({ location, history }) => (
+                <AnimatorComponent
+                    uniqKey={location.pathname}
+                    updateStep={updateStep}
+                >
+                    <Switch location={location}>{children}</Switch>
+                </AnimatorComponent>
+            )}
+        />
+    );
+};
 
-const SwitchWithSlide = animateSwitch(Switch, SlideOut);
-
-export default SwitchWithSlide;
+export default animateSwitch(Switch, SlideOut);

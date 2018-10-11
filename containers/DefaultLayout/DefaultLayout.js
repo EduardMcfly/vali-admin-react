@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { Container } from "reactstrap";
 import classNames from "classnames";
 import { I18n } from "react-i18next";
@@ -14,16 +14,20 @@ import { Breadcrumb, Header, Sidebar, SwitchWithSlide } from "../../components";
 class DefaultLayout extends Component {
     constructor(props) {
         super(props);
+        this.switch = true;
         this.toggleLarge = this.toggleLarge.bind(this);
         this.toggleSidebarNav = this.toggleSidebarNav.bind(this);
         this.hideSidebarNav = this.hideSidebarNav.bind(this);
         this.state = { asideNavToggle: false };
     }
-
     toggleLarge() {
         this.setState({
             large: !this.state.large
         });
+    }
+
+    componentDidMount() {
+        this.switch = false;
     }
 
     toggleSidebarNav() {
@@ -36,12 +40,11 @@ class DefaultLayout extends Component {
         }
     }
     render() {
+        const SwitchComponent = this.switch ? Switch : SwitchWithSlide;
         return (
             <div
                 className={classNames(
-                    {
-                        "sidenav-toggled": this.state.asideNavToggle
-                    },
+                    { "sidenav-toggled": this.state.asideNavToggle },
                     "app sidebar-mini rtl"
                 )}
             >
@@ -66,7 +69,7 @@ class DefaultLayout extends Component {
                 <main className="app-content">
                     <Breadcrumb appRoutes={routes} />
                     <Container fluid>
-                        <SwitchWithSlide>
+                        <SwitchComponent>
                             {routes.map((route, id) => {
                                 return route.component ? (
                                     <Route
@@ -102,8 +105,12 @@ class DefaultLayout extends Component {
                                     />
                                 ) : null;
                             })}
-                            <Redirect from="/" to="/home" />
-                        </SwitchWithSlide>
+                            <Redirect
+                                from="/"
+                                to="/farms"
+                                key="from-hello"
+                            />
+                        </SwitchComponent>
                     </Container>
                 </main>
             </div>

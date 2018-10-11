@@ -20,8 +20,6 @@ import { CircleAnimation } from "../Animations";
 class LoginComponent extends Component {
     constructor(props) {
         super(props);
-        this.loginSubmit = this.loginSubmit.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
         this.state = {
             sendLogin: false,
             email: "",
@@ -31,6 +29,8 @@ class LoginComponent extends Component {
                 messages: { email: "", password: "" }
             }
         };
+        this.loginSubmit = this.loginSubmit.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     loginSubmit() {
