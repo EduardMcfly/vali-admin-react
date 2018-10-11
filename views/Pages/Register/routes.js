@@ -1,8 +1,8 @@
-import { CircleCharge } from "../../../components";
+import { CircleAnimation } from "../../../components";
 import { Register, Token } from "./views";
 
 function Loading() {
-    return CircleCharge;
+    return CircleAnimation;
 }
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config

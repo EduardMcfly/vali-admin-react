@@ -54,7 +54,7 @@ class DefaultHeader extends Component {
                     className="app-headerLogo"
                     to={
                         this.props.userAuth.authenticatedState()
-                            ? "/farm"
+                            ? "/farms"
                             : "/home"
                     }
                 >

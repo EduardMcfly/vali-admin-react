@@ -5,7 +5,7 @@ import { I18n } from "react-i18next";
 
 const gridCreate = () => (
     <Container>
-        <Row className="text-truncate" style={{ height: "100%" }}>
+        <Row className="text-truncate">
             <Col sm="12 g-height-20 gray mb-1" />
             <Col sm="6 col-6 g-height-90 gray" />
             <Col sm="6 col-6">

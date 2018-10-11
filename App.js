@@ -3,14 +3,8 @@ import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 // Styles
 // Import Font Awesome Icons Set
 import "font-awesome/css/font-awesome.min.css";
-/* // CoreUI Icons Set
-import "@coreui/icons/css/coreui-icons.min.css";
-// Import Flag Icons Set
-import "flag-icon-css/css/flag-icon.min.css";
 // Import Simple Line Icons Set
 import "simple-line-icons/css/simple-line-icons.css";
-// Import Main styles for this application */
-/* import './scss/style.css'; */
 import "../sass/app.css";
 
 import i18next from "./i18n";
