@@ -42,7 +42,7 @@ class DefaultLayout extends Component {
     render() {
         return (
             <div className={classNames({ 'sidenav-toggled': this.state.asideNavToggle }, 'app sidebar-mini rtl')}>
-                <div className="app-header pr-1">
+                <div className="app-header">
                     <Header
                         toggleSidebarNav={this.toggleSidebarNav}
                         userAuthLogout={this.props.userAuth.logout}
