@@ -1,38 +1,6 @@
 export default {
     items: [
         {
-            name: 'Colors',
-            url: '/theme/colors',
-            only: true,
-            treeview: 2,
-            icon: 'icon-drop',
-        },
-        {
-            name: 'Typography',
-            url: '/theme/typography',
-            only: true,
-            treeview: 3,
-            icon: 'icon-pencil',
-        },
-        {
-            name: 'Buttons',
-            url: '/buttons',
-            icon: 'icon-cursor',
-            treeview: 5,
-            children: [
-                {
-                    name: 'Button dropdowns',
-                    url: '/buttons/button-dropdowns',
-                    icon: 'icon-cursor',
-                },
-                {
-                    name: 'Button groups',
-                    url: '/buttons/button-groups',
-                    icon: 'icon-cursor',
-                },
-            ],
-        },
-        {
             name: 'Charts',
             url: '/charts',
             only: true,
@@ -136,19 +104,12 @@ export default {
             ],
         },
         {
-            name: 'Download CoreUI',
-            url: 'http://coreui.io/react/',
+            name: 'Download cosva',
+            url: 'https://cosva.cf',
             only: true,
             icon: 'icon-cloud-download',
             class: 'mt-auto',
             variant: 'success',
-        },
-        {
-            name: 'Try CoreUI PRO',
-            url: 'http://coreui.io/pro/react/',
-            only: true,
-            icon: 'icon-layers',
-            variant: 'danger',
-        },
+        }
     ],
 };

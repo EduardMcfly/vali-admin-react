@@ -150,7 +150,7 @@ class Farms extends Component {
                     getlistFarms={this.updateListFarms}
                 />
                 <I18n ns="farm">
-                    {(t) => (
+                    {t => (
                         <React.Fragment>
                             <Col md="12" className="text-center" data-aos="zoom-in">
                                 <div className="tile">
@@ -220,7 +220,7 @@ class Farms extends Component {
                     )}
                 </I18n>
                 <I18n ns="farm">
-                    {(t) => (
+                    {t => (
                         <React.Fragment>
                             <Modal
                                 isOpen={this.state.modalConfigFarm}
@@ -249,14 +249,18 @@ class Farms extends Component {
                                         {this.state.modalBodyConfigFarm}
                                     </ReactCSSTransitionGroup>
                                 </ModalBody>
-                                <ModalFooter>
-                                    <Button color="primary" onClick={this.toggleConfigFarm}>
-                                        Do Something
-                                    </Button>
-                                    <Button color="secondary" onClick={this.toggleConfigFarm}>
-                                        Cancel
-                                    </Button>
-                                </ModalFooter>
+                                <I18n ns="general">
+                                    {t => (
+                                        <ModalFooter>
+                                            <Button color="primary" onClick={this.toggleConfigFarm}>
+                                                {t('save')}
+                                            </Button>
+                                            <Button color="secondary" onClick={this.toggleConfigFarm}>
+                                                {t('cancel')}
+                                            </Button>
+                                        </ModalFooter>
+                                    )}
+                                </I18n>
                             </Modal>
                         </React.Fragment>
                     )}

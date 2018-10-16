@@ -35,9 +35,9 @@ class FarmWorker extends Component {
                         </div>
                         <p />
                         <h3 className="heading">Options</h3>
-                        <label className="switch switch-3d switch-sm form-check-label">
+                        <label className="switch switch-3d switch-label switch-sm switch-pill switch-success form-check-label">
                             <input type="checkbox" className="switch-input form-check-input" value="" />
-                            <span className="switch-slider" />
+                            <span className="switch-slider" data-checked="On" data-unchecked="Off" />
                         </label>
                     </CardBody>
                     <CardFooter className="text-center">
