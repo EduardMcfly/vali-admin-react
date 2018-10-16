@@ -56,7 +56,7 @@ class DefaultLayout extends Component {
                         this.sideBar = sideBar;
                     }}
                 />
-                <main className="app-content">
+                <main className="app-content" style={{'overflow':'hidden'}}>
                     <Breadcrumb appRoutes={Object.assign(routes.animated, routes.withoutAnimation)} />
                     <Container fluid>
                         <Switch>

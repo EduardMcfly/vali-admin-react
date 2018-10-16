@@ -1,34 +1,6 @@
 export default {
     items: [
         {
-            name: 'regitersCowsTreeview',
-            url: '/farm',
-            icon: 'fa-laptop',
-            treeview: 1,
-            children: [
-                {
-                    name: 'cows',
-                    url: '/farm/:id/buttons',
-                    icon: 'fa-circle-o',
-                },
-                {
-                    name: 'registerProductive',
-                    url: '/buttons/button-dropdowns',
-                    icon: 'fa-keyboard-o',
-                },
-                {
-                    name: 'Button groups',
-                    url: '/buttons/button-groups',
-                    icon: 'icon-cursor',
-                },
-                {
-                    name: 'Social Buttons',
-                    url: '/buttons/social-buttons',
-                    icon: 'icon-cursor',
-                },
-            ],
-        },
-        {
             name: 'Colors',
             url: '/theme/colors',
             only: true,
@@ -48,11 +20,6 @@ export default {
             icon: 'icon-cursor',
             treeview: 5,
             children: [
-                {
-                    name: 'Buttons',
-                    url: '/farm/:id/buttons',
-                    icon: 'icon-cursor',
-                },
                 {
                     name: 'Button dropdowns',
                     url: '/buttons/button-dropdowns',
