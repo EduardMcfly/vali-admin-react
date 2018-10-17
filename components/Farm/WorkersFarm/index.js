@@ -1,4 +1,4 @@
 import AddFarmWorkers from "./AddFarmWorkers";
-import FarmWorker from "./FarmWorkerCard";
+import FarmWorkerCard from "./FarmWorkerCard";
 
-export { AddFarmWorkers, FarmWorker };
+export { AddFarmWorkers, FarmWorkerCard };

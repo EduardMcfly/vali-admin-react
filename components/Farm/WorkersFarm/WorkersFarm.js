@@ -1,55 +1,41 @@
-import React, { Component } from "react";
-import {
-    Container,
-    Button,
-    Modal,
-    ModalFooter,
-    ModalBody,
-    ModalHeader,
-    Col
-} from "reactstrap";
-import Loadable from "react-loadable";
-import { GridCharge, CircleAnimation } from "../../Animations";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group"; // ES6
-import { I18n } from "react-i18next";
-import { AddFarmWorkers } from "./";
+import React, { Component } from 'react';
+import { Container, Button, Col, Row } from 'reactstrap';
+import { GridCharge, CircleAnimation } from '../../Animations';
+import Loadable from 'react-loadable';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; // ES6
+import { I18n } from 'react-i18next';
 
-function Loading() {
-    return <CircleAnimation width={"30%"} />;
-}
-const FarmWorker = Loadable({
-    loader: () => import("./WorkersFarm/FarmWorkerCard.js"),
-    loading: Loading
-});
-
-class WorkersFarm extends Component {
+class AddFarmWorkers extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalWorkersFarm: false,
-            modalWorkersFarmTitle: "",
-            modalBodyFarmWorker: true
+            modalConfigFarm: true,
+            modalConfigFarmTitle: '',
+            modalBodyConfigFarm: true,
         };
         this.modalData = this.modalData.bind(this);
         this.toggleModalAnimation = this.toggleModalAnimation.bind(this);
-        this.toggleWorkersFarm = this.toggleWorkersFarm.bind(this);
         this.buildFarmWorker = this.buildFarmWorker.bind(this);
+    }
+
+    componentDidMount() {
+        this.modalData();
     }
 
     buildFarmWorker(responses) {
         if (responses.length) {
-            return responses.map((farm, i) => (
-                <FarmWorker obj={farm} key={i} />
-            ));
+            const FarmWorkerCard = Loadable({
+                loader: () => import('./FarmWorkerCard.js'),
+                loading: () => <CircleAnimation width={'25%'} />,
+            });
+            return responses.map((farm, key) => <FarmWorkerCard obj={farm} key={key} />);
         } else {
             return (
                 <Col sm={12} md={12} lg={6} xl={4}>
                     <I18n ns="farm">
                         {t => (
                             <Container>
-                                <h6 className={"text-capitalize"}>
-                                    {t("noneWorkers")}
-                                </h6>
+                                <h6 className={'text-capitalize'}>{t('noneWorkers')}</h6>
                             </Container>
                         )}
                     </I18n>
@@ -60,17 +46,17 @@ class WorkersFarm extends Component {
 
     toggleModalAnimation() {
         this.setState({
-            modalBodyFarmWorker: (
+            modalBodyFarmWorkers: (
                 <Container>
                     <GridCharge grid={true} />
                 </Container>
-            )
+            ),
         });
     }
 
-    toggleWorkersFarm() {
+    toggleFarmWorkers() {
         this.setState({
-            modalWorkersFarm: !this.state.modalWorkersFarm
+            modalFarmWorkers: !this.state.modalFarmWorkers,
         });
     }
 
@@ -78,23 +64,14 @@ class WorkersFarm extends Component {
         this.toggleModalAnimation();
         this.setState({ modalWorkersFarmTitle: name });
         axios({
-            method: "post",
-            url: "./farmModalConfig/" + id
+            method: 'post',
+            url: './farmModalConfig',
+            data: { farmId: this.props.farmId },
         }).then(res => {
-            if (typeof res.data.errors != "undefined") {
-                if (typeof res.data.errors.permits != "undefined") {
-                    swal("", res.data.errors.permits, "warning");
-                    this.setState({
-                        modalWorkersFarm: false
-                    });
-                }
-            } else {
-                this.setState({
-                    modalBodyFarmWorker: this.buildFarmWorker(res.data)
-                });
-            }
+            this.setState({
+                modalBodyFarmWorkers: <Row key="fdssfddsfdsf">{this.buildFarmWorker(res.data)}</Row>,
+            });
         });
-        this.toggleWorkersFarm();
     }
 
     render() {
@@ -102,51 +79,29 @@ class WorkersFarm extends Component {
             <I18n ns="farm">
                 {t => (
                     <React.Fragment>
-                        <Modal
-                            isOpen={this.state.modalWorkersFarm}
-                            toggle={this.toggleWorkersFarm}
-                            className={
-                                (this.props.className,
-                                "modal-dialog-centered modal-lg")
-                            }
-                        >
-                            <ModalHeader
-                                toggle={this.toggleWorkersFarm}
-                                className="text-uppercase"
-                            >
-                                {this.state.modalWorkersFarmTitle}
-                            </ModalHeader>
-                            <ModalBody>
-                                <ReactCSSTransitionGroup
-                                    transitionName="page"
-                                    transitionAppear={false}
-                                    transitionEnterTimeout={1000}
-                                    transitionLeaveTimeout={600}
-                                    component="div"
-                                    className="row"
+                        <Container>
+                            <h5 className="lead">Trabajadores</h5>
+                            <hr className="my-3" />
+                            <div className="mb-3">
+                                <Button
+                                    color="secondary"
+                                    onClick={() => {
+                                        console.log(32432);
+                                    }}
                                 >
-                                    {this.state.modalBodyFarmWorker}
-                                </ReactCSSTransitionGroup>
-                            </ModalBody>
-                            <I18n ns="general">
-                                {t => (
-                                    <ModalFooter>
-                                        <Button
-                                            color="primary"
-                                            onClick={this.toggleWorkersFarm}
-                                        >
-                                            {t("save")}
-                                        </Button>
-                                        <Button
-                                            color="secondary"
-                                            onClick={this.toggleWorkersFarm}
-                                        >
-                                            {t("cancel")}
-                                        </Button>
-                                    </ModalFooter>
-                                )}
-                            </I18n>
-                        </Modal>
+                                    Agregar trabajador
+                                </Button>
+                            </div>
+                            <ReactCSSTransitionGroup
+                                transitionName="slide"
+                                transitionAppear={true}
+                                transitionAppearTimeout={800}
+                                transitionEnterTimeout={50}
+                                transitionLeaveTimeout={800}
+                            >
+                                {this.state.modalBodyFarmWorkers}
+                            </ReactCSSTransitionGroup>
+                        </Container>
                     </React.Fragment>
                 )}
             </I18n>
@@ -154,4 +109,4 @@ class WorkersFarm extends Component {
     }
 }
 
-export default WorkersFarm;
+export default AddFarmWorkers;

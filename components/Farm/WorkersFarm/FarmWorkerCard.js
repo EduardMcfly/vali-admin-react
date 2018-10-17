@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Row, Col, Card, CardHeader, CardBody, CardFooter } from "reactstrap";
+import React, { Component } from 'react';
+import { Row, Col, Card, CardHeader, CardBody, CardFooter } from 'reactstrap';
 
 class FarmWorkerCard extends Component {
     constructor(props) {
@@ -8,23 +8,15 @@ class FarmWorkerCard extends Component {
 
     render() {
         return (
-            <Col sm={12} md={12} lg={6} xl={4}>
+            <Col sm={12} md={12} lg={6} xl={5}>
                 <Card className="border-dark mb-3">
                     <CardHeader className="text-capitalize">
                         <Row>
-                            <Col
-                                md="12"
-                                className="d-flex justify-content-center"
-                            >
-                                <i
-                                    className="fa fa-user-circle-o fa-5x mr-2 imgUserNavBar"
-                                    aria-hidden="true"
-                                />
+                            <Col md="12" className="d-flex justify-content-center">
+                                <i className="fa fa-user-circle-o fa-5x mr-2 imgUserNavBar" aria-hidden="true" />
                             </Col>
                             <Col md="12" className="mt-2 text-truncate">
-                                {this.props.obj.name +
-                                    " " +
-                                    this.props.obj.lastName}
+                                {this.props.obj.name + ' ' + this.props.obj.lastName}
                             </Col>
                         </Row>
                     </CardHeader>
@@ -39,25 +31,13 @@ class FarmWorkerCard extends Component {
                         <p className="card-text" />
                         <div className="d-inline-block">
                             Super Administrador.
-                            <i
-                                id="editableDateTxt"
-                                className="fa fa-pencil pl-2"
-                                aria-hidden="true"
-                            />
+                            <i id="editableDateTxt" className="fa fa-pencil pl-2" aria-hidden="true" />
                         </div>
                         <p />
                         <h3 className="heading">Options</h3>
                         <label className="switch switch-3d switch-label switch-sm switch-pill switch-success form-check-label">
-                            <input
-                                type="checkbox"
-                                className="switch-input form-check-input"
-                                value=""
-                            />
-                            <span
-                                className="switch-slider"
-                                data-checked="On"
-                                data-unchecked="Off"
-                            />
+                            <input type="checkbox" className="switch-input form-check-input" value="" />
+                            <span className="switch-slider" data-checked="On" data-unchecked="Off" />
                         </label>
                     </CardBody>
                     <CardFooter className="text-center">

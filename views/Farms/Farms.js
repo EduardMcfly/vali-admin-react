@@ -53,7 +53,7 @@ class Farms extends Component {
                     if (this.state.listFarms === false && res.status === 500) {
                         this.getListFarms();
                     }
-                }, 5000);
+                }, 100);
             });
     }
     updateListFarms() {
@@ -79,18 +79,18 @@ class Farms extends Component {
                         <React.Fragment>
                             <Col
                                 md="12"
-                                className="text-center"
+                                className={"text-center"}
                                 data-aos="zoom-in"
                             >
-                                <div className="tile">
+                                <div className={"tile"}>
                                     <h2>
-                                        <div className="tile-body">
+                                        <div className={"tile-body"}>
                                             {t("welcome")}
                                         </div>
                                     </h2>
                                 </div>
                             </Col>
-                            <Container className="p-0" data-aos="zoom-in">
+                            <Container className={"p-0"} data-aos="zoom-in">
                                 <Row>
                                     <Col
                                         sm="10"
@@ -98,17 +98,17 @@ class Farms extends Component {
                                         style={{ cursor: "pointer" }}
                                     >
                                         <Row>
-                                            <Col md="6" className="mx-auto">
+                                            <Col md="6" className={"mx-auto"}>
                                                 <div
-                                                    className="widget-small primary coloured-icon mb-2"
+                                                    className={"widget-small primary coloured-icon mb-2"}
                                                     style={{
                                                         borderRadius: 1 + "em"
                                                     }}
                                                     onClick={this.AddFarmModal}
                                                 >
-                                                    <a className="my-auto">
+                                                    <a className={"my-auto"}>
                                                         <i
-                                                            className="icon fa fa-pencil-square fa-2x p-1"
+                                                            className={"icon fa fa-pencil-square fa-2x p-1"}
                                                             style={{
                                                                 backgroundColor:
                                                                     "#ffd404",
@@ -121,10 +121,10 @@ class Farms extends Component {
                                                             }}
                                                         />
                                                     </a>
-                                                    <Container className="d-flex align-items-center">
-                                                        <div className="info text-center text-truncate">
+                                                    <Container className={"d-flex align-items-center"}>
+                                                        <div className={"info text-center"}>
                                                             <a
-                                                                className="fa-lg"
+                                                                className={"fa-lg"}
                                                                 style={{
                                                                     display:
                                                                         "contents"
@@ -141,9 +141,9 @@ class Farms extends Component {
                                         </Row>
                                     </Col>
                                     <Col sm="2" md="1">
-                                        <div className="justify-content-end align-items-center d-flex m-1">
+                                        <div className={"justify-content-end align-items-center d-flex m-1"}>
                                             <i
-                                                className="icon fa fa-refresh text-light  fa-2x p-1"
+                                                className={"icon fa fa-refresh text-light  fa-2x p-1"}
                                                 onClick={this.updateListFarms}
                                                 style={{
                                                     backgroundColor:
