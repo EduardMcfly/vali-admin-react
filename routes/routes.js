@@ -1,6 +1,5 @@
 import React from 'react';
 import Loadable from 'react-loadable';
-
 import { Button } from 'reactstrap';
 import DefaultLayout from '../containers/DefaultLayout';
 import { CircleAnimation } from '../components';

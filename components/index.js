@@ -1,6 +1,6 @@
 import Breadcrumb from './Breadcrumb';
 import LoginComponent from './Login';
-import { AddFarm } from './Farm';
+import { AddFarm, ConfigFarm } from "./Farm";
 import Footer from './Footer';
 import Header from './Header';
 import Sidebar from './Sidebar';
@@ -13,8 +13,9 @@ export {
     Header,
     Sidebar,
     AddFarm,
+    ConfigFarm,
     CircleAnimation,
     TextCharge,
     SwitchWithSlide,
-    GridCharge,
+    GridCharge
 };
