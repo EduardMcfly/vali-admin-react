@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
     Button,
     CardBody,
@@ -9,90 +9,91 @@ import {
     InputGroupText,
     Row,
     Card,
-    FormFeedback
-} from "reactstrap";
-import { I18n } from "react-i18next";
-import Link from "react-router-dom/Link";
-import classNames from "classnames";
-import { CircleAnimation } from "../Animations";
+    FormFeedback,
+} from 'reactstrap';
+import { I18n } from 'react-i18next';
+import Link from 'react-router-dom/Link';
+import classNames from 'classnames';
+import { CircleAnimation } from '../Animations';
 
 class LoginComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
             sendLogin: false,
-            email: "",
-            password: "",
-            errors: {
-                inputs: { email: false, password: false },
-                messages: { email: "", password: "" }
-            }
+            email: '',
+            password: '',
+            emailError: { message: false },
+            passwordError: { message: false },
         };
         this.loginSubmit = this.loginSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
+    resetErrosInputs() {
+        this.setState({
+            emailError: { message: false },
+            passwordError: { message: false },
+        });
+    }
+
     loginSubmit() {
         this.setState({ sendLogin: true });
         return axios({
-            method: "post",
-            url: "./login",
-            data: { email: this.state.email, password: this.state.password }
+            method: 'post',
+            url: './login',
+            data: { email: this.state.email, password: this.state.password },
         })
             .then(res => {
-                if (typeof res.data.success !== "undefined") {
+                console.log('====================================');
+                console.log(res);
+                console.log('====================================');
+                if (typeof res.data.success !== 'undefined') {
                     this.props.userAuth.login();
-                } else if (typeof res.data.errors !== "undefined") {
+                } else if (typeof res.data.auth !== 'undefined') {
+                    this.props.userAuth.login();
+                } else if (typeof res.data.errors !== 'undefined') {
                     this.setState({ sendLogin: false });
                     var errors = res.data.errors;
-                    this.setState({
-                        errors: {
-                            inputs: { email: false, password: false },
-                            messages: { email: "", password: "" }
-                        }
-                    });
-                    this.errorInput(errors.email, "email");
-                    this.errorInput(errors.password, "password");
+                    this.errorInputs(errors);
                 }
             })
             .catch(res => {
+                console.log('====================================');
+                console.log(res);
+                console.log('====================================');
                 this.setState({ sendLogin: false });
-                if (typeof res.data.errors !== "undefined") {
+                if (typeof res.data.errors !== 'undefined') {
                     var errors = res.data.errors;
-                    this.setState({
-                        errors: {
-                            inputs: { email: false, password: false },
-                            messages: { email: "", password: "" }
-                        }
-                    });
-                    this.errorInput(errors.email, "email");
-                    this.errorInput(errors.password, "password");
+                    this.errorInputs(errors);
                 }
             });
     }
 
+    errorInputs(errors) {
+        this.resetErrosInputs();
+        this.errorInput(errors.email, 'emailError');
+        this.errorInput(errors.password, 'passwordError');
+    }
+
     errorInput(error, input) {
-        if (typeof error !== "undefined") {
-            this.errorsChange(input, error);
+        if (typeof error !== 'undefined') {
+            this.errorsChange(error, input);
         }
     }
 
-    errorsChange(position, message) {
+    errorsChange(error, input) {
         this.setState({
-            errors: {
-                inputs: { [position]: true },
-                messages: { [position]: message }
-            }
+            [input]: { message: error },
         });
     }
 
     handleInputChange(event) {
-        const name = event.target.name;
-        const value = event.target.value;
         this.setState({
-            [name]: value
+            [event.target.name]: event.target.value,
         });
     }
+
     render() {
         return (
             <I18n ns="login">
@@ -100,10 +101,8 @@ class LoginComponent extends Component {
                     <Card className="p-4">
                         <CardBody className="tileAnimation">
                             <React.Fragment>
-                                <h1>{t("loginTitle")}</h1>
-                                <p className="text-muted">
-                                    {t("loginSubtitle")}
-                                </p>
+                                <h1>{t('loginTitle')}</h1>
+                                <p className="text-muted">{t('loginSubtitle')}</p>
                                 <InputGroup className="mb-3">
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>
@@ -111,21 +110,17 @@ class LoginComponent extends Component {
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
-                                        className={
-                                            this.state.errors.inputs.email
-                                                ? "is-invalid"
-                                                : ""
-                                        }
+                                        className={classNames({
+                                            'is-invalid': this.state.emailError.message,
+                                        })}
                                         type="text"
-                                        placeholder={t("emailTitle")}
+                                        placeholder={t('emailTitle')}
                                         autoComplete="email"
                                         name="email"
                                         value={this.state.email}
                                         onChange={this.handleInputChange}
                                     />
-                                    <FormFeedback>
-                                        {this.state.errors.messages.email}
-                                    </FormFeedback>
+                                    <FormFeedback>{this.state.emailError.message}</FormFeedback>
                                 </InputGroup>
                                 <InputGroup className="mb-4">
                                     <InputGroupAddon addonType="prepend">
@@ -134,13 +129,11 @@ class LoginComponent extends Component {
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
-                                        className={
-                                            this.state.errors.inputs.password
-                                                ? "is-invalid"
-                                                : ""
-                                        }
+                                        className={classNames({
+                                            'is-invalid': this.state.passwordError.message,
+                                        })}
                                         type="password"
-                                        placeholder={t("password")}
+                                        placeholder={t('password')}
                                         autoComplete="current-password"
                                         name="password"
                                         value={this.state.password}
@@ -151,34 +144,33 @@ class LoginComponent extends Component {
                                             }
                                         }}
                                     />
-                                    <FormFeedback>
-                                        {this.state.errors.messages.password}
-                                    </FormFeedback>
+                                    <FormFeedback>{this.state.passwordError.message}</FormFeedback>
                                 </InputGroup>
                                 <Row>
                                     <Col sm="12" lg="6">
                                         <Button
                                             color="primary"
                                             className="w-100 px-4 text-truncate"
-                                            onClick={this.loginSubmit}
+                                            onClick={() => {
+                                                if (!this.state.sendLogin) {
+                                                    this.loginSubmit();
+                                                }
+                                            }}
                                         >
-                                            {t("loginTitle")}
+                                            {t('loginTitle')}
                                         </Button>
-                                        <Link to={"/register"}>
+                                        <Link to={'/register'}>
                                             <Button
                                                 color="info"
                                                 className="mt-3 w-100 px-4 text-truncate d-md-none d-sm-block"
                                             >
-                                                {t("registerTitle")}
+                                                {t('registerTitle')}
                                             </Button>
                                         </Link>
                                     </Col>
                                     <Col sm="12" lg="6" className="text-right">
-                                        <Button
-                                            color="link"
-                                            className="text-truncate w-100 px-0"
-                                        >
-                                            {t("forgotPassword")}
+                                        <Button color="link" className="text-truncate w-100 px-0">
+                                            {t('forgotPassword')}
                                         </Button>
                                     </Col>
                                 </Row>
@@ -186,12 +178,12 @@ class LoginComponent extends Component {
                             <div
                                 className={classNames(
                                     {
-                                        "d-none": this.state.sendLogin === false
+                                        'd-none': !this.state.sendLogin,
                                     },
-                                    "overlay"
+                                    'overlay'
                                 )}
                             >
-                                <CircleAnimation width={"70px"} />
+                                <CircleAnimation width={'70px'} />
                             </div>
                         </CardBody>
                     </Card>

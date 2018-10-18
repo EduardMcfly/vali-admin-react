@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { AddFarm } from '..';
 import { I18n } from 'react-i18next';
 import nav from './_nav';
+import { log } from 'util';
 
 class Sidebar extends Component {
     constructor(props) {
@@ -49,9 +50,9 @@ class Sidebar extends Component {
         })
             .then(res => {
                 if (AxiosStore.validate('infoUser')) {
-                    var user = AxiosStore.get('infoUser');
-                } else {
                     var user = AxiosStore.set('infoUser', res.data.user['0']);
+                } else {
+                    var user = AxiosStore.get('infoUser');
                 }
                 if (this.state.isMounted) {
                     this.setState({
@@ -60,12 +61,10 @@ class Sidebar extends Component {
                     });
                 }
             })
-            .catch(error => {
-                if (typeof error.data.errors !== 'undefined') {
-                    setTimeout(() => {
-                        this.getInfoUser();
-                    }, 5000);
-                }
+            .catch(res => {
+                setTimeout(() => {
+                    this.getInfoUser();
+                }, 2000);
             });
     }
 
@@ -135,7 +134,7 @@ class Sidebar extends Component {
             return (
                 <li key={key} className="treeview">
                     <div key={key} className={classes}>
-                        <span class="app-menuLabel">{wrapper(title)}</span>
+                        <span className="app-menuLabel">{wrapper(title)}</span>
                     </div>
                 </li>
             );
