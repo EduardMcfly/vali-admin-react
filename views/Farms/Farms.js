@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 import { I18n } from "react-i18next";
+import Link from "react-router-dom/Link";
 import { AddFarm, ConfigFarm } from "../../components";
 import FarmsBuild from "./FarmsBuild";
 
@@ -24,14 +25,50 @@ class Farms extends Component {
         this.farmAdd.showAddFarm();
     }
     build(responses) {
-        return responses.map((farm, i) => (
-            <FarmsBuild
-                obj={farm}
-                key={i}
-                modalData={this.modalDataConfiFarm.modalData}
-                colorRand={colorRand()}
-            />
-        ));
+        if (responses.length) {
+            return responses.map((farm, i) => (
+                <FarmsBuild
+                    obj={farm}
+                    key={i}
+                    modalData={this.modalDataConfiFarm.modalData}
+                    colorRand={colorRand()}
+                />
+            ));
+        } else {
+            return (
+                <I18n ns="farm">
+                    {t => (
+                        <Col
+                            sm="12"
+                            className={"d-flex justify-content-center"}
+                            data-aos="zoom-in"
+                        >
+                            <Col
+                                md="6"
+                                sm="6"
+                                className={"text-center mt-3"}
+                                data-aos="zoom-in"
+                            >
+                                <div
+                                    className={"tile c-pointer"}
+                                    onClick={this.AddFarmModal}
+                                >
+                                    <h4>
+                                        <div className={"tile-body lead"}>
+                                            <i
+                                                class="fa fa-3x fa-inbox d-block"
+                                                aria-hidden="true"
+                                            />
+                                            <span>{t("noneFarms")}</span>
+                                        </div>
+                                    </h4>
+                                </div>
+                            </Col>
+                        </Col>
+                    )}
+                </I18n>
+            );
+        }
     }
     getListFarms() {
         axios({
@@ -53,7 +90,7 @@ class Farms extends Component {
                     if (this.state.listFarms === false && res.status === 500) {
                         this.getListFarms();
                     }
-                }, 100);
+                }, 1000);
             });
     }
     updateListFarms() {
@@ -100,7 +137,9 @@ class Farms extends Component {
                                         <Row>
                                             <Col md="6" className={"mx-auto"}>
                                                 <div
-                                                    className={"widget-small primary coloured-icon mb-2"}
+                                                    className={
+                                                        "widget-small primary coloured-icon mb-2"
+                                                    }
                                                     style={{
                                                         borderRadius: 1 + "em"
                                                     }}
@@ -108,7 +147,9 @@ class Farms extends Component {
                                                 >
                                                     <a className={"my-auto"}>
                                                         <i
-                                                            className={"icon fa fa-pencil-square fa-2x p-1"}
+                                                            className={
+                                                                "icon fa fa-pencil-square fa-2x p-1"
+                                                            }
                                                             style={{
                                                                 backgroundColor:
                                                                     "#ffd404",
@@ -121,10 +162,20 @@ class Farms extends Component {
                                                             }}
                                                         />
                                                     </a>
-                                                    <Container className={"d-flex align-items-center"}>
-                                                        <div className={"info text-center"}>
+                                                    <Container
+                                                        className={
+                                                            "d-flex align-items-center"
+                                                        }
+                                                    >
+                                                        <div
+                                                            className={
+                                                                "info text-center"
+                                                            }
+                                                        >
                                                             <a
-                                                                className={"fa-lg"}
+                                                                className={
+                                                                    "fa-lg"
+                                                                }
                                                                 style={{
                                                                     display:
                                                                         "contents"
@@ -141,9 +192,15 @@ class Farms extends Component {
                                         </Row>
                                     </Col>
                                     <Col sm="2" md="1">
-                                        <div className={"justify-content-end align-items-center d-flex m-1"}>
+                                        <div
+                                            className={
+                                                "justify-content-end align-items-center d-flex m-1"
+                                            }
+                                        >
                                             <i
-                                                className={"icon fa fa-refresh text-light  fa-2x p-1"}
+                                                className={
+                                                    "icon fa fa-refresh text-light  fa-2x p-1"
+                                                }
                                                 onClick={this.updateListFarms}
                                                 style={{
                                                     backgroundColor:

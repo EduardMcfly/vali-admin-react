@@ -10,7 +10,7 @@ class FarmsBuild extends Component {
 
     render() {
         return (
-            <div className="col-md-6 col-lg-6" data-aos="flip-right">
+            <Col md={6} lg={6} data-aos="flip-right">
                 <div className="widget-small primary coloured-icon align-items-center">
                     <Link to={"/farm/" + this.props.obj[0]}>
                         <i
@@ -19,7 +19,7 @@ class FarmsBuild extends Component {
                         />
                     </Link>
                     <Container>
-                        <Row style={{ wordBreak: "break-word" }}>
+                        <Row className={'text-wrap'}>
                             <Col
                                 sm="12"
                                 md="12"
@@ -60,7 +60,7 @@ class FarmsBuild extends Component {
                         </Row>
                     </Container>
                 </div>
-            </div>
+            </Col>
         );
     }
 }

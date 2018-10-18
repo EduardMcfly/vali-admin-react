@@ -12,7 +12,6 @@ import {
     FormFeedback
 } from "reactstrap";
 import { I18n } from "react-i18next";
-import update from "immutability-helper";
 import Link from "react-router-dom/Link";
 import classNames from "classnames";
 import { CircleAnimation } from "../Animations";
@@ -52,12 +51,8 @@ class LoginComponent extends Component {
                             messages: { email: "", password: "" }
                         }
                     });
-                    if (typeof errors.email !== "undefined") {
-                        this.errorsChange("email", errors.email);
-                    }
-                    if (typeof errors.password !== "undefined") {
-                        this.errorsChange("password", errors.password);
-                    }
+                    this.errorInput(errors.email, "email");
+                    this.errorInput(errors.password, "password");
                 }
             })
             .catch(res => {
@@ -70,14 +65,16 @@ class LoginComponent extends Component {
                             messages: { email: "", password: "" }
                         }
                     });
-                    if (typeof errors.email !== "undefined") {
-                        this.errorsChange("email", errors.email);
-                    }
-                    if (typeof errors.password !== "undefined") {
-                        this.errorsChange("password", errors.password);
-                    }
+                    this.errorInput(errors.email, "email");
+                    this.errorInput(errors.password, "password");
                 }
             });
+    }
+
+    errorInput(error, input) {
+        if (typeof error !== "undefined") {
+            this.errorsChange(input, error);
+        }
     }
 
     errorsChange(position, message) {
