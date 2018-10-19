@@ -5,6 +5,7 @@ import Loadable from 'react-loadable';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; // ES6
 import { I18n } from 'react-i18next';
 import classNames from 'classnames';
+ import axios from "axios";
 
 class AddFarmWorkers extends Component {
     constructor(props) {
@@ -95,7 +96,6 @@ class AddFarmWorkers extends Component {
 
     modalData() {
         this.toggleModalAnimation();
-        this.setState({ modalWorkersFarmTitle: name });
         this.getFarmInfo();
     }
 

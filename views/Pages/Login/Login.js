@@ -3,6 +3,7 @@ import { Button, Card, CardBody, CardGroup, Col, Container, Row } from 'reactstr
 import { I18n } from 'react-i18next';
 import Link from 'react-router-dom/Link';
 import { LoginComponent, Header } from '../../../components';
+import axios from 'axios';
 
 class Login extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class Login extends Component {
     }
 
     sendRequest() {
-        return axios({
+        axios({
             method: 'post',
             url: './verifyAuth',
         })
@@ -39,7 +40,7 @@ class Login extends Component {
                 }
 
                 if (typeof error.data.auth !== 'undefined') {
-                    if (res.data.auth) {
+                    if (error.data.auth) {
                         this.props.userAuth.login();
                     }
                 }

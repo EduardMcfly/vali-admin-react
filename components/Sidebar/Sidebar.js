@@ -7,6 +7,9 @@ import { AddFarm } from '..';
 import { I18n } from 'react-i18next';
 import nav from './_nav';
 import { log } from 'util';
+import axios from 'axios';
+import { AxiosStore } from '../../app-utilities';
+
 
 class Sidebar extends Component {
     constructor(props) {

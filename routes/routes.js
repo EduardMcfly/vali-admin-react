@@ -4,6 +4,7 @@ import { Button } from "reactstrap";
 import DefaultLayout from "../containers/DefaultLayout";
 import { CircleAnimation } from "../components";
 import i18next from "./../i18n";
+import { swal } from "sweetalert2";
 const delay = 5000;
 
 class Loading extends React.Component {
