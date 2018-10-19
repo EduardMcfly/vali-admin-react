@@ -7,7 +7,9 @@ export default function mt_rand(min, max) {
         min = 0;
         max = 2147483647;
     } else if (argc === 1) {
-        throw new Error('Warning: mt_rand() expects exactly 2 parameters, 1 given');
+        throw new Error(
+            "Warning: mt_rand() expects exactly 2 parameters, 1 given"
+        );
     } else {
         min = parseInt(min, 10);
         max = parseInt(max, 10);

@@ -1,8 +1,16 @@
-const AutenticateRender = ({ authenticatedState, children, ...rest }) => {
-    if (authenticatedState) {
-        return children;
+import { Component } from "react";
+class AutenticateRender extends Component {
+    constructor(props) {
+        super(props);
     }
-    return null;
-};
+
+    render() {
+        const { authenticatedState, children, ...rest } = this.props;
+        if (authenticatedState) {
+            return children;
+        }
+        return null;
+    }
+}
 
 export default AutenticateRender;

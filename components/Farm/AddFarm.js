@@ -8,7 +8,6 @@ import {
     FormFeedback
 } from "reactstrap";
 import { I18n } from "react-i18next";
-import update from "immutability-helper";
 
 class Addfarm extends Component {
     constructor(props) {
@@ -29,10 +28,10 @@ class Addfarm extends Component {
 
     errorsChange(position, message) {
         this.setState({
-            errors: update(this.state.errors, {
-                inputs: { $merge: { [position]: true } },
-                messages: { $merge: { [position]: message } }
-            })
+            errors: {
+                inputs: { [position]: true },
+                messages: { [position]: message }
+            }
         });
     }
 

@@ -1,21 +1,8 @@
 import React, { Component } from "react";
-import {
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle
-} from "reactstrap";
 import PropTypes from "prop-types";
-import { I18n } from "react-i18next";
 import Link from "react-router-dom/Link";
 import { HeaderSearch, HeaderDropdown } from "./components";
 import { AutenticateRender } from "../../controllers";
-
-const propTypes = {
-    children: PropTypes.node
-};
-
-const defaultProps = {};
 
 class DefaultHeader extends Component {
     constructor(props) {
@@ -76,7 +63,9 @@ class DefaultHeader extends Component {
     }
 }
 
-DefaultHeader.propTypes = propTypes;
-DefaultHeader.defaultProps = defaultProps;
+DefaultHeader.propTypes = {
+    children: PropTypes.node
+};
+DefaultHeader.defaultProps = {};
 
 export default DefaultHeader;

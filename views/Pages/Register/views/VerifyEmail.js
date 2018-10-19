@@ -17,17 +17,21 @@ import classNames from "classnames";
 import { CircleAnimation } from "../../../../components/Animations";
 // routes config
 
-class Register extends Component {
+class VerifyEmail extends Component {
     constructor(props) {
         super(props);
         this.state = {
             sendLogin: false,
-            emailValidate: false,
-            email: "",
+            emailError: { message: false },
             errors: { inputs: { email: false }, messages: { email: "" } }
         };
-        this.handleInputChange = this.handleInputChange.bind(this);
         this.emailVerifySubmit = this.emailVerifySubmit.bind(this);
+    }
+
+    resetErrosInputs() {
+        this.setState({
+            emailError: { message: false }
+        });
     }
 
     emailVerifySubmit() {
@@ -35,7 +39,7 @@ class Register extends Component {
         return axios({
             method: "post",
             url: "./registerVerifyEmail",
-            data: { email: this.state.email }
+            data: { email: this.props.state.email }
         })
             .then(res => {
                 if (typeof res.data.success !== "undefined") {
@@ -43,47 +47,35 @@ class Register extends Component {
                 } else if (typeof res.data.errors !== "undefined") {
                     this.setState({ sendLogin: false });
                     var errors = res.data.errors;
-                    if (typeof errors.email !== "undefined") {
-                        this.errorsChange("email", errors.email);
-                    }
+                    this.errorInputs(errors);
                 }
             })
             .catch(res => {
                 this.setState({ sendLogin: false });
                 if (typeof res.data.errors !== "undefined") {
                     var errors = res.data.errors;
-                    this.setState({
-                        errors: {
-                            inputs: { email: false, password: false },
-                            messages: { email: "", password: "" }
-                        }
-                    });
-                    if (typeof errors.email !== "undefined") {
-                        this.errorsChange("email", errors.email);
-                    }
+                    this.errorInputs(errors);
                 }
             });
     }
 
-    handleInputChange(event) {
-        const name = event.target.name;
-        const value = event.target.value;
+    errorInputs(errors) {
+        this.resetErrosInputs();
+        this.errorInput(errors.email, "emailError");
+    }
 
-        if ("email" == name) {
-            if (this.state.email.indexOf("@") !== -1) {
-                this.setState({
-                    emailValidate: true
-                });
-            } else {
-                this.setState({
-                    emailValidate: false
-                });
-            }
+    errorInput(error, input) {
+        if (typeof error !== "undefined") {
+            this.errorsChange(error, input);
         }
+    }
+
+    errorsChange(error, input) {
         this.setState({
-            [name]: value
+            [input]: { message: error }
         });
     }
+
     render() {
         return (
             <I18n ns="register">
@@ -104,38 +96,34 @@ class Register extends Component {
                                                 </InputGroupText>
                                             </InputGroupAddon>
                                             <Input
-                                                className={
-                                                    this.state.errors.inputs
-                                                        .email
-                                                        ? "is-invalid"
-                                                        : ""
-                                                }
+                                                className={classNames({
+                                                    "is-invalid": this.state
+                                                        .emailError.message
+                                                })}
                                                 type="text"
                                                 placeholder={t("emailTitle")}
                                                 autoComplete="email"
                                                 name="email"
-                                                value={this.state.email}
-                                                onChange={
-                                                    this.handleInputChange
-                                                }
-                                                onKeyUp={this.handleInputChange}
+                                                value={this.props.state.email}
+                                                onChange={this.props.setEmail}
+                                                onKeyUp={this.props.setEmail}
                                             />
                                             <FormFeedback>
-                                                {
-                                                    this.state.errors.messages
-                                                        .email
-                                                }
+                                                {this.state.emailError.message}
                                             </FormFeedback>
                                         </InputGroup>
                                         <Button
                                             color={classNames("success", {
                                                 disabled:
-                                                    this.state.emailValidate ===
-                                                    false
+                                                    this.props.state
+                                                        .emailValidate === false
                                             })}
                                             block
                                             onClick={() => {
-                                                if (this.state.emailValidate) {
+                                                if (
+                                                    this.props.state
+                                                        .emailValidate
+                                                ) {
                                                     this.emailVerifySubmit();
                                                 }
                                             }}
@@ -143,21 +131,19 @@ class Register extends Component {
                                             {t("confirmEmail")}
                                         </Button>
                                     </div>
-                                    {/* <Row className={"my-2"}>
-                                        <Col xs="12" sm="6">
-                                            <Button className={""} block>
-                                                <span>facebook</span>
-                                            </Button>
-                                        </Col>
-                                        <Col xs="12" sm="6">
-                                            <Button className={""} block>
-                                                <span>twitter</span>
-                                            </Button>
-                                        </Col>
-                                    </Row> */}
+                                    <Link to={"/register/token"}>
+                                        <Button color="link" block>
+                                            <InputGroup className="mb-3 align-items-center">
+                                                <i
+                                                    className={"fa fa-user p-2"}
+                                                />
+                                                {t("haveCode")}
+                                            </InputGroup>
+                                        </Button>
+                                    </Link>
                                     <Link to={"/login"}>
                                         <Button color="link" block>
-                                            {t("haveLogin")}
+                                            {"<< " + t("haveLogin")}
                                         </Button>
                                     </Link>
                                 </CardBody>
@@ -172,7 +158,7 @@ class Register extends Component {
                                 >
                                     <CircleAnimation width={"70px"} />
                                 </div>
-                                <Link to={"/register/token"}>Token</Link>
+                                {console.log()}
                             </Card>
                         </Col>
                     </Row>
@@ -182,4 +168,4 @@ class Register extends Component {
     }
 }
 
-export default Register;
+export default VerifyEmail;

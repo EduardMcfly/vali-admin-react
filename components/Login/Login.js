@@ -45,9 +45,6 @@ class LoginComponent extends Component {
             data: { email: this.state.email, password: this.state.password },
         })
             .then(res => {
-                console.log('====================================');
-                console.log(res);
-                console.log('====================================');
                 if (typeof res.data.success !== 'undefined') {
                     this.props.userAuth.login();
                 } else if (typeof res.data.auth !== 'undefined') {
@@ -59,9 +56,6 @@ class LoginComponent extends Component {
                 }
             })
             .catch(res => {
-                console.log('====================================');
-                console.log(res);
-                console.log('====================================');
                 this.setState({ sendLogin: false });
                 if (typeof res.data.errors !== 'undefined') {
                     var errors = res.data.errors;

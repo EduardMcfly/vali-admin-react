@@ -15,11 +15,9 @@ import {
 } from "reactstrap";
 import { I18n } from "react-i18next";
 import Link from "react-router-dom/Link";
-
 class Register extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props.match.params);
     }
     render() {
         return (
@@ -32,23 +30,23 @@ class Register extends Component {
                                     <Form>
                                         <h1>Register</h1>
                                         <p className="text-muted">
-                                            Create your account
-                                        </p>
+                                            Create your account</p>
                                         <InputGroup className="mb-3">
-                                            <InputGroupAddon addonType="prepend">
-                                                <InputGroupText>
-                                                    @
-                                                </InputGroupText>
+                                            <InputGroupAddon
+                                                ddonType="prepend">
+                                                <InputGroupText>@</InputGroupText>
                                             </InputGroupAddon>
                                             <Input
                                                 type="text"
                                                 placeholder="Email"
                                                 autoComplete="email"
                                             />
+
+
+
                                         </InputGroup>
                                         <Button color="success" block>
-                                            Create Account
-                                        </Button>
+                                            Create Account</Button>
                                         <Link to={"/login"}>
                                             <Button
                                                 className="mt-2"
@@ -78,9 +76,7 @@ class Register extends Component {
                                                 <span>twitter</span>
                                             </Button>
                                         </Col>
-                                        <Link to={"/register"}>
-                                            Register
-                                        </Link>
+                                        <Link to={"/register"}>Register</Link>
                                     </Row>
                                 </CardFooter>
                             </Card>
@@ -91,5 +87,4 @@ class Register extends Component {
         );
     }
 }
-
 export default Register;

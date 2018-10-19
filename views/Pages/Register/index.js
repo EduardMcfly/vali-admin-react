@@ -10,7 +10,22 @@ import { Header, SwitchWithSlide } from "../../../components";
 class Register extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            email: "",
+            emailValidate: false
+        };
+        this.setEmail = this.setEmail.bind(this);
     }
+
+    setEmail(e) {
+        if (this.state.email.indexOf("@") !== -1) {
+            this.setState({ emailValidate: true });
+        } else {
+            this.setState({ emailValidate: false });
+        }
+        this.setState({ email: e.target.value });
+    }
+
     render() {
         return (
             <div className="app flex-row align-items-center">
@@ -38,6 +53,7 @@ class Register extends Component {
                                                     );
                                                     return (
                                                         <route.component
+                                                            {...this}
                                                             {...props}
                                                         />
                                                     );
