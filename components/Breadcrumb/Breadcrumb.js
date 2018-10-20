@@ -1,3 +1,9 @@
+import React, { Component } from "react";
+import { Route, Link, matchPath } from "react-router-dom";
+import { Breadcrumb, BreadcrumbItem } from "reactstrap";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+
 var _extends =
     Object.assign ||
     function(target) {
@@ -59,12 +65,6 @@ function _inherits(subClass, superClass) {
             ? Object.setPrototypeOf(subClass, superClass)
             : (subClass.__proto__ = superClass);
 }
-
-import React, { Component } from "react";
-import { Route, Link, matchPath } from "react-router-dom";
-import { Breadcrumb, BreadcrumbItem } from "reactstrap";
-import PropTypes from "prop-types";
-import classNames from "classnames";
 
 var routes = void 0;
 

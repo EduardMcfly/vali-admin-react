@@ -15,6 +15,7 @@ import { I18n } from 'react-i18next';
 import Link from 'react-router-dom/Link';
 import classNames from 'classnames';
 import { CircleAnimation } from '../Animations';
+import axios from 'axios';
 
 class LoginComponent extends Component {
     constructor(props) {
@@ -39,7 +40,7 @@ class LoginComponent extends Component {
 
     loginSubmit() {
         this.setState({ sendLogin: true });
-        return axios({
+        axios({
             method: 'post',
             url: './login',
             data: { email: this.state.email, password: this.state.password },

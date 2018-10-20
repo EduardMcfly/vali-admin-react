@@ -58,7 +58,6 @@ class Farm extends Component {
                                 <I18n ns="farm">
                                     {t => (
                                         <div className="chart-wrapper">
-                                            {t('addUser')}
                                             <Line data={this.dataLine(t)} options={options} />
                                         </div>
                                     )}

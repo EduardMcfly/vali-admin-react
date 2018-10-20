@@ -15,6 +15,8 @@ import { I18n } from "react-i18next";
 import Link from "react-router-dom/Link";
 import classNames from "classnames";
 import { CircleAnimation } from "../../../../components/Animations";
+ import axios from "axios";
+
 // routes config
 
 class Register extends Component {

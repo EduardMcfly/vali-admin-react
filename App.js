@@ -5,7 +5,7 @@ import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import 'font-awesome/css/font-awesome.min.css';
 // Import Simple Line Icons Set
 import 'simple-line-icons/css/simple-line-icons.css';
-import '../sass/app.css';
+import './app.css';
 
 import i18next from './i18n';
 
@@ -16,6 +16,9 @@ import { AuthUser, AuthFarm } from './controllers';
 import { Login, Page404, Page500, Register, Home } from './views/Pages';
 import { setTimeout } from 'timers';
 
+import axios from 'axios';
+
+import swal from 'sweetalert2';
 // for current language
 
 class App extends Component {
@@ -47,7 +50,7 @@ class App extends Component {
     }
 
     sendRequest() {
-        return axios({
+        axios({
             method: 'post',
             url: './verifyAuth',
         });
