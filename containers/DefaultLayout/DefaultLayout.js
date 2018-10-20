@@ -56,7 +56,7 @@ class DefaultLayout extends Component {
                         this.sideBar = sideBar;
                     }}
                 />
-                <main className="app-content" style={{'overflow':'hidden'}}>
+                <main className="app-content" style={{ 'overflow': 'hidden' }}>
                     <Breadcrumb appRoutes={Object.assign(routes.animated, routes.withoutAnimation)} />
                     <Container fluid>
                         <Switch>
@@ -115,8 +115,8 @@ class DefaultLayout extends Component {
                                         />
                                     ) : null;
                                 })}
-                            </SwitchWithSlide>
                                 <Redirect from="/" to="/farm" />
+                            </SwitchWithSlide>
                         </Switch>
                     </Container>
                 </main>
