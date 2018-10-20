@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import { AddFarm } from '..';
 import { I18n } from 'react-i18next';
 import nav from './_nav';
-import { log } from 'util';
 
 class Sidebar extends Component {
     constructor(props) {
@@ -64,7 +63,7 @@ class Sidebar extends Component {
             .catch(res => {
                 setTimeout(() => {
                     this.getInfoUser();
-                }, 2000);
+                }, 4000);
             });
     }
 
@@ -85,7 +84,7 @@ class Sidebar extends Component {
             .catch(error => {
                 setTimeout(() => {
                     this.getlistFarms();
-                }, 2000);
+                }, 4000);
             });
     }
 
