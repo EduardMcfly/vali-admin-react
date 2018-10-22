@@ -1,5 +1,5 @@
 import { CircleAnimation } from "../../../components";
-import { VerifyEmail, Token } from "./views";
+import { VerifyEmail, Token, TokenVerify } from "./views";
 
 function Loading() {
     return CircleAnimation;
@@ -22,7 +22,7 @@ const routes = [
     {
         path: "/register/token/:id",
         name: "tokenValue",
-        component: Token
+        component: TokenVerify
     }
 ];
 

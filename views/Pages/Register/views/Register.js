@@ -145,18 +145,6 @@ class Register extends Component {
                                             {t("confirmEmail")}
                                         </Button>
                                     </div>
-                                    {/* <Row className={"my-2"}>
-                                        <Col xs="12" sm="6">
-                                            <Button className={""} block>
-                                                <span>facebook</span>
-                                            </Button>
-                                        </Col>
-                                        <Col xs="12" sm="6">
-                                            <Button className={""} block>
-                                                <span>twitter</span>
-                                            </Button>
-                                        </Col>
-                                    </Row> */}
                                     <Link to={"/login"}>
                                         <Button color="link" block>
                                             {t("haveLogin")}

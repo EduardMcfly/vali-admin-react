@@ -5,17 +5,19 @@ import {
     CardBody,
     CardFooter,
     Col,
-    Container,
     Form,
     Input,
     InputGroup,
     InputGroupAddon,
     InputGroupText,
+    FormFeedback,
     Row
 } from "reactstrap";
 import { I18n } from "react-i18next";
 import Link from "react-router-dom/Link";
-class Register extends Component {
+import AccessAlarmIcon from "@material-ui/icons/Person";
+
+class Token extends Component {
     constructor(props) {
         super(props);
     }
@@ -28,55 +30,59 @@ class Register extends Component {
                             <Card className="mx-4">
                                 <CardBody className="p-4">
                                     <Form>
-                                        <h1>Register</h1>
-                                        <p className="text-muted">
-                                            Create your account</p>
                                         <InputGroup className="mb-3">
-                                            <InputGroupAddon
-                                                ddonType="prepend">
-                                                <InputGroupText>@</InputGroupText>
+                                            <InputGroupAddon addonType="prepend">
+                                                <InputGroupText>
+                                                    <AccessAlarmIcon />
+                                                </InputGroupText>
                                             </InputGroupAddon>
                                             <Input
                                                 type="text"
-                                                placeholder="Email"
+                                                placeholder={t(
+                                                    "labelEmailRecived"
+                                                )}
+                                                autoComplete="email"
+                                                name="email"
+                                            />
+                                            <FormFeedback />
+                                        </InputGroup>
+                                        <label className="text-muted" />
+                                        <InputGroup className="mb-3">
+                                            <InputGroupAddon addonType="prepend">
+                                                <InputGroupText>
+                                                    @
+                                                </InputGroupText>
+                                            </InputGroupAddon>
+                                            <Input
+                                                type="number"
+                                                placeholder={t(
+                                                    "labelCodeRecived"
+                                                )}
                                                 autoComplete="email"
                                             />
-
-
-
                                         </InputGroup>
-                                        <Button color="success" block>
-                                            Create Account</Button>
-                                        <Link to={"/login"}>
-                                            <Button
-                                                className="mt-2"
-                                                color="primary"
-                                                block
-                                            >
-                                                Login
-                                            </Button>
-                                        </Link>
+                                        <Button color="primary" block>
+                                            Create Account
+                                        </Button>
                                     </Form>
                                 </CardBody>
                                 <CardFooter className="p-4">
                                     <Row>
-                                        <Col xs="12" sm="6">
-                                            <Button
-                                                className="btn-facebook"
-                                                block
-                                            >
-                                                <span>facebook</span>
-                                            </Button>
+                                        <Col
+                                            xs="6"
+                                            sm="6"
+                                            className={"mx-auto"}
+                                        >
+                                            <Link to={"/register"}>
+                                                <Button
+                                                    color={"success"}
+                                                    block
+                                                    size={"sm"}
+                                                >
+                                                    Register
+                                                </Button>
+                                            </Link>
                                         </Col>
-                                        <Col xs="12" sm="6">
-                                            <Button
-                                                className="btn-twitter"
-                                                block
-                                            >
-                                                <span>twitter</span>
-                                            </Button>
-                                        </Col>
-                                        <Link to={"/register"}>Register</Link>
                                     </Row>
                                 </CardFooter>
                             </Card>
@@ -87,4 +93,4 @@ class Register extends Component {
         );
     }
 }
-export default Register;
+export default Token;

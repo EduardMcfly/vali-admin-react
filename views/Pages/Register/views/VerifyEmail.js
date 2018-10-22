@@ -3,6 +3,7 @@ import {
     Button,
     Card,
     CardBody,
+    CardFooter,
     Col,
     Input,
     FormFeedback,
@@ -15,7 +16,7 @@ import { I18n } from "react-i18next";
 import Link from "react-router-dom/Link";
 import classNames from "classnames";
 import { CircleAnimation } from "../../../../components/Animations";
- import axios from "axios";
+import axios from "axios";
 
 // routes config
 
@@ -85,14 +86,14 @@ class VerifyEmail extends Component {
                     <Row className="justify-content-center">
                         <Col md={"9"} lg={"7"} xl={"6"}>
                             <Card className="tileAnimation">
-                                <CardBody className="p-4">
+                                <CardBody className="pb-0">
                                     <div>
                                         <h1>{t("registerTitle")}</h1>
                                         <p className="text-muted">
                                             {t("registerSubtitle")}
                                         </p>
                                         <InputGroup className="mb-3">
-                                            <InputGroupAddon addonType="prepend">
+                                            <InputGroupAddon>
                                                 <InputGroupText>
                                                     <i className="fa fa-user" />
                                                 </InputGroupText>
@@ -135,17 +136,12 @@ class VerifyEmail extends Component {
                                     </div>
                                     <Link to={"/register/token"}>
                                         <Button color="link" block>
-                                            <InputGroup className="mb-3 align-items-center">
+                                            <InputGroup className="d-block align-items-center">
                                                 <i
                                                     className={"fa fa-user p-2"}
                                                 />
                                                 {t("haveCode")}
                                             </InputGroup>
-                                        </Button>
-                                    </Link>
-                                    <Link to={"/login"}>
-                                        <Button color="link" block>
-                                            {"<< " + t("haveLogin")}
                                         </Button>
                                     </Link>
                                 </CardBody>
@@ -160,7 +156,25 @@ class VerifyEmail extends Component {
                                 >
                                     <CircleAnimation width={"70px"} />
                                 </div>
-                                {console.log()}
+                                <CardFooter className="p-0">
+                                    <Row>
+                                        <Col
+                                            xs="6"
+                                            sm="6"
+                                            className={"mx-auto"}
+                                        >
+                                            <Link to={"/register"}>
+                                                <Button
+                                                    color={"link"}
+                                                    block
+                                                    size={"sm"}
+                                                >
+                                                    {t("haveLogin")}
+                                                </Button>
+                                            </Link>
+                                        </Col>
+                                    </Row>
+                                </CardFooter>
                             </Card>
                         </Col>
                     </Row>
