@@ -17,6 +17,7 @@ import Link from "react-router-dom/Link";
 import classNames from "classnames";
 import { CircleAnimation } from "../../../../components/Animations";
 import axios from "axios";
+import EmailInput from "../components/EmailInput";
 
 // routes config
 
@@ -29,6 +30,7 @@ class VerifyEmail extends Component {
             errors: { inputs: { email: false }, messages: { email: "" } }
         };
         this.emailVerifySubmit = this.emailVerifySubmit.bind(this);
+        this.resetErrosInputs = this.resetErrosInputs.bind(this);
     }
 
     resetErrosInputs() {
@@ -42,11 +44,11 @@ class VerifyEmail extends Component {
         return axios({
             method: "post",
             url: "./registerVerifyEmail",
-            data: { email: this.props.state.email }
+            data: { email: this.props.email.input }
         })
             .then(res => {
                 if (typeof res.data.success !== "undefined") {
-                    this.props.userAuth.login();
+                    this.props.history.push('/register/token/')
                 } else if (typeof res.data.errors !== "undefined") {
                     this.setState({ sendLogin: false });
                     var errors = res.data.errors;
@@ -84,7 +86,7 @@ class VerifyEmail extends Component {
             <I18n ns="register">
                 {(t, { i18n }) => (
                     <Row className="justify-content-center">
-                        <Col md={"9"} lg={"7"} xl={"6"}>
+                        <Col sm={"12"} md={"9"} lg={"6"} xl={"6"}>
                             <Card className="tileAnimation">
                                 <CardBody className="pb-0">
                                     <div>
@@ -92,40 +94,21 @@ class VerifyEmail extends Component {
                                         <p className="text-muted">
                                             {t("registerSubtitle")}
                                         </p>
-                                        <InputGroup className="mb-3">
-                                            <InputGroupAddon>
-                                                <InputGroupText>
-                                                    <i className="fa fa-user" />
-                                                </InputGroupText>
-                                            </InputGroupAddon>
-                                            <Input
-                                                className={classNames({
-                                                    "is-invalid": this.state
-                                                        .emailError.message
-                                                })}
-                                                type="text"
-                                                placeholder={t("emailTitle")}
-                                                autoComplete="email"
-                                                name="email"
-                                                value={this.props.state.email}
-                                                onChange={this.props.setEmail}
-                                                onKeyUp={this.props.setEmail}
-                                            />
-                                            <FormFeedback>
-                                                {this.state.emailError.message}
-                                            </FormFeedback>
-                                        </InputGroup>
+                                        <EmailInput
+                                            value={this.props.email.input}
+                                            setEmail={this.props.setEmail}
+                                            emailError={this.state.emailError.message}
+                                            resetErrosInputs={this.resetErrosInputs}
+                                        />
                                         <Button
                                             color={classNames("success", {
                                                 disabled:
-                                                    this.props.state
-                                                        .emailValidate === false
+                                                    this.props.verifyEmail() === false
                                             })}
                                             block
                                             onClick={() => {
                                                 if (
-                                                    this.props.state
-                                                        .emailValidate
+                                                    this.props.verifyEmail()
                                                 ) {
                                                     this.emailVerifySubmit();
                                                 }

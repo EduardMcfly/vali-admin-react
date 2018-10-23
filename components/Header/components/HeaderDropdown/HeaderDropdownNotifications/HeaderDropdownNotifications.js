@@ -6,7 +6,7 @@ import {
     DropdownToggle
 } from "reactstrap";
 import { I18n } from "react-i18next";
-import { AutenticateRender } from "../../../../../controllers";
+import { RenderChildren } from "../../../../../controllers";
 import { ElemntsNotificationsDropDown } from "./components";
 
 class HeaderDropdownNotifications extends Component {
@@ -62,7 +62,7 @@ class HeaderDropdownNotifications extends Component {
     render() {
         const authenticatedState = this.props.userAuth.authenticatedState();
         return (
-            <AutenticateRender
+            <RenderChildren
                 authenticatedState={authenticatedState}
                 children={
                     <Dropdown

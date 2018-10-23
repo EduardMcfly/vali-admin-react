@@ -1,4 +1,3 @@
-import { AuthUser, AutenticateRender } from './Auth';
-import { AuthFarm } from './Farm';
+import { RenderChildren, RenderRoute } from "./RenderValidation";
 
-export { AuthUser, AuthFarm, AutenticateRender };
+export { AutenticateRender, RenderRoute, RenderChildren };

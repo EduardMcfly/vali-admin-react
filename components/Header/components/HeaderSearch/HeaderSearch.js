@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "reactstrap";
-import { AutenticateRender } from "../../../../controllers";
+import { RenderChildren } from "../../../../controllers";
 
 class HeaderSearch extends Component {
     constructor(props) {
@@ -10,7 +10,7 @@ class HeaderSearch extends Component {
     render() {
         const authenticatedState = this.props.userAuth.authenticatedState();
         return (
-            <AutenticateRender
+            <RenderChildren
                 authenticatedState={authenticatedState}
                 children={
                     <li className="app-search">

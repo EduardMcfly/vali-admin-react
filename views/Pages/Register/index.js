@@ -3,27 +3,34 @@ import { Container } from "reactstrap";
 import routes from "./routes";
 import { I18n } from "react-i18next";
 import { Redirect, Route, Switch } from "react-router-dom";
+import validator from 'validator';
 
 // routes config
 import { Header, SwitchWithSlide } from "../../../components";
+
+import { VerifyEmail } from "./views";
 
 class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
             email: "",
-            emailValidate: false
+            verifyEmail: false
         };
         this.setEmail = this.setEmail.bind(this);
+        this.verifyEmail = this.verifyEmail.bind(this);
     }
 
     setEmail(e) {
-        if (this.state.email.indexOf("@") !== -1) {
-            this.setState({ emailValidate: true });
-        } else {
-            this.setState({ emailValidate: false });
-        }
         this.setState({ email: e.target.value });
+    }
+
+    verifyEmail() {
+        if (validator.isEmail(this.state.email)) {
+            return true
+        } else {
+            return false
+        }
     }
 
     render() {
@@ -38,6 +45,17 @@ class Register extends Component {
                         style={{ minHeight: "unset" }}
                     >
                         <SwitchWithSlide>
+                            <Route
+                                exact
+                                path="/register"
+                                name="register"
+                                render={(props) => (<VerifyEmail
+                                    {...props}
+                                    email={{ input: this.state.email }}
+                                    setEmail={this.setEmail}
+                                    verifyEmail={this.verifyEmail}
+                                />)}
+                            />
                             {routes.map((route, idx) => {
                                 return route.component ? (
                                     <Route
@@ -45,25 +63,29 @@ class Register extends Component {
                                         path={route.path}
                                         exact={route.exact}
                                         name={route.name}
-                                        render={props => (
-                                            <I18n ns="general">
-                                                {t => {
-                                                    document.title = t(
-                                                        "routes." + route.name
-                                                    );
-                                                    return (
-                                                        <route.component
-                                                            {...this}
-                                                            {...props}
-                                                        />
-                                                    );
-                                                }}
-                                            </I18n>
-                                        )}
+                                        render={props => {
+                                            return (
+                                                <I18n ns="general">
+                                                    {t => {
+                                                        document.title = t(
+                                                            "routes." + route.name
+                                                        );
+                                                        return (
+                                                            <route.component
+                                                                {...props}
+                                                                email={{ input: this.state.email }}
+                                                                setEmail={this.setEmail}
+                                                                verifyEmail={this.verifyEmail}
+                                                            />
+                                                        );
+                                                    }}
+                                                </I18n>
+                                            )
+                                        }}
                                     />
                                 ) : null;
                             })}
-                            <Redirect from="/" to="/home" />
+                            <Redirect from="/" to="/register" />
                         </SwitchWithSlide>
                     </div>
                 </Container>

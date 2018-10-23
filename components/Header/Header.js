@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Link from "react-router-dom/Link";
 import { HeaderSearch, HeaderDropdown } from "./components";
-import { AutenticateRender } from "../../controllers";
+import { RenderChildren } from "../../controllers";
 
 class DefaultHeader extends Component {
     constructor(props) {
@@ -24,7 +24,7 @@ class DefaultHeader extends Component {
 
         return (
             <React.Fragment>
-                <AutenticateRender
+                <RenderChildren
                     authenticatedState={this.props.userAuth.authenticatedState()}
                     children={
                         <React.Fragment>
@@ -48,7 +48,7 @@ class DefaultHeader extends Component {
                     Cosva
                 </Link>
                 <ul className="app-nav">
-                    <AutenticateRender
+                    <RenderChildren
                         authenticatedState={this.props.userAuth.authenticatedState()}
                         children={
                             <React.Fragment>

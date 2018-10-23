@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 import { I18n } from 'react-i18next';
-import { AutenticateRender } from '../../../../controllers';
+import { RenderChildren } from '../../../../controllers';
  import axios from "axios";
 class HeaderDropdownUser extends Component {
     constructor(props) {
@@ -41,7 +41,7 @@ class HeaderDropdownUser extends Component {
                 <I18n ns="header">
                     {(t, { i18n }) => (
                         <DropdownMenu>
-                            <AutenticateRender
+                            <RenderChildren
                                 authenticatedState={authenticatedState}
                                 children={
                                     <DropdownItem>
@@ -50,7 +50,7 @@ class HeaderDropdownUser extends Component {
                                     </DropdownItem>
                                 }
                             />
-                            <AutenticateRender
+                            <RenderChildren
                                 authenticatedState={authenticatedState}
                                 children={
                                     <DropdownItem>
@@ -67,7 +67,7 @@ class HeaderDropdownUser extends Component {
                                 <i className="fa fa-language fa-lg" />
                                 English
                             </DropdownItem>
-                            <AutenticateRender
+                            <RenderChildren
                                 authenticatedState={authenticatedState}
                                 children={
                                     <React.Fragment>

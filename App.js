@@ -11,7 +11,7 @@ import i18next from './i18n';
 
 // Containers
 import { DefaultLayout } from './containers';
-import { AuthUser, AuthFarm } from './controllers';
+import { RenderRoute, AuthFarm } from './controllers';
 // Pages
 import { Login, Page404, Page500, Register, Home } from './views/Pages';
 import { setTimeout } from 'timers';
@@ -161,7 +161,7 @@ class App extends Component {
         return (
             <HashRouter>
                 <Switch>
-                    <AuthUser
+                    <RenderRoute
                         exact
                         path="/login"
                         name="Login Page"
@@ -180,7 +180,7 @@ class App extends Component {
                         redirectTo="/farms"
                         authenticated={this.state.login}
                     />
-                    <AuthUser
+                    <RenderRoute
                         path="/register/"
                         name="Login Page"
                         component={props => {
@@ -201,7 +201,7 @@ class App extends Component {
                     <Route exact path="/404" name="Page 404" component={Page404} />
                     <Route exact path="/500" name="Page 500" component={Page500} />
                     <Route exact path="/home" name="Home" component={Home} />
-                    <AuthUser
+                    <RenderRoute
                         path="/"
                         name="root"
                         component={props => (

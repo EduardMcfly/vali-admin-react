@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 import { I18n } from "react-i18next";
 import Link from "react-router-dom/Link";
-import AccessAlarmIcon from "@material-ui/icons/Person";
+import { RenderChildren } from '../../../../controllers';
 
 class Token extends Component {
     constructor(props) {
@@ -26,31 +26,33 @@ class Token extends Component {
             <I18n ns="register">
                 {(t, { i18n }) => (
                     <Row className="justify-content-center">
-                        <Col md="9">
+                        <Col sm={"12"} md={"9"} lg={"6"} xl={"6"}>
                             <Card className="mx-4">
                                 <CardBody className="p-4">
                                     <Form>
-                                        <InputGroup className="mb-3">
-                                            <InputGroupAddon addonType="prepend">
-                                                <InputGroupText>
-                                                    <AccessAlarmIcon />
-                                                </InputGroupText>
-                                            </InputGroupAddon>
-                                            <Input
-                                                type="text"
-                                                placeholder={t(
-                                                    "labelEmailRecived"
-                                                )}
-                                                autoComplete="email"
-                                                name="email"
-                                            />
-                                            <FormFeedback />
-                                        </InputGroup>
+                                        <RenderChildren state={!this.props.verifyEmail()}>
+                                            <InputGroup className="mb-3">
+                                                <InputGroupAddon addonType="prepend">
+                                                    <InputGroupText className={'d-flex justify-content-center'} style={{ width: '40px' }}>
+                                                        <i className="fa fa-user" />
+                                                    </InputGroupText>
+                                                </InputGroupAddon>
+                                                <Input
+                                                    type="text"
+                                                    placeholder={t(
+                                                        "labelEmailRecived"
+                                                    )}
+                                                    autoComplete="email"
+                                                    name="email"
+                                                />
+                                                <FormFeedback />
+                                            </InputGroup>
+                                        </RenderChildren>
                                         <label className="text-muted" />
                                         <InputGroup className="mb-3">
                                             <InputGroupAddon addonType="prepend">
-                                                <InputGroupText>
-                                                    @
+                                                <InputGroupText className={'d-flex justify-content-center'} style={{ width: '40px' }}>
+                                                    <i className="fa fa-slack" />
                                                 </InputGroupText>
                                             </InputGroupAddon>
                                             <Input

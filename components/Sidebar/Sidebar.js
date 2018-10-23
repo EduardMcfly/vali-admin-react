@@ -51,7 +51,7 @@ class Sidebar extends Component {
             url: './infoUser',
         })
             .then(res => {
-                if (AxiosStore.validate('infoUser')) {
+                if (!AxiosStore.validate('infoUser')) {
                     var user = AxiosStore.set('infoUser', res.data.user['0']);
                 } else {
                     var user = AxiosStore.get('infoUser');
