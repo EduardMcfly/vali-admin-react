@@ -3,7 +3,7 @@ import { Container } from "reactstrap";
 import routes from "./routes";
 import { I18n } from "react-i18next";
 import { Redirect, Route, Switch } from "react-router-dom";
-import validator from 'validator';
+import validator from "validator";
 
 // routes config
 import { Header, SwitchWithSlide } from "../../../components";
@@ -15,21 +15,30 @@ class Register extends Component {
         super(props);
         this.state = {
             email: "",
-            verifyEmail: false
+            code: ""
         };
-        this.setEmail = this.setEmail.bind(this);
+        this.setInputs = this.setInputs.bind(this);
         this.verifyEmail = this.verifyEmail.bind(this);
+        this.verifyCode = this.verifyCode.bind(this);
     }
 
-    setEmail(e) {
-        this.setState({ email: e.target.value });
+    setInputs(e) {
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     verifyEmail() {
         if (validator.isEmail(this.state.email)) {
-            return true
+            return true;
         } else {
-            return false
+            return false;
+        }
+    }
+
+    verifyCode() {
+        if (validator.isEmail(this.state.code)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -49,12 +58,14 @@ class Register extends Component {
                                 exact
                                 path="/register"
                                 name="register"
-                                render={(props) => (<VerifyEmail
-                                    {...props}
-                                    email={{ input: this.state.email }}
-                                    setEmail={this.setEmail}
-                                    verifyEmail={this.verifyEmail}
-                                />)}
+                                render={props => (
+                                    <VerifyEmail
+                                        {...props}
+                                        email={{ input: this.state.email }}
+                                        setInputs={this.setInputs}
+                                        verifyEmail={this.verifyEmail}
+                                    />
+                                )}
                             />
                             {routes.map((route, idx) => {
                                 return route.component ? (
@@ -68,19 +79,39 @@ class Register extends Component {
                                                 <I18n ns="general">
                                                     {t => {
                                                         document.title = t(
-                                                            "routes." + route.name
+                                                            "routes." +
+                                                                route.name
                                                         );
                                                         return (
                                                             <route.component
                                                                 {...props}
-                                                                email={{ input: this.state.email }}
-                                                                setEmail={this.setEmail}
-                                                                verifyEmail={this.verifyEmail}
+                                                                setInputs={
+                                                                    this
+                                                                        .setInputs
+                                                                }
+                                                                email={{
+                                                                    input: this
+                                                                        .state
+                                                                        .email
+                                                                }}
+                                                                verifyEmail={
+                                                                    this
+                                                                        .verifyEmail
+                                                                }
+                                                                code={{
+                                                                    input: this
+                                                                        .state
+                                                                        .code
+                                                                }}
+                                                                verifyCode={
+                                                                    this
+                                                                        .verifyCode
+                                                                }
                                                             />
                                                         );
                                                     }}
                                                 </I18n>
-                                            )
+                                            );
                                         }}
                                     />
                                 ) : null;

@@ -33,7 +33,7 @@ class EmailInput extends Component {
                             name="email"
                             value={this.props.value}
                             onChange={(e) => {
-                                this.props.setEmail(e)
+                                this.props.setInputs(e)
                                 if (this.props.emailError) {
                                     this.props.resetErrosInputs()
                                 }
