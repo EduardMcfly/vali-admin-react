@@ -11,7 +11,7 @@ class HeaderSearch extends Component {
         const authenticatedState = this.props.userAuth.authenticatedState();
         return (
             <RenderChildren
-                authenticatedState={authenticatedState}
+                state={authenticatedState}
                 children={
                     <li className="app-search">
                         <input

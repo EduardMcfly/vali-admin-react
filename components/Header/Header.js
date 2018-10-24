@@ -25,7 +25,7 @@ class DefaultHeader extends Component {
         return (
             <React.Fragment>
                 <RenderChildren
-                    authenticatedState={this.props.userAuth.authenticatedState()}
+                    state={this.props.userAuth.authenticatedState()}
                     children={
                         <React.Fragment>
                             <div
@@ -49,7 +49,7 @@ class DefaultHeader extends Component {
                 </Link>
                 <ul className="app-nav">
                     <RenderChildren
-                        authenticatedState={this.props.userAuth.authenticatedState()}
+                        state={this.props.userAuth.authenticatedState()}
                         children={
                             <React.Fragment>
                                 <HeaderSearch {...this.props} />

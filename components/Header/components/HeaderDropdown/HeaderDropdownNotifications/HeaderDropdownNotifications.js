@@ -63,7 +63,7 @@ class HeaderDropdownNotifications extends Component {
         const authenticatedState = this.props.userAuth.authenticatedState();
         return (
             <RenderChildren
-                authenticatedState={authenticatedState}
+                state={authenticatedState}
                 children={
                     <Dropdown
                         isOpen={this.state.notificationsDropdownOpen}

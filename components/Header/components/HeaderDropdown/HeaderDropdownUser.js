@@ -42,7 +42,7 @@ class HeaderDropdownUser extends Component {
                     {(t, { i18n }) => (
                         <DropdownMenu>
                             <RenderChildren
-                                authenticatedState={authenticatedState}
+                                state={authenticatedState}
                                 children={
                                     <DropdownItem>
                                         <i className="fa fa-user fa-lg" />
@@ -51,7 +51,7 @@ class HeaderDropdownUser extends Component {
                                 }
                             />
                             <RenderChildren
-                                authenticatedState={authenticatedState}
+                                state={authenticatedState}
                                 children={
                                     <DropdownItem>
                                         <i className="fa fa-cog fa-lg" />
@@ -68,7 +68,7 @@ class HeaderDropdownUser extends Component {
                                 English
                             </DropdownItem>
                             <RenderChildren
-                                authenticatedState={authenticatedState}
+                                state={authenticatedState}
                                 children={
                                     <React.Fragment>
                                         <DropdownItem divider />
