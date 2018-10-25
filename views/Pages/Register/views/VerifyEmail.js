@@ -5,19 +5,15 @@ import {
     CardBody,
     CardFooter,
     Col,
-    Input,
-    FormFeedback,
     InputGroup,
-    InputGroupAddon,
-    InputGroupText,
     Row
 } from "reactstrap";
 import { I18n } from "react-i18next";
 import Link from "react-router-dom/Link";
 import classNames from "classnames";
-import { CircleAnimation } from "../../../../components/Animations";
-import axios from "axios";
 import EmailInput from "../components/EmailInput";
+import SendEmailToken from "../components/SendEmailToken";
+import { Overlay } from "../../../../components";
 
 // routes config
 
@@ -25,11 +21,8 @@ class VerifyEmail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sendLogin: false,
-            emailError: { message: false },
-            errors: { inputs: { email: false }, messages: { email: "" } }
+            emailError: { message: false }
         };
-        this.emailVerifySubmit = this.emailVerifySubmit.bind(this);
         this.resetErrosInputs = this.resetErrosInputs.bind(this);
     }
 
@@ -37,31 +30,6 @@ class VerifyEmail extends Component {
         this.setState({
             emailError: { message: false }
         });
-    }
-
-    emailVerifySubmit() {
-        this.setState({ sendLogin: true });
-        return axios({
-            method: "post",
-            url: "./registerVerifyEmail",
-            data: { email: this.props.email.input }
-        })
-            .then(res => {
-                if (typeof res.data.success !== "undefined") {
-                    this.props.history.push('/register/token/')
-                } else if (typeof res.data.errors !== "undefined") {
-                    this.setState({ sendLogin: false });
-                    var errors = res.data.errors;
-                    this.errorInputs(errors);
-                }
-            })
-            .catch(res => {
-                this.setState({ sendLogin: false });
-                if (typeof res.data.errors !== "undefined") {
-                    var errors = res.data.errors;
-                    this.errorInputs(errors);
-                }
-            });
     }
 
     errorInputs(errors) {
@@ -84,7 +52,7 @@ class VerifyEmail extends Component {
     render() {
         return (
             <I18n ns="register">
-                {(t, { i18n }) => (
+                {t => (
                     <Row className="justify-content-center">
                         <Col sm={"12"} md={"9"} lg={"6"} xl={"6"}>
                             <Card className="tileAnimation">
@@ -96,21 +64,24 @@ class VerifyEmail extends Component {
                                         </p>
                                         <EmailInput
                                             value={this.props.email.input}
-                                            setEmail={this.props.setEmail}
-                                            emailError={this.state.emailError.message}
-                                            resetErrosInputs={this.resetErrosInputs}
+                                            setInputs={this.props.setInputs}
+                                            emailError={
+                                                this.state.emailError.message
+                                            }
+                                            resetErrosInputs={
+                                                this.resetErrosInputs
+                                            }
                                         />
                                         <Button
                                             color={classNames("success", {
                                                 disabled:
-                                                    this.props.verifyEmail() === false
+                                                    this.props.verifyEmail() ===
+                                                    false
                                             })}
                                             block
                                             onClick={() => {
-                                                if (
-                                                    this.props.verifyEmail()
-                                                ) {
-                                                    this.emailVerifySubmit();
+                                                if (this.props.verifyEmail()) {
+                                                    SendEmailToken(this);
                                                 }
                                             }}
                                         >
@@ -128,17 +99,7 @@ class VerifyEmail extends Component {
                                         </Button>
                                     </Link>
                                 </CardBody>
-                                <div
-                                    className={classNames(
-                                        {
-                                            "d-none":
-                                                this.state.sendLogin === false
-                                        },
-                                        "overlay"
-                                    )}
-                                >
-                                    <CircleAnimation width={"70px"} />
-                                </div>
+                                <Overlay state={this.props.overlay} />
                                 <CardFooter className="p-0">
                                     <Row>
                                         <Col
@@ -146,7 +107,7 @@ class VerifyEmail extends Component {
                                             sm="6"
                                             className={"mx-auto"}
                                         >
-                                            <Link to={"/register"}>
+                                            <Link to={"/login"}>
                                                 <Button
                                                     color={"link"}
                                                     block

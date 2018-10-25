@@ -4,6 +4,7 @@ import {
     Card,
     CardBody,
     CardFooter,
+    CardHeader,
     Col,
     Form,
     Input,
@@ -18,100 +19,143 @@ import Link from "react-router-dom/Link";
 import EmailInput from "../components/EmailInput";
 import axios from "axios";
 import classNames from "classnames";
-import validator from "validator";
+import SendEmailToken from "../components/SendEmailToken";
+import { Overlay, MessagesTranslate } from "../../../../components";
 
 class TokenVerify extends Component {
     constructor(props) {
         super(props);
+        this.validations = true;
         this.tokenSubmit = this.tokenSubmit.bind(this);
         this.state = {
-            sendLogin: false,
-            emailError: { message: false },
-            codeError: { message: false },
-            errors: { inputs: { email: false }, messages: { email: "" } }
+            sendEmailToken: false,
+            emailError: { message: false, state: false },
+            codeError: { message: false, state: false }
         };
         this.resetErrosInputs = this.resetErrosInputs.bind(this);
+        this.resetErrosInput = this.resetErrosInput.bind(this);
         this.validateInputs = this.validateInputs.bind(this);
+        this.ad = this.ad.bind(this);
     }
 
-    resetErrosInputs() {
+    ad({ elements }) {
+        elements.map(obj => {
+            if (obj.param) {
+                this.props.setInputs({
+                    target: { name: obj.input, value: obj.param }
+                });
+            }
+        });
+    }
+
+    componentWillMount() {
+        const { params } = this.props.match;
+        this.ad({
+            elements: [
+                { param: params.token, input: "code" },
+                { param: params.email, input: "email" }
+            ]
+        });
+    }
+    resetErrosInput({ input }) {
         this.setState({
-            emailError: { message: false }
+            [input]: { message: false, state: false }
+        });
+    }
+    resetErrosInputs() {
+        this.validations = true;
+        this.setState({
+            sendEmailToken: false,
+            emailError: { message: false, state: false },
+            codeError: { message: false, state: false }
         });
     }
 
     errorInputs(errors) {
-        this.resetErrosInputs();
+        if (typeof errors.sendEmail !== "undefined") {
+            this.setState({ sendEmailToken: true });
+        }
         this.errorInput(errors.email, "emailError");
         this.errorInput(errors.code, "codeError");
     }
 
     errorInput(error, input) {
         if (typeof error !== "undefined") {
-            this.errorsChange(error, input);
+            this.errorsSet(error, input);
         }
     }
 
-    errorsChange(error, input) {
+    errorsSet(error, input) {
+        if (this.validations) {
+            this.validations = false;
+        }
         this.setState({
-            [input]: { message: error }
+            [input]: { message: error, state: true }
         });
     }
 
-    validateInputs(t){
+    validateInputs() {
+        this.resetErrosInputs();
         if (!this.props.verifyEmail()) {
-            console.log(t('active_url'));
-            /* this.errorInput() */
+            this.errorInput(<MessagesTranslate type={"email"} />, "emailError");
         }
+        if (!this.props.verifyCode()) {
+            this.errorInput(
+                <MessagesTranslate
+                    type={"numeric"}
+                    attribute={this.props.code.input}
+                />,
+                "codeError"
+            );
+        }
+        return this.validations;
     }
 
-    tokenSubmit(t) {
-        this.validateInputs(t)
-        if (validator.isEmail(this.props.email.input)) {
-            return true;
-        } else {
-            return false;
-        }
-        this.setState({ sendLogin: true });
-        return axios({
-            method: "post",
-            url: "./registerVerifyPin",
-            data: { email: this.props.email.input, code: this.props.code.input }
-        })
-            .then(res => {
-                if (typeof res.data.success !== "undefined") {
-                    this.props.history.push("/register/token/");
-                } else if (typeof res.data.errors !== "undefined") {
-                    this.setState({ sendLogin: false });
-                    var errors = res.data.errors;
-                    this.errorInputs(errors);
+    tokenSubmit() {
+        if (this.validateInputs()) {
+            const { toggleOverlay } = this.props;
+            toggleOverlay(true);
+            axios({
+                method: "post",
+                url: "./registerVerifyPin",
+                data: {
+                    email: this.props.email.input,
+                    code: this.props.code.input
                 }
             })
-            .catch(res => {
-                this.setState({ sendLogin: false });
-                if (typeof res.data.errors !== "undefined") {
-                    var errors = res.data.errors;
-                    this.errorInputs(errors);
-                }
-            });
-        /* setTimeout(() => {
-            this.props.history.push("/register/token/32233");
-        }, 1000); */
+                .then(res => {
+                    toggleOverlay(false);
+                    if (typeof res.data.success !== "undefined") {
+                        this.props.history.push("/register/registerUser");
+                    } else if (typeof res.data.errors !== "undefined") {
+                        toggleOverlay(false);
+                        var errors = res.data.errors;
+                        this.errorInputs(errors);
+                    }
+                })
+                .catch(res => {
+                    toggleOverlay(false);
+                    if (typeof res.data.errors !== "undefined") {
+                        var errors = res.data.errors;
+                        this.errorInputs(errors);
+                    }
+                });
+        }
     }
 
     render() {
         return (
-            <I18n ns={['register','login']}>
+            <I18n ns={["register"]}>
                 {(t, { i18n }) => (
                     <Row className="justify-content-center">
                         <Col sm={"12"} md={"9"} lg={"6"} xl={"6"}>
-                            <Card className="mx-4">
-                                <CardFooter>
+                            <Card className="mx-4 tileAnimation">
+                                <CardHeader>
                                     <h3>{t("verifyTokenTitle")}</h3>
                                     <span className="text-muted">
                                         {t("verifyTokenSubtitle")}
                                     </span>
-                                </CardFooter>
+                                </CardHeader>
                                 <CardBody className="p-4">
                                     <Form>
                                         <EmailInput
@@ -120,9 +164,27 @@ class TokenVerify extends Component {
                                             emailError={
                                                 this.state.emailError.message
                                             }
-                                            resetErrosInputs={
-                                                this.resetErrosInputs
-                                            }
+                                            resetErrosInputs={() => {
+                                                this.resetErrosInput({
+                                                    input: "emailError"
+                                                });
+                                            }}
+                                            sentToken={{
+                                                state: this.state
+                                                    .sendEmailToken,
+                                                action: () => {
+                                                    this.props.history.push(
+                                                        "/register"
+                                                    );
+                                                    this.props.setInputs({
+                                                        target: {
+                                                            name: "code",
+                                                            value: ""
+                                                        }
+                                                    });
+                                                    SendEmailToken(this);
+                                                }
+                                            }}
                                         />
                                         <label className="text-muted" />
                                         <InputGroup className="mb-3">
@@ -140,7 +202,7 @@ class TokenVerify extends Component {
                                                 type="number"
                                                 className={classNames({
                                                     "is-invalid": this.state
-                                                        .codeError.message
+                                                        .codeError.state
                                                 })}
                                                 placeholder={t(
                                                     "labelCodeRecived"
@@ -154,7 +216,9 @@ class TokenVerify extends Component {
                                                         this.state.codeError
                                                             .message
                                                     ) {
-                                                        this.resetErrosInputs();
+                                                        this.resetErrosInput({
+                                                            input: "codeError"
+                                                        });
                                                     }
                                                 }}
                                             />
@@ -163,11 +227,10 @@ class TokenVerify extends Component {
                                             </FormFeedback>
                                         </InputGroup>
                                         <Button
-                                            onClick={() => this.tokenSubmit(t)}
+                                            onClick={() => this.tokenSubmit()}
                                             color="info"
                                             block
                                         >
-                                            {console.log(i18n)}
                                             {t("confirm")}
                                         </Button>
                                     </Form>
@@ -191,6 +254,7 @@ class TokenVerify extends Component {
                                         </Col>
                                     </Row>
                                 </CardFooter>
+                                <Overlay state={this.props.overlay} />
                             </Card>
                         </Col>
                     </Row>

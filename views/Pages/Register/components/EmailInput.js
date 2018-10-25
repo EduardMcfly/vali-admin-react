@@ -4,7 +4,7 @@ import {
     FormFeedback,
     InputGroup,
     InputGroupAddon,
-    InputGroupText,
+    InputGroupText
 } from "reactstrap";
 import { I18n } from "react-i18next";
 import classNames from "classnames";
@@ -14,9 +14,10 @@ class EmailInput extends Component {
         super(props);
     }
     render() {
+        const { props } = this;
         return (
             <I18n ns="register">
-                {(t, { i18n }) => (
+                {t => (
                     <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText>
@@ -25,22 +26,33 @@ class EmailInput extends Component {
                         </InputGroupAddon>
                         <Input
                             className={classNames({
-                                "is-invalid": this.props.emailError
+                                "is-invalid": props.emailError
                             })}
                             type="text"
                             placeholder={t("emailTitle")}
                             autoComplete="email"
                             name="email"
-                            value={this.props.value}
-                            onChange={(e) => {
-                                this.props.setInputs(e)
-                                if (this.props.emailError) {
-                                    this.props.resetErrosInputs()
+                            value={props.value}
+                            onChange={e => {
+                                props.setInputs(e);
+                                if (props.emailError) {
+                                    props.resetErrosInputs();
                                 }
                             }}
                         />
                         <FormFeedback>
-                            {this.props.emailError}
+                            <div
+                                className={classNames({
+                                    "c-pointer": props.sentToken.state
+                                })}
+                                onClick={() => {
+                                    if (props.sentToken.state) {
+                                        props.sentToken.action();
+                                    }
+                                }}
+                            >
+                                {props.emailError}
+                            </div>
                         </FormFeedback>
                     </InputGroup>
                 )}
@@ -48,4 +60,9 @@ class EmailInput extends Component {
         );
     }
 }
+
+EmailInput.defaultProps = {
+    sentToken: { state: false }
+};
+
 export default EmailInput;

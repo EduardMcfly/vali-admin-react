@@ -3,43 +3,40 @@ import { Container } from "reactstrap";
 import routes from "./routes";
 import { I18n } from "react-i18next";
 import { Redirect, Route, Switch } from "react-router-dom";
-import validator from "validator";
-
-// routes config
 import { Header, SwitchWithSlide } from "../../../components";
-
-import { VerifyEmail } from "./views";
+import { RenderRoute } from "../../../controllers";
+import { VerifyEmail, RegisterUser } from "./views";
+import validator from "validator";
 
 class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            overlay: false,
             email: "",
             code: ""
         };
         this.setInputs = this.setInputs.bind(this);
         this.verifyEmail = this.verifyEmail.bind(this);
         this.verifyCode = this.verifyCode.bind(this);
+        this.toggleOverlay = this.toggleOverlay.bind(this);
     }
 
+    toggleOverlay(state: boolean) {
+        this.setState({
+            overlay: state
+        });
+    }
     setInputs(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
 
     verifyEmail() {
-        if (validator.isEmail(this.state.email)) {
-            return true;
-        } else {
-            return false;
-        }
+        return validator.isEmail(this.state.email) ? true : false;
     }
 
     verifyCode() {
-        if (validator.isEmail(this.state.code)) {
-            return true;
-        } else {
-            return false;
-        }
+        return validator.isNumeric(this.state.code) ? true : false;
     }
 
     render() {
@@ -62,32 +59,68 @@ class Register extends Component {
                                     <VerifyEmail
                                         {...props}
                                         email={{ input: this.state.email }}
+                                        overlay={this.state.overlay}
+                                        toggleOverlay={this.toggleOverlay}
                                         setInputs={this.setInputs}
                                         verifyEmail={this.verifyEmail}
                                     />
                                 )}
                             />
-                            {routes.map((route, idx) => {
-                                return route.component ? (
+                            <RenderRoute
+                                path="/register/registerUser"
+                                name="Register user"
+                                component={props => {
+                                    this.authenticatedUser = false;
+                                    return (
+                                        <RegisterUser
+                                            {...props}
+                                            setInputs={this.setInputs}
+                                            toggleOverlay={this.toggleOverlay}
+                                            overlay={this.state.overlay}
+                                            email={{
+                                                input: this.state.email
+                                            }}
+                                            verifyEmail={this.verifyEmail}
+                                            code={{
+                                                input: this.state.code
+                                            }}
+                                            verifyCode={this.verifyCode}
+                                        />
+                                    );
+                                }}
+                                redirectTo="/register/token"
+                                authenticated={
+                                    this.verifyEmail() && this.verifyCode()
+                                }
+                            />
+                            {routes.map((r, idx) => {
+                                return r.component ? (
                                     <Route
                                         key={idx}
-                                        path={route.path}
-                                        exact={route.exact}
-                                        name={route.name}
+                                        path={r.path}
+                                        exact={r.exact}
+                                        name={r.name}
                                         render={props => {
                                             return (
                                                 <I18n ns="general">
                                                     {t => {
                                                         document.title = t(
-                                                            "routes." +
-                                                                route.name
+                                                            "routes." + r.name
                                                         );
                                                         return (
-                                                            <route.component
+                                                            <r.component
                                                                 {...props}
                                                                 setInputs={
                                                                     this
                                                                         .setInputs
+                                                                }
+                                                                toggleOverlay={
+                                                                    this
+                                                                        .toggleOverlay
+                                                                }
+                                                                overlay={
+                                                                    this.state
+                                                                        .overlay
                                                                 }
                                                                 email={{
                                                                     input: this

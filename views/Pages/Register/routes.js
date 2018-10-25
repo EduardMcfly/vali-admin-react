@@ -1,5 +1,5 @@
 import { CircleAnimation } from "../../../components";
-import { Register, TokenVerify } from "./views";
+import { TokenVerify } from "./views";
 
 function Loading() {
     return CircleAnimation;
@@ -14,9 +14,14 @@ const routes = [
         component: TokenVerify
     },
     {
-        path: "/register/token/:id",
+        path: "/register/token/:token/:email",
         name: "tokenValue",
-        component: Register
+        component: TokenVerify
+    },
+    {
+        path: "/register/token/:token",
+        name: "tokenValue",
+        component: TokenVerify
     }
 ];
 
