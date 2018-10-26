@@ -61,7 +61,7 @@ ResgisterUser.propTypes = {
 };
 
 ResgisterUser.defaultProps = {
-    type: "number",
+    type: "text",
     icon: "",
     classError: false,
     className: "",

@@ -146,7 +146,6 @@ class ResgisterUser extends Component {
                                     </CardHeader>
                                     <CardBody className="p-4">
                                         <Inputs
-                                            type={"text"}
                                             classError={
                                                 this.state.nameError.state
                                             }
@@ -164,10 +163,10 @@ class ResgisterUser extends Component {
                                                     });
                                                 }
                                             }}
+                                            icon={"fa fa-info-circle"}
                                             errorMessage="342343"
                                         />
                                         <Inputs
-                                            type={"text"}
                                             classError={
                                                 this.state.nameError.state
                                             }
@@ -186,6 +185,7 @@ class ResgisterUser extends Component {
                                                     });
                                                 }
                                             }}
+                                            icon={"fa fa-info"}
                                             errorMessage="342343"
                                         />
                                         <Inputs
@@ -207,6 +207,7 @@ class ResgisterUser extends Component {
                                                     });
                                                 }
                                             }}
+                                            icon={"fa fa-id-card-o"}
                                             errorMessage="342343"
                                         />
                                         <Inputs
@@ -228,10 +229,10 @@ class ResgisterUser extends Component {
                                                     });
                                                 }
                                             }}
+                                            icon={"fa fa-hashtag"}
                                             errorMessage="342343"
                                         />
                                         <Inputs
-                                            type={"text"}
                                             classError={
                                                 this.state.passwordError.state
                                             }
@@ -249,10 +250,10 @@ class ResgisterUser extends Component {
                                                     });
                                                 }
                                             }}
+                                            icon={"fa  fa-circle-o-notch"}
                                             errorMessage="342343"
                                         />
                                         <Inputs
-                                            type={"text"}
                                             classError={
                                                 this.state.confirmPasswordError
                                                     .state
@@ -273,6 +274,7 @@ class ResgisterUser extends Component {
                                                     });
                                                 }
                                             }}
+                                            icon={"fa fa-dot-circle-o"}
                                             errorMessage="342343"
                                         />
                                         <Button

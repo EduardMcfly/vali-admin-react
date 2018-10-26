@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
     Input,
     InputGroup,
@@ -10,21 +10,20 @@ import {
     Modal,
     ModalFooter,
     ModalBody,
-    ModalHeader,
-} from 'reactstrap';
-import { I18n } from 'react-i18next';
-import { axios } from 'axios';
-
+    ModalHeader
+} from "reactstrap";
+import { I18n } from "react-i18next";
+import axios from "axios";
 
 class AddFarmWorkers extends Component {
     constructor(props) {
         super(props);
         this.state = {
             modalAddFarmWorkers: true,
-            modalAddFarmWorkersTitle: '',
+            modalAddFarmWorkersTitle: "",
             sendLogin: false,
-            email: '',
-            emailError: { message: false },
+            email: "",
+            emailError: { message: false }
         };
         this.toggleAddFarmWorkers = this.toggleAddFarmWorkers.bind(this);
         this.userFarmCreate = this.userFarmCreate.bind(this);
@@ -33,32 +32,32 @@ class AddFarmWorkers extends Component {
 
     resetErrosInputs() {
         this.setState({
-            emailError: { message: false },
+            emailError: { message: false }
         });
     }
 
     toggleAddFarmWorkers(proxy, action = !this.state.modalAddFarmWorkers) {
         this.setState({
-            modalAddFarmWorkers: action,
+            modalAddFarmWorkers: action
         });
     }
 
     userFarmCreate() {
         this.setState({ sendLogin: true });
-        return axios({
-            method: 'post',
-            url: './addUserFarm',
-            data: { email: this.state.email, farmId: this.props.farmId },
+        axios({
+            method: "post",
+            url: "./addUserFarm",
+            data: { email: this.state.email, farmId: this.props.farmId }
         })
             .then(res => {
                 this.resetErrosInputs();
-                if (typeof res.data.success !== 'undefined') {
-                    if (typeof this.props.reload !== 'undefined') {
+                if (typeof res.data.success !== "undefined") {
+                    if (typeof this.props.reload !== "undefined") {
                         this.props.reload();
                     }
                     this.toggleAddFarmWorkers(false);
                 }
-                if (typeof res.data.errors !== 'undefined') {
+                if (typeof res.data.errors !== "undefined") {
                     this.setState({ sendLogin: false });
                     var errors = res.data.errors;
                     this.errorInputs(errors);
@@ -66,7 +65,7 @@ class AddFarmWorkers extends Component {
             })
             .catch(res => {
                 this.setState({ sendLogin: false });
-                if (typeof res.data.errors !== 'undefined') {
+                if (typeof res.data.errors !== "undefined") {
                     var errors = res.data.errors;
                     this.errorInputs(errors);
                 }
@@ -75,24 +74,24 @@ class AddFarmWorkers extends Component {
 
     errorInputs(errors) {
         this.resetErrosInputs();
-        this.errorInput(errors.email, 'emailError');
+        this.errorInput(errors.email, "emailError");
     }
 
     errorInput(error, input) {
-        if (typeof error !== 'undefined') {
+        if (typeof error !== "undefined") {
             this.errorsChange(error, input);
         }
     }
 
     errorsChange(error, input) {
         this.setState({
-            [input]: { message: error },
+            [input]: { message: error }
         });
     }
 
     handleInputChange(event) {
         this.setState({
-            [event.target.name]: event.target.value,
+            [event.target.name]: event.target.value
         });
     }
 
@@ -104,15 +103,26 @@ class AddFarmWorkers extends Component {
                         <Modal
                             isOpen={this.state.modalAddFarmWorkers}
                             toggle={this.toggleAddFarmWorkers}
-                            className={(this.props.className, 'modal-dialog-centered modal-md')}
+                            className={
+                                (this.props.className,
+                                "modal-dialog-centered modal-md")
+                            }
                         >
-                            <ModalHeader toggle={this.toggleAddFarmWorkers} className="text-uppercase">
-                                {t('addUser')}
+                            <ModalHeader
+                                toggle={this.toggleAddFarmWorkers}
+                                className="text-uppercase"
+                            >
+                                {t("addUser")}
                             </ModalHeader>
                             <ModalBody>
                                 <span>
-                                    Tenga en cuenta que el trabajador ya debe estar
-                                    <b className="font-weight-bold"> registrado</b> en el sistema.
+                                    Tenga en cuenta que el trabajador ya debe
+                                    estar
+                                    <b className="font-weight-bold">
+                                        {" "}
+                                        registrado{" "}
+                                    </b>
+                                    en el sistema.
                                 </span>
                                 <InputGroup className="mb-3">
                                     <InputGroupAddon addonType="prepend">
@@ -121,26 +131,40 @@ class AddFarmWorkers extends Component {
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
-                                        className={this.state.emailError.message ? 'is-invalid' : ''}
+                                        className={
+                                            this.state.emailError.message
+                                                ? "is-invalid"
+                                                : ""
+                                        }
                                         type="email"
-                                        placeholder={t('addEmailUser')}
+                                        placeholder={t("addEmailUser")}
                                         autoComplete="email"
                                         name="email"
                                         value={this.state.email}
                                         onChange={this.handleInputChange}
                                     />
-                                    <FormFeedback>{this.state.emailError.message}</FormFeedback>
+                                    <FormFeedback>
+                                        {this.state.emailError.message}
+                                    </FormFeedback>
                                 </InputGroup>
                             </ModalBody>
                             <I18n ns="general">
                                 {t => (
                                     <ModalFooter>
                                         <ButtonGroup>
-                                            <Button color="primary" onClick={this.userFarmCreate}>
-                                                {t('save')}
+                                            <Button
+                                                color="primary"
+                                                onClick={this.userFarmCreate}
+                                            >
+                                                {t("save")}
                                             </Button>
-                                            <Button color="secondary" onClick={this.toggleAddFarmWorkers}>
-                                                {t('cancel')}
+                                            <Button
+                                                color="secondary"
+                                                onClick={
+                                                    this.toggleAddFarmWorkers
+                                                }
+                                            >
+                                                {t("cancel")}
                                             </Button>
                                         </ButtonGroup>
                                     </ModalFooter>
