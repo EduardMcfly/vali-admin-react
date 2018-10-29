@@ -90,7 +90,7 @@ class Register extends Component {
                                 }}
                                 redirectTo="/register/token"
                                 authenticated={
-                                    true
+                                    this.verifyEmail() && this.verifyCode()
                                 }
                             />
                             {routes.map((r, idx) => {

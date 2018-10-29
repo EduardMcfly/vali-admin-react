@@ -144,6 +144,7 @@ class TokenVerify extends Component {
     }
 
     render() {
+        const { state } = this;
         return (
             <I18n ns={["register"]}>
                 {(t, { i18n }) => (
@@ -162,7 +163,7 @@ class TokenVerify extends Component {
                                             value={this.props.email.input}
                                             setInputs={this.props.setInputs}
                                             emailError={
-                                                this.state.emailError.message
+                                                state.emailError.message
                                             }
                                             resetErrosInputs={() => {
                                                 this.resetErrosInput({
@@ -170,7 +171,7 @@ class TokenVerify extends Component {
                                                 });
                                             }}
                                             sentToken={{
-                                                state: this.state
+                                                state: state
                                                     .sendEmailToken,
                                                 action: () => {
                                                     this.props.history.push(
@@ -201,7 +202,7 @@ class TokenVerify extends Component {
                                             <Input
                                                 type="number"
                                                 className={classNames({
-                                                    "is-invalid": this.state
+                                                    "is-invalid": state
                                                         .codeError.state
                                                 })}
                                                 placeholder={t(
@@ -213,7 +214,7 @@ class TokenVerify extends Component {
                                                 onChange={e => {
                                                     this.props.setInputs(e);
                                                     if (
-                                                        this.state.codeError
+                                                        state.codeError
                                                             .message
                                                     ) {
                                                         this.resetErrosInput({
@@ -223,7 +224,7 @@ class TokenVerify extends Component {
                                                 }}
                                             />
                                             <FormFeedback>
-                                                {this.state.codeError.message}
+                                                {state.codeError.message}
                                             </FormFeedback>
                                         </InputGroup>
                                         <Button
