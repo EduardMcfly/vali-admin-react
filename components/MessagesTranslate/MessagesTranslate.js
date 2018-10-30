@@ -8,7 +8,6 @@ class MessagesTranslate extends Component {
     }
     render() {
         const { props } = this;
-        console.log(props);
         return (
             <I18n ns={[props.ns]}>
                 {t =>

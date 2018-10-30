@@ -38,14 +38,12 @@ class ResgisterUser extends Component {
             password: "",
             confirmPassword: "",
             sendEmailToken: false,
-            emailError: { message: false, state: false },
-            codeError: { message: false, state: false },
-            nameError: { message: false, state: false },
-            lastNameError: { message: false, state: false },
-            numberError: { message: false, state: false },
-            birthDateError: { message: false, state: false },
-            passwordError: { message: false, state: false },
-            confirmPasswordError: { message: false, state: false }
+            nameError: { message: "", state: false },
+            lastNameError: { message: "", state: false },
+            numberError: { message: "", state: false },
+            birthDateError: { message: "", state: false },
+            passwordError: { message: "", state: false },
+            confirmPasswordError: { message: "", state: false }
         };
         this.setInputs = this.setInputs.bind(this);
         this.resetErrosInputs = this.resetErrosInputs.bind(this);
@@ -62,9 +60,9 @@ class ResgisterUser extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    resetErrosInput({ input }) {
+    resetErrosInput({ input, state = false }) {
         this.setState({
-            [input]: { message: false, state: false }
+            [input]: { message: "", state: state }
         });
     }
     resetErrosInputs() {
@@ -84,9 +82,9 @@ class ResgisterUser extends Component {
         this.errorInput(errors.code, "codeError");
     }
 
-    errorInput(error, input) {
-        if (typeof error !== "undefined") {
-            this.errorsSet(error, input);
+    errorInput(error, inputError) {
+        if (typeof error !== "undefined" && !validator.isEmpty(inputError)) {
+            this.errorsSet(error, inputError);
         }
     }
 
@@ -102,6 +100,8 @@ class ResgisterUser extends Component {
     validateInputs() {
         this.resetErrosInputs();
         const { props, state } = this;
+        const { name, lastName, number, password, confirmPassword } = state;
+
         if (!props.verifyEmail()) {
             this.errorInput(<MessagesTranslate type={"email"} />, "emailError");
         }
@@ -114,14 +114,39 @@ class ResgisterUser extends Component {
                 "codeError"
             );
         }
-        this.errorInput(
-            <MessagesTranslate
-                type={"numeric"}
-                attribute={this.state.name}
-            />,
-            "lastNameError"
-        );
-        if (!validator.isEmail(this.state.name)) {
+        if (!validator.isAlpha(name)) {
+            this.errorInput(
+                <MessagesTranslate type={"alpha"} attribute={name} />,
+                "nameError"
+            );
+        }
+        if (!validator.isAlpha(lastName)) {
+            this.errorInput(
+                <MessagesTranslate type={"alpha"} attribute={lastName} />,
+                "lastNameError"
+            );
+        }
+        if (!validator.isNumeric(number)) {
+            this.errorInput(
+                <MessagesTranslate type={"numeric"} attribute={number} />,
+                "numberError"
+            );
+        }
+
+        if (!validator.isAlphanumeric(password)) {
+            this.errorInput(
+                <MessagesTranslate type={"alpha"} attribute={password} />,
+                "passwordError"
+            );
+        }
+        if (!validator.isAlphanumeric(confirmPassword)) {
+            this.errorInput(
+                <MessagesTranslate
+                    type={"alpha"}
+                    attribute={confirmPassword}
+                />,
+                "confirmPasswordError"
+            );
         }
         return this.validations;
     }
@@ -161,6 +186,20 @@ class ResgisterUser extends Component {
 
     render() {
         const { state, props } = this;
+        const {
+            name,
+            nameError,
+            lastName,
+            lastNameError,
+            birthDate,
+            birthDateError,
+            number,
+            numberError,
+            password,
+            passwordError,
+            confirmPasswordError,
+            confirmPassword
+        } = state;
         return (
             <I18n ns={["register"]}>
                 {(t, { i18n }) => (
@@ -180,105 +219,23 @@ class ResgisterUser extends Component {
                                     </p>
                                 </CardHeader>
                                 <CardBody className="p-4">
-                                    <RenderChildren
-                                        state={state.emailError.state}
-                                    >
-                                        <EmailInput
-                                            value={props.email.input}
-                                            setInputs={props.setInputs}
-                                            emailError={
-                                                state.emailError.message
-                                            }
-                                            resetErrosInputs={() => {
-                                                this.resetErrosInput({
-                                                    input: "emailError"
-                                                });
-                                            }}
-                                            sentToken={{
-                                                state: state.sendEmailToken,
-                                                action: () => {
-                                                    props.history.push(
-                                                        "/register"
-                                                    );
-                                                    props.setInputs({
-                                                        target: {
-                                                            name: "code",
-                                                            value: ""
-                                                        }
-                                                    });
-                                                    SendEmailToken(this);
-                                                }
-                                            }}
-                                        />
-                                    </RenderChildren>
-                                    <label className="text-muted" />
-                                    <RenderChildren
-                                        state={state.codeError.state}
-                                    >
-                                        <InputGroup className="mb-3">
-                                            <InputGroupAddon addonType="prepend">
-                                                <InputGroupText
-                                                    className={
-                                                        "d-flex justify-content-center"
-                                                    }
-                                                    style={{
-                                                        width: "40px"
-                                                    }}
-                                                >
-                                                    <i className="fa fa-slack" />
-                                                </InputGroupText>
-                                            </InputGroupAddon>
-                                            <Input
-                                                type="number"
-                                                className={classNames({
-                                                    "is-invalid":
-                                                        state.codeError.state
-                                                })}
-                                                placeholder={t(
-                                                    "labelCodeRecived"
-                                                )}
-                                                autoComplete="false"
-                                                name="code"
-                                                value={props.code.input}
-                                                onChange={e => {
-                                                    props.setInputs(e);
-                                                    if (
-                                                        state.codeError.message
-                                                    ) {
-                                                        this.resetErrosInput({
-                                                            input: "codeError"
-                                                        });
-                                                    }
-                                                }}
-                                            />
-                                            <FormFeedback>
-                                                {state.codeError.message}
-                                            </FormFeedback>
-                                        </InputGroup>
-                                    </RenderChildren>
                                     <Inputs
-                                        classError={state.nameError.state}
                                         placeholder={t("name")}
                                         autoComplete={"off"}
                                         name={"name"}
-                                        value={state.name}
-                                        onChange={e => {
-                                            this.setInputs(e);
-                                        }}
+                                        value={name}
+                                        onChange={this.setInputs}
                                         icon={"fa fa-info-circle"}
-                                        errorMessage="342343"
+                                        error={nameError}
                                     />
                                     <Inputs
-                                        classError={state.lastNameError.state}
                                         placeholder={t("lastName")}
                                         autoComplete={"off"}
                                         name={"lastName"}
-                                        value={state.lastName}
-                                        onChange={e => {
-                                            this.setInputs(e);
-                                        }}
+                                        value={lastName}
+                                        onChange={this.setInputs}
                                         icon={"fa fa-info"}
-                                        errorMessage="342343"
+                                        error={lastNameError}
                                     />
                                     <InputGroup className="mb-3">
                                         <InputGroupAddon addonType="prepend">
@@ -297,9 +254,8 @@ class ResgisterUser extends Component {
                                             <DatePicker
                                                 className={classNames(
                                                     {
-                                                        "is-invalid": this.state
-                                                            .birthDateError
-                                                            .state
+                                                        "is-invalid":
+                                                            birthDateError.state
                                                     },
                                                     "form-control"
                                                 )}
@@ -307,7 +263,7 @@ class ResgisterUser extends Component {
                                                 fixedHeight
                                                 popperPlacement="bottom"
                                                 showYearDropdown={true}
-                                                selected={this.state.birthDate}
+                                                selected={birthDate}
                                                 maxDate={moment(
                                                     moment().year(
                                                         moment().year() - 13
@@ -355,46 +311,42 @@ class ResgisterUser extends Component {
                                     </InputGroup>
                                     <Inputs
                                         type={"number"}
-                                        classError={
-                                            this.state.numberError.state
-                                        }
                                         placeholder={t("number")}
                                         name={"number"}
-                                        value={this.state.number}
-                                        onChange={e => {
-                                            this.setInputs(e);
-                                        }}
+                                        value={number}
+                                        onChange={this.setInputs}
                                         icon={"fa fa-hashtag"}
-                                        errorMessage="342343"
+                                        error={numberError}
                                     />
                                     <Inputs
-                                        classError={
-                                            this.state.passwordError.state
-                                        }
                                         placeholder={t("password")}
                                         type={"password"}
                                         name={"password"}
-                                        value={this.state.password}
-                                        onChange={e => {
-                                            this.setInputs(e);
-                                        }}
+                                        value={password}
+                                        onChange={this.setInputs}
                                         icon={"fa  fa-circle-o-notch"}
-                                        errorMessage="342343"
+                                        error={passwordError}
                                     />
                                     <Inputs
-                                        classError={
-                                            this.state.confirmPasswordError
-                                                .state
-                                        }
                                         type={"password"}
                                         placeholder={t("passwordConfirm")}
                                         name={"confirmPassword"}
-                                        value={this.state.confirmPassword}
+                                        value={confirmPassword}
                                         onChange={e => {
+                                            this.resetErrosInput({
+                                                input: "confirmPasswordError",
+                                                state: password.match(
+                                                    new RegExp(
+                                                        e.target.value + ".*"
+                                                    )
+                                                )
+                                                    ? false
+                                                    : true
+                                            });
                                             this.setInputs(e);
                                         }}
                                         icon={"fa fa-dot-circle-o"}
-                                        errorMessage="342343"
+                                        error={confirmPasswordError}
                                     />
                                     <Button
                                         onClick={() => this.registerSubmit()}

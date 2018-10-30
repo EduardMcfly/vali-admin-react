@@ -31,7 +31,7 @@ class ResgisterUser extends Component {
                     type={props.type}
                     className={classNames(
                         {
-                            "is-invalid": props.classError
+                            "is-invalid": props.error.state
                         },
                         props.className
                     )}
@@ -41,7 +41,7 @@ class ResgisterUser extends Component {
                     value={props.value}
                     onChange={props.onChange}
                 />
-                <FormFeedback>{props.errorMessage}</FormFeedback>
+                <FormFeedback>{props.error.message}</FormFeedback>
             </InputGroup>
         );
     }
@@ -50,24 +50,24 @@ class ResgisterUser extends Component {
 ResgisterUser.propTypes = {
     type: PropTypes.string,
     icon: PropTypes.string,
-    classError: PropTypes.bool,
     className: PropTypes.string,
     placeholder: PropTypes.string,
     autoComplete: PropTypes.string,
     name: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-    errorMessage: PropTypes.string
+    onChange: PropTypes.func.isRequired
 };
 
 ResgisterUser.defaultProps = {
     type: "text",
     icon: "",
-    classError: false,
+    error: {
+        state: false,
+        message: ""
+    },
     className: "",
     placeholder: "",
-    autoComplete: "",
-    errorMessage: ""
+    autoComplete: ""
 };
 
 export default ResgisterUser;
