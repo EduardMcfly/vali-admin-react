@@ -267,7 +267,7 @@ class ResgisterUser extends Component {
                     <I18n ns={["register"]}>
                         {(t, { i18n }) => (
                             <React.Fragment>
-                                <Card className="mx-4 tileAnimation">
+                                <Card className="tileAnimation">
                                     <CardHeader>
                                         <h1>{t("registerTitle")}</h1>
                                         <p className="text-muted">
@@ -282,6 +282,7 @@ class ResgisterUser extends Component {
                                     >
                                         <Inputs
                                             placeholder={t("name")}
+                                            tabIndex={1}
                                             autoComplete={"off"}
                                             name={"name"}
                                             value={name}
@@ -291,6 +292,7 @@ class ResgisterUser extends Component {
                                         />
                                         <Inputs
                                             placeholder={t("lastName")}
+                                            tabIndex={2}
                                             autoComplete={"off"}
                                             name={"lastName"}
                                             value={lastName}
@@ -322,6 +324,7 @@ class ResgisterUser extends Component {
                                                         },
                                                         "form-control"
                                                     )}
+                                                    tabIndex={3}
                                                     required
                                                     fixedHeight
                                                     popperPlacement="bottom"
@@ -338,6 +341,14 @@ class ResgisterUser extends Component {
                                                         )
                                                     )}
                                                     locale={i18n.language}
+                                                    onFocus={e => {
+                                                        e.stopPropagation();
+                                                        e.nativeEvent.stopImmediatePropagation();
+                                                    }}
+                                                    onClick={e => {
+                                                        e.stopPropagation();
+                                                        e.nativeEvent.stopImmediatePropagation();
+                                                    }}
                                                     onChange={value => {
                                                         if (
                                                             validator.isBefore(
@@ -377,6 +388,7 @@ class ResgisterUser extends Component {
                                         <Inputs
                                             type={"number"}
                                             placeholder={t("identity")}
+                                            tabIndex={4}
                                             name={"identity"}
                                             value={identity}
                                             onChange={this.setInputs}
@@ -386,6 +398,7 @@ class ResgisterUser extends Component {
                                         <Inputs
                                             type={"number"}
                                             placeholder={t("number")}
+                                            tabIndex={5}
                                             name={"number"}
                                             value={number}
                                             onChange={this.setInputs}
@@ -394,6 +407,7 @@ class ResgisterUser extends Component {
                                         />
                                         <Inputs
                                             placeholder={t("password")}
+                                            tabIndex={6}
                                             type={"password"}
                                             name={"password"}
                                             value={password}
@@ -403,6 +417,7 @@ class ResgisterUser extends Component {
                                         />
                                         <Inputs
                                             type={"password"}
+                                            tabIndex={7}
                                             placeholder={t("passwordConfirm")}
                                             name={"confirmPassword"}
                                             value={confirmPassword}

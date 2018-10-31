@@ -148,8 +148,8 @@ class TokenVerify extends Component {
             <I18n ns={["register"]}>
                 {(t, { i18n }) => (
                     <Row className="justify-content-center">
-                        <Col sm={"12"} md={"9"} lg={"6"} xl={"6"}>
-                            <Card className="mx-4 tileAnimation">
+                        <Col sm={"12"} md={"9"} lg={"6"} xl={"6"} className="p-0">
+                            <Card className="tileAnimation">
                                 <CardHeader>
                                     <h3>{t("verifyTokenTitle")}</h3>
                                     <span className="text-muted">

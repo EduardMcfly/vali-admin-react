@@ -29,6 +29,7 @@ class ResgisterUser extends Component {
                 </InputGroupAddon>
                 <Input
                     type={props.type}
+                    tabIndex={props.tabIndex}
                     className={classNames(
                         {
                             "is-invalid": props.error.state
@@ -65,6 +66,7 @@ ResgisterUser.defaultProps = {
         state: false,
         message: ""
     },
+    tabindex: "0",
     className: "",
     placeholder: "",
     autoComplete: ""
