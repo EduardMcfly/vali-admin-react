@@ -126,18 +126,17 @@ class TokenVerify extends Component {
                 .then(res => {
                     toggleOverlay(false);
                     if (typeof res.data.success !== "undefined") {
+                        this.props.verifyRegisterSet(true);
                         this.props.history.push("/register/registerUser");
                     } else if (typeof res.data.errors !== "undefined") {
                         toggleOverlay(false);
-                        var errors = res.data.errors;
-                        this.errorInputs(errors);
+                        this.errorInputs(res.data.errors);
                     }
                 })
                 .catch(res => {
                     toggleOverlay(false);
                     if (typeof res.data.errors !== "undefined") {
-                        var errors = res.data.errors;
-                        this.errorInputs(errors);
+                        this.errorInputs(res.data.errors);
                     }
                 });
         }
@@ -171,8 +170,7 @@ class TokenVerify extends Component {
                                                 });
                                             }}
                                             sentToken={{
-                                                state: state
-                                                    .sendEmailToken,
+                                                state: state.sendEmailToken,
                                                 action: () => {
                                                     this.props.history.push(
                                                         "/register"
@@ -202,8 +200,8 @@ class TokenVerify extends Component {
                                             <Input
                                                 type="number"
                                                 className={classNames({
-                                                    "is-invalid": state
-                                                        .codeError.state
+                                                    "is-invalid":
+                                                        state.codeError.state
                                                 })}
                                                 placeholder={t(
                                                     "labelCodeRecived"
@@ -214,8 +212,7 @@ class TokenVerify extends Component {
                                                 onChange={e => {
                                                     this.props.setInputs(e);
                                                     if (
-                                                        state.codeError
-                                                            .message
+                                                        state.codeError.message
                                                     ) {
                                                         this.resetErrosInput({
                                                             input: "codeError"

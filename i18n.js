@@ -1,11 +1,9 @@
 import i18n from "i18next";
-import LocizeBackend from "i18next-locize-backend";
-import LocizeEditor from "locize-editor";
+import Backend from "i18next-xhr-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { reactI18nextModule } from "react-i18next";
 import axios from "axios";
-i18n.use(LocizeBackend)
-    .use(LocizeEditor)
+i18n.use(Backend)
     .use(LanguageDetector)
     .use(reactI18nextModule)
     .init({
@@ -15,9 +13,9 @@ i18n.use(LocizeBackend)
         ns: ["general"],
         defaultNS: "general",
         backend: {
-            projectId: "07105b25-de1e-440d-9bcb-4098478f36dc", // <-- replace with your projectId
-            apiKey: "b3f30c7c-5746-4449-b344-f9c4fb31ade3",
-            referenceLng: "es"
+            loadPath:
+                process.env.MIX_SENTRY_DSN_PUBLIC +
+                "/locales/{{lng}}/{{ns}}.json"
         },
         debug: false,
         react: {

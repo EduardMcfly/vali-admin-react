@@ -1,6 +1,7 @@
 import { CircleAnimation } from "../../../components";
 import { TokenVerify } from "./views";
 
+const delay = 5000;
 function Loading() {
     return CircleAnimation;
 }

@@ -13,6 +13,7 @@ class Register extends Component {
         super(props);
         this.state = {
             overlay: false,
+            registerState: false,
             email: "",
             code: ""
         };
@@ -20,6 +21,7 @@ class Register extends Component {
         this.verifyEmail = this.verifyEmail.bind(this);
         this.verifyCode = this.verifyCode.bind(this);
         this.toggleOverlay = this.toggleOverlay.bind(this);
+        this.verifyRegisterSet = this.verifyRegisterSet.bind(this);
     }
 
     toggleOverlay(state: boolean) {
@@ -39,6 +41,10 @@ class Register extends Component {
         return validator.isNumeric(this.state.code) ? true : false;
     }
 
+    verifyRegisterSet(value = false) {
+        this.setState({ registerState: value });
+    }
+
     render() {
         return (
             <div className="app flex-row align-items-center">
@@ -50,22 +56,7 @@ class Register extends Component {
                         className="app-content ml-0"
                         style={{ minHeight: "unset" }}
                     >
-                        <SwitchWithSlide>
-                            <Route
-                                exact
-                                path="/register"
-                                name="register"
-                                render={props => (
-                                    <VerifyEmail
-                                        {...props}
-                                        email={{ input: this.state.email }}
-                                        overlay={this.state.overlay}
-                                        toggleOverlay={this.toggleOverlay}
-                                        setInputs={this.setInputs}
-                                        verifyEmail={this.verifyEmail}
-                                    />
-                                )}
-                            />
+                        <Switch>
                             <RenderRoute
                                 path="/register/registerUser"
                                 name="Register user"
@@ -77,6 +68,9 @@ class Register extends Component {
                                             setInputs={this.setInputs}
                                             toggleOverlay={this.toggleOverlay}
                                             overlay={this.state.overlay}
+                                            verifyRegisterSet={
+                                                this.verifyRegisterSet
+                                            }
                                             email={{
                                                 input: this.state.email
                                             }}
@@ -89,69 +83,89 @@ class Register extends Component {
                                     );
                                 }}
                                 redirectTo="/register/token"
-                                authenticated={
-                                    true
-                                    /* this.verifyEmail() && this.verifyCode() */
-                                }
+                                authenticated={this.state.registerState}
                             />
-                            {routes.map((r, idx) => {
-                                return r.component ? (
-                                    <Route
-                                        key={idx}
-                                        path={r.path}
-                                        exact={r.exact}
-                                        name={r.name}
-                                        render={props => {
-                                            return (
-                                                <I18n ns="general">
-                                                    {t => {
-                                                        document.title = t(
-                                                            "routes." + r.name
-                                                        );
-                                                        return (
-                                                            <r.component
-                                                                {...props}
-                                                                setInputs={
-                                                                    this
-                                                                        .setInputs
-                                                                }
-                                                                toggleOverlay={
-                                                                    this
-                                                                        .toggleOverlay
-                                                                }
-                                                                overlay={
-                                                                    this.state
-                                                                        .overlay
-                                                                }
-                                                                email={{
-                                                                    input: this
-                                                                        .state
-                                                                        .email
-                                                                }}
-                                                                verifyEmail={
-                                                                    this
-                                                                        .verifyEmail
-                                                                }
-                                                                code={{
-                                                                    input: this
-                                                                        .state
-                                                                        .code
-                                                                }}
-                                                                verifyCode={
-                                                                    this
-                                                                        .verifyCode
-                                                                }
-                                                            />
-                                                        );
-                                                    }}
-                                                </I18n>
-                                            );
-                                        }}
-                                    />
-                                ) : null;
-                            })}
-                            <Redirect from="/" to="/register" />
-                        </SwitchWithSlide>
+                            <SwitchWithSlide>
+                                <Route
+                                    exact
+                                    path="/register"
+                                    name="register"
+                                    render={props => (
+                                        <VerifyEmail
+                                            {...props}
+                                            email={{ input: this.state.email }}
+                                            overlay={this.state.overlay}
+                                            toggleOverlay={this.toggleOverlay}
+                                            setInputs={this.setInputs}
+                                            verifyEmail={this.verifyEmail}
+                                        />
+                                    )}
+                                />
+                                {routes.map((r, idx) => {
+                                    return r.component ? (
+                                        <Route
+                                            key={idx}
+                                            path={r.path}
+                                            exact={r.exact}
+                                            name={r.name}
+                                            render={props => {
+                                                return (
+                                                    <I18n ns="general">
+                                                        {t => {
+                                                            document.title = t(
+                                                                "routes." +
+                                                                    r.name
+                                                            );
+                                                            return (
+                                                                <r.component
+                                                                    {...props}
+                                                                    setInputs={
+                                                                        this
+                                                                            .setInputs
+                                                                    }
+                                                                    toggleOverlay={
+                                                                        this
+                                                                            .toggleOverlay
+                                                                    }
+                                                                    verifyRegisterSet={
+                                                                        this
+                                                                            .verifyRegisterSet
+                                                                    }
+                                                                    overlay={
+                                                                        this
+                                                                            .state
+                                                                            .overlay
+                                                                    }
+                                                                    email={{
+                                                                        input: this
+                                                                            .state
+                                                                            .email
+                                                                    }}
+                                                                    verifyEmail={
+                                                                        this
+                                                                            .verifyEmail
+                                                                    }
+                                                                    code={{
+                                                                        input: this
+                                                                            .state
+                                                                            .code
+                                                                    }}
+                                                                    verifyCode={
+                                                                        this
+                                                                            .verifyCode
+                                                                    }
+                                                                />
+                                                            );
+                                                        }}
+                                                    </I18n>
+                                                );
+                                            }}
+                                        />
+                                    ) : null;
+                                })}
+                                <Redirect from="/" to="/register" />
+                            </SwitchWithSlide>
+                        </Switch>
                     </div>
                 </Container>
             </div>
