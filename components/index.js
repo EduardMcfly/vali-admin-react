@@ -13,6 +13,7 @@ import {
     Overlay
 } from "./Animations";
 import MessagesTranslate from "./MessagesTranslate";
+import { Target, TargetSmall } from "./Cards";
 
 export {
     Breadcrumb,
@@ -28,5 +29,7 @@ export {
     SwitchWithSlide,
     GridCharge,
     Overlay,
-    MessagesTranslate
+    MessagesTranslate,
+    Target,
+    TargetSmall
 };

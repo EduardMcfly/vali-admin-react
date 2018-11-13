@@ -18,47 +18,49 @@ class FarmsBuild extends Component {
                             style={{ backgroundColor: this.props.colorRand }}
                         />
                     </Link>
-                    <Container>
-                        <Row className={'text-wrap'}>
-                            <Col
-                                sm="12"
-                                md="12"
-                                className={"px-2 info"}
-                                data-aos="fade-up"
-                                data-aos-duration="500"
-                            >
-                                <h4>
-                                    <Link to={"/farm/" + this.props.obj[0]}>
-                                        {this.props.obj[1]}
-                                    </Link>
-                                </h4>
-                                <I18n ns="farm">
-                                    {(t, { i18n }) => (
-                                        <p>
-                                            <b>{t("seeFarm")}.</b>
-                                        </p>
-                                    )}
-                                </I18n>
-                            </Col>
-                            <Col
-                                xs="auto"
-                                className={
-                                    "p-0 p-sm-2 p-lg-3 d-flex align-items-center"
-                                }
-                            >
-                                <i
-                                    className="fa fa-cogs fa-2x btn-link c-pointer"
-                                    aria-hidden="true"
-                                    onClick={() =>
-                                        this.props.modalData(
-                                            this.props.obj[0],
-                                            this.props.obj[1]
-                                        )
+                    <Col
+                        sm="12"
+                        md="12"
+                        className={"px-2 info text-truncate"}
+                        data-aos="fade-up"
+                        data-aos-duration="500"
+                    >
+                        <h4>
+                            <Link to={"/farm/" + this.props.obj[0]}>
+                                <div className="text-truncate">
+                                    {this.props.obj[1]}
+                                </div>
+                            </Link>
+                        </h4>
+                        <I18n ns="farm">
+                            {(t, { i18n }) => (
+                                <p
+                                    className={
+                                        "d-md-none d-lg-block text-truncate"
                                     }
-                                />
-                            </Col>
-                        </Row>
-                    </Container>
+                                >
+                                    <b>{t("seeFarm")}.</b>
+                                </p>
+                            )}
+                        </I18n>
+                    </Col>
+                    <Col
+                        xs="auto"
+                        className={
+                            "p-0 p-sm-2 p-lg-3 d-flex align-items-center"
+                        }
+                    >
+                        <i
+                            className="fa fa-cogs fa-2x btn-link c-pointer"
+                            aria-hidden="true"
+                            onClick={() =>
+                                this.props.modalData(
+                                    this.props.obj[0],
+                                    this.props.obj[1]
+                                )
+                            }
+                        />
+                    </Col>
                 </div>
             </Col>
         );

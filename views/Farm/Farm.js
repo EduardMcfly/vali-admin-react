@@ -1,71 +1,78 @@
-import React, { Component } from 'react';
-import { Line } from 'react-chartjs-2';
-import { Col, Card, CardBody, Row, CardHeader } from 'reactstrap';
-import { I18n } from 'react-i18next';
+import React, { Component } from "react";
+import { Line } from "react-chartjs-2";
+import { Col, Card, CardBody, Row, CardHeader, Container } from "reactstrap";
+import { I18n } from "react-i18next";
+import { Target, TargetSmall } from "../../components";
 
 const options = {
-    maintainAspectRatio: true,
+    maintainAspectRatio: true
 };
 
 class Farm extends Component {
     constructor(props) {
         super(props);
-        this.dataLine = this.dataLine.bind(this);
-    }
-    dataLine(t) {
-        return {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [
-                {
-                    label: t('addUser'),
-                    fill: false,
-                    lineTension: 0.1,
-                    backgroundColor: 'rgba(75,192,192,0.4)',
-                    borderColor: 'rgba(75,192,192,1)',
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: 'rgba(75,192,192,1)',
-                    pointBackgroundColor: '#fff',
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-                    pointHoverBorderColor: 'rgba(220,220,220,1)',
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                },
-            ],
+        this.state = {
+            modalAddFarm: false,
+            listFarms: false
         };
+        this.AddFarmModal = this.AddFarmModal.bind(this);
+    }
+
+    AddFarmModal() {
+        console.log(234432434);
     }
     render() {
         return (
             <div className="animated fadeIn">
-                <Row>
-                    <Col md="8">
-                        <Card>
-                            <CardHeader>
-                                Line Chart
-                                <div className="card-header-actions">
-                                    <a href="http://www.chartjs.org" className="card-header-action">
-                                        <small className="text-muted">docs</small>
-                                    </a>
-                                </div>
-                            </CardHeader>
-                            <CardBody>
-                                <I18n ns="farm">
-                                    {t => (
-                                        <div className="chart-wrapper">
-                                            <Line data={this.dataLine(t)} options={options} />
-                                        </div>
-                                    )}
-                                </I18n>
-                            </CardBody>
-                        </Card>
+                <Row className={"mb-4"}>
+                    <Col md="9" xl="7" xs="10" className={"mx-auto"}>
+                        <TargetSmall
+                            onClick={this.AddFarmModal}
+                            title="registerAnimal.title"
+                            ns="farm"
+                            fontWeight="font-weight-normal"
+                        />
                     </Col>
+                    <div
+                        className={"c-pointer position-absolute"}
+                        style={{
+                            right: "0",
+                            bottom: "1vh"
+                        }}
+                    >
+                        <i
+                            className={
+                                "icon fa fa-refresh text-light  fa-2x p-1 rounded-circle"
+                            }
+                            onClick={() => console.log(234324)}
+                            style={{
+                                backgroundColor: "rgba(0, 150, 136, 0.5)"
+                            }}
+                        />
+                    </div>
                 </Row>
+
+                <Col
+                    sm="12"
+                    className={"d-flex justify-content-center"}
+                    data-aos="zoom-in"
+                >
+                    <Col
+                        md="6"
+                        sm="6"
+                        className={"text-center mt-3"}
+                        data-aos="zoom-in"
+                    >
+                        <Target
+                            title={"noneFarms"}
+                            iconSize="fa-3x"
+                            iconType="fa-inbox"
+                            ns="farm"
+                            sizeText="h4"
+                        />
+                    </Col>
+                </Col>
+                <Row data-aos="fade-up">{this.state.listFarms}</Row>
             </div>
         );
     }
