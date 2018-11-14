@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 // Styles
+// Import Font Cosva Icons Set
+import "../fonts/cosva-fonts/style.css";
+import "../fonts/cosva-fonts/style-icons.css";
 // Import Font Awesome Icons Set
-import "font-awesome/css/font-awesome.min.css";
+/* import "font-awesome/css/font-awesome.min.css";
 // Import Simple Line Icons Set
 import "simple-line-icons/css/simple-line-icons.css";
+ */
 import "./app.css";
 
 import i18next from "./i18n";

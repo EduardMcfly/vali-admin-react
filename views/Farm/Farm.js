@@ -19,7 +19,7 @@ class Farm extends Component {
     }
 
     AddFarmModal() {
-        console.log(234432434);
+        console.log(new Date());
     }
     render() {
         return (
@@ -64,7 +64,7 @@ class Farm extends Component {
                         data-aos="zoom-in"
                     >
                         <Target
-                            title={"noneFarms"}
+                            title={"noneAnimal"}
                             iconSize="fa-3x"
                             iconType="fa-inbox"
                             ns="farm"

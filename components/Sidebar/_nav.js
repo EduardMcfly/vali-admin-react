@@ -4,19 +4,19 @@ export default {
             name: 'Charts',
             url: '/charts',
             only: true,
-            icon: 'icon-pie-chart',
+            icon: 'fa-pie-chart',
             treeview: 6,
         },
         {
             name: 'Icons',
             url: '/icons',
-            icon: 'icon-star',
+            icon: 'fa-star',
             treeview: 7,
             children: [
                 {
                     name: 'Flags',
                     url: '/icons/flags',
-                    icon: 'icon-star',
+                    icon: 'fa-star',
                     badge: {
                         variant: 'success',
                         text: 'NEW',
@@ -25,7 +25,7 @@ export default {
                 {
                     name: 'Font Awesome',
                     url: '/icons/font-awesome',
-                    icon: 'icon-star',
+                    icon: 'fa-star',
                     badge: {
                         variant: 'secondary',
                         text: '4.7',
@@ -34,37 +34,37 @@ export default {
                 {
                     name: 'Simple Line Icons',
                     url: '/icons/simple-line-icons',
-                    icon: 'icon-star',
+                    icon: 'fa-star',
                 },
             ],
         },
         {
             name: 'Notifications',
             url: '/notifications',
-            icon: 'icon-bell',
+            icon: 'fa-bell',
             treeview: 8,
             children: [
                 {
                     name: 'Alerts',
                     url: '/notifications/alerts',
-                    icon: 'icon-bell',
+                    icon: 'fa-bell',
                 },
                 {
                     name: 'Badges',
                     url: '/notifications/badges',
-                    icon: 'icon-bell',
+                    icon: 'fa-bell',
                 },
                 {
                     name: 'Modals',
                     url: '/notifications/modals',
-                    icon: 'icon-bell',
+                    icon: 'fa-bell',
                 },
             ],
         },
         {
             name: 'Widgets',
             url: '/widgets',
-            icon: 'icon-calculator',
+            icon: 'fa-calculator',
             only: true,
             treeview: 10,
             badge: {
@@ -79,27 +79,27 @@ export default {
             name: 'Pages',
             url: '/pages',
             treeview: 11,
-            icon: 'icon-star',
+            icon: 'fa-star',
             children: [
                 {
                     name: 'Login',
                     url: '/login',
-                    icon: 'icon-star',
+                    icon: 'fa-star',
                 },
                 {
                     name: 'Register',
                     url: '/register',
-                    icon: 'icon-star',
+                    icon: 'fa-star',
                 },
                 {
                     name: 'Error 404',
                     url: '/404',
-                    icon: 'icon-star',
+                    icon: 'fa-star',
                 },
                 {
                     name: 'Error 500',
                     url: '/500',
-                    icon: 'icon-star',
+                    icon: 'fa-star',
                 },
             ],
         },
@@ -107,7 +107,7 @@ export default {
             name: 'Download cosva',
             url: 'https://cosva.cf',
             only: true,
-            icon: 'icon-cloud-download',
+            icon: 'fa-cloud-download',
             class: 'mt-auto',
             variant: 'success',
         }
