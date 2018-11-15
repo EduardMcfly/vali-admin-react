@@ -27,14 +27,16 @@ class DefaultHeader extends Component {
                 <RenderChildren
                     state={this.props.userAuth.authenticatedState()}
                     children={
-                        <React.Fragment>
-                            <div
-                                className="app-sidebarToggle jqvmap-region"
-                                data-toggle="sidebar"
-                                aria-label="Hide Sidebar"
+                            <div 
+                                className="app-navItem c-pointer" 
                                 onClick={this.props.toggleSidebarNav}
-                            />
-                        </React.Fragment>
+                            >
+                                <i 
+                                    className="fa fa-lg fa-reorder"
+                                    data-toggle="sidebar"
+                                    aria-label="Hide Sidebar"
+                                />
+                            </div>
                     }
                 />
                 <Link
