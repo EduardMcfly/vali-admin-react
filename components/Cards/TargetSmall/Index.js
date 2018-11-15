@@ -20,6 +20,7 @@ class TargetSmall extends React.Component {
             ns,
             sizeText,
             fontWeight,
+            iconColor,
             cPointer
         } = this.props;
         return (
@@ -40,7 +41,7 @@ class TargetSmall extends React.Component {
                                 iconPosition
                             )}
                             style={{
-                                backgroundColor: "#ffd404",
+                                backgroundColor: iconColor,
                                 textTransform: "unset",
                                 minWidth: "unset",
                                 borderRadius: 0.8 + "rem"
@@ -77,6 +78,7 @@ TargetSmall.defaultProps = {
     fontWeight: "font-weight-light",
     cPointer: true,
     iconSize: "fa-2x",
+    iconColor: "rgb(77, 140, 183)",
     iconType: "fa-pencil-square",
     iconPosition: "d-block",
     ns: "general"

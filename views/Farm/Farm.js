@@ -65,6 +65,12 @@ class Farm extends Component {
                     >
                         <Target
                             title={"noneAnimal"}
+                            iconNode={
+                                <i
+                                    className="fa-3x fa-inbox"
+                                    aria-hidden="true"
+                                />
+                            }
                             iconSize="fa-3x"
                             iconType="fa-inbox"
                             ns="farm"

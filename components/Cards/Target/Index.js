@@ -10,24 +10,43 @@ class Target extends React.Component {
     }
 
     render() {
+        const { props } = this;
         const {
             title,
             onClick,
             icon,
             iconSize,
             iconType,
+            iconNode,
             iconPosition,
             ns,
             sizeText,
             fontWeight,
             cPointer,
             ...rest
-        } = this.props;
+        } = props;
         return (
             <div
                 className={classNames("tile", cPointer ? "c-pointer" : "")}
                 onClick={() => onClick()}
             >
+                <div className={classNames("text-truncate", sizeText)}>
+                    {icon ? (
+                        !iconNode ? (
+                            <i
+                                className={classNames(
+                                    "fa",
+                                    iconSize,
+                                    iconType,
+                                    iconPosition
+                                )}
+                                aria-hidden="true"
+                            />
+                        ) : (
+                            iconNode
+                        )
+                    ) : null}
+                </div>
                 <div
                     className={classNames(
                         "tile-body text-truncate",
@@ -35,17 +54,6 @@ class Target extends React.Component {
                         fontWeight
                     )}
                 >
-                    {icon ? (
-                        <i
-                            className={classNames(
-                                "fa",
-                                iconSize,
-                                iconType,
-                                iconPosition
-                            )}
-                            aria-hidden="true"
-                        />
-                    ) : null}
                     <span>
                         <MessagesTranslate type={title} ns={ns} />
                     </span>
@@ -56,7 +64,8 @@ class Target extends React.Component {
 }
 
 Target.propTypes = {
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    iconNode: PropTypes.node
 };
 
 Target.defaultProps = {
@@ -65,6 +74,7 @@ Target.defaultProps = {
     sizeText: "h4",
     fontWeight: "font-weight-light",
     cPointer: true,
+    iconNode: false,
     iconSize: "fa-3x",
     iconType: "fa-inbox",
     iconPosition: "d-block",

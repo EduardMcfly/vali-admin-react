@@ -128,6 +128,7 @@ class Farms extends Component {
                                         className={"mx-auto"}
                                     >
                                         <TargetSmall
+                                            iconColor="#ffd404"
                                             onClick={this.AddFarmModal}
                                             title="registerFarm.title"
                                             ns="farm"
