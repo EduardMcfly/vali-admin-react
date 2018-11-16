@@ -23,14 +23,20 @@ class Target extends React.Component {
             sizeText,
             fontWeight,
             cPointer,
-            ...rest
+            textTruncate,
+            iconTruncate
         } = props;
         return (
             <div
                 className={classNames("tile", cPointer ? "c-pointer" : "")}
                 onClick={() => onClick()}
             >
-                <div className={classNames("text-truncate", sizeText)}>
+                <div
+                    className={classNames(
+                        iconTruncate ? "text-truncate" : "",
+                        sizeText
+                    )}
+                >
                     {icon ? (
                         !iconNode ? (
                             <i
@@ -49,9 +55,10 @@ class Target extends React.Component {
                 </div>
                 <div
                     className={classNames(
-                        "tile-body text-truncate",
+                        textTruncate ? "text-truncate" : "",
                         sizeText,
-                        fontWeight
+                        fontWeight,
+                        "tile-body"
                     )}
                 >
                     <span>
@@ -65,12 +72,15 @@ class Target extends React.Component {
 
 Target.propTypes = {
     title: PropTypes.string.isRequired,
+    textTruncate: PropTypes.bool,
     iconNode: PropTypes.node
 };
 
 Target.defaultProps = {
     onClick: () => {},
     icon: true,
+    textTruncate: true,
+    iconTruncate: true,
     sizeText: "h4",
     fontWeight: "font-weight-light",
     cPointer: true,

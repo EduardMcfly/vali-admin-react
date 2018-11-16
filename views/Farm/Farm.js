@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
 import { Col, Card, CardBody, Row, CardHeader, Container } from "reactstrap";
 import { I18n } from "react-i18next";
-import { Target, TargetSmall } from "../../components";
+import { Target, TargetSmall, Overlay } from "../../components";
 
 const options = {
     maintainAspectRatio: true
@@ -58,18 +58,44 @@ class Farm extends Component {
                     data-aos="zoom-in"
                 >
                     <Col
-                        md="6"
+                        md="8"
                         sm="6"
                         className={"text-center mt-3"}
                         data-aos="zoom-in"
                     >
                         <Target
                             title={"noneAnimal"}
+                            iconTruncate={false}
                             iconNode={
-                                <i
-                                    className="fa-3x fa-inbox"
-                                    aria-hidden="true"
-                                />
+                                <CardBody className="tileAnimation">
+                                    <Row className="m-0 justify-content-center">
+                                        <Col>
+                                            <i
+                                                className="fa-3x fa-duck"
+                                                aria-hidden="true"
+                                            />
+                                        </Col>
+                                        <Col>
+                                            <i
+                                                className="fa-3x fa-cow"
+                                                aria-hidden="true"
+                                            />
+                                        </Col>
+                                        <Col>
+                                            <i
+                                                className="fa-3x fa-pig"
+                                                aria-hidden="true"
+                                            />
+                                        </Col>
+                                        <Col>
+                                            <i
+                                                className="fa-3x fa-chicken"
+                                                aria-hidden="true"
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Overlay state={true} />
+                                </CardBody>
                             }
                             iconSize="fa-3x"
                             iconType="fa-inbox"

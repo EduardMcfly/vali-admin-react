@@ -115,7 +115,7 @@ class DefaultLayout extends Component {
                                         />
                                     ) : null;
                                 })}
-                                <Redirect from="/" to="/farm" />
+                                {/* <Redirect from="/" to="/farm" /> */}
                             </SwitchWithSlide>
                         </Switch>
                     </Container>

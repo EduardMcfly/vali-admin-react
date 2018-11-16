@@ -112,6 +112,7 @@ class Farms extends Component {
                             >
                                 <Target
                                     title={"welcome"}
+                                    textTruncate={true}
                                     icon={false}
                                     ns="farm"
                                     sizeText="h2"

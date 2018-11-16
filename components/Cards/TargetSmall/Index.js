@@ -21,6 +21,7 @@ class TargetSmall extends React.Component {
             sizeText,
             fontWeight,
             iconColor,
+            textTruncate,
             cPointer
         } = this.props;
         return (
@@ -50,7 +51,10 @@ class TargetSmall extends React.Component {
                     </a>
                 ) : null}
                 <Container
-                    className={"d-flex align-items-center text-truncate"}
+                    className={classNames(
+                        textTruncate ? "text-truncate" : "",
+                        "d-flex align-items-center"
+                    )}
                 >
                     <div
                         className={classNames(
@@ -74,6 +78,7 @@ TargetSmall.propTypes = {
 TargetSmall.defaultProps = {
     onClick: () => {},
     icon: true,
+    textTruncate: true,
     sizeText: "h4",
     fontWeight: "font-weight-light",
     cPointer: true,
