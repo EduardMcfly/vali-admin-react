@@ -1,4 +1,4 @@
-import HeaderDropdown from "./HeaderDropdown";
-import HeaderSearch from "./HeaderSearch";
+import HeaderDropdown from './HeaderDropdown';
+import HeaderSearch from './HeaderSearch';
 
 export { HeaderDropdown, HeaderSearch };

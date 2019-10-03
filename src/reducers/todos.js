@@ -1,4 +1,4 @@
-export default (state = "", action) => {
+export default (state = '', action) => {
   switch (action.type) {
     case 'EMAIL_REGISTER':
       return [
@@ -6,16 +6,16 @@ export default (state = "", action) => {
         {
           id: action.id,
           text: action.text,
-          completed: false
-        }
-      ]
+          completed: false,
+        },
+      ];
     case 'TOGGLE_TODO':
       return state.map(todo =>
-        (todo.id === action.id)
+        todo.id === action.id
           ? { ...todo, completed: !todo.completed }
-          : todo
-      )
+          : todo,
+      );
     default:
-      return state
+      return state;
   }
-}
+};

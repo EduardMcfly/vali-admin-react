@@ -1,0 +1,9 @@
+.gray {
+  background-color: rgba(123, 137, 148, 0.06);
+}
+$max-px: 100;
+@for $i from 16 to $max-px {
+  .g-height-#{$i} {
+    height: #{$i}px;
+  }
+}

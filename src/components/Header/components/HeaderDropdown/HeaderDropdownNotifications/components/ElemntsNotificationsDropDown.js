@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import i18next from "../../../../../../i18n";
-import timerIntConverter  from "../../../../../../app-utilities/timerConverter";
-import classNames from "classnames";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import i18next from '../../../../../../i18n';
+import timerIntConverter from '../../../../../../app-utilities/timerConverter';
+import classNames from 'classnames';
 
 class ElemntsNotificationsDropDown extends Component {
   constructor(props) {
@@ -22,23 +22,25 @@ class ElemntsNotificationsDropDown extends Component {
             <span className="fa-stack fa-lg">
               <i
                 className={classNames(
-                  "fa fa-circle fa-stack-2x",
-                  this.props.color
+                  'fa fa-circle fa-stack-2x',
+                  this.props.color,
                 )}
               />
               <i
                 className={classNames(
-                  "fa fa-stack-1x fa-inverse",
-                  this.props.icon
+                  'fa fa-stack-1x fa-inverse',
+                  this.props.icon,
                 )}
               />
             </span>
           </span>
           <div>
-            <p className="app-notificationMessage">{this.props.message}</p>
+            <p className="app-notificationMessage">
+              {this.props.message}
+            </p>
             <p className="app-notificationMeta">
-              {i18next.t("time." + timer[0], {
-                count: timer[1]
+              {i18next.t('time.' + timer[0], {
+                count: timer[1],
               })}
             </p>
           </div>
@@ -49,17 +51,17 @@ class ElemntsNotificationsDropDown extends Component {
 }
 
 ElemntsNotificationsDropDown.defaultProps = {
-  message: "stranger",
+  message: 'stranger',
   time: 322323,
-  icon: "fa-envelope",
-  color: "text-primary"
+  icon: 'fa-envelope',
+  color: 'text-primary',
 };
 
 ElemntsNotificationsDropDown.propTypes = {
   message: PropTypes.string,
   time: PropTypes.number,
   icon: PropTypes.string,
-  color: PropTypes.string
+  color: PropTypes.string,
 };
 
 export default ElemntsNotificationsDropDown;

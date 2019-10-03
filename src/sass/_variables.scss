@@ -1,0 +1,34 @@
+// Switches
+
+$switch-width: 40px !default;
+$switch-height: 26px !default;
+$switch-font-size: 10px !default;
+
+$switch-xl-width: 80px !default;
+$switch-xl-height: 36px !default;
+$switch-xl-font-size: 18px !default;
+
+$switch-lg-width: 48px !default;
+$switch-lg-height: 30px !default;
+$switch-lg-font-size: 12px !default;
+
+$switch-sm-width: 42px !default;
+$switch-sm-height: 22px !default;
+$switch-sm-font-size: 8px !default;
+
+$switch-label-width: 48px !default;
+$switch-label-xl-width: 100px !default;
+$switch-label-lg-width: 56px !default;
+$switch-label-sm-width: 50px !default;
+
+$switch-handle-margin: 2px !default;
+
+// Modals
+
+// Padding applied to the modal body
+
+$modal-backdrop-bg-gradient: radial-gradient(
+  ellipse farthest-corner at center,
+  rgba(0, 0, 0, 0.3) 0%,
+  rgba(0, 0, 0, 0.7) 100%
+) !default;

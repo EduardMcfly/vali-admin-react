@@ -1,4 +1,4 @@
-import store from "store";
+import store from 'store';
 /*
  * colorRand create colors Ramdon
  * Is a fuction global
@@ -15,5 +15,5 @@ export default {
   },
   get: position => {
     return store.get(position);
-  }
+  },
 };

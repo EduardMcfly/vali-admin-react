@@ -1,7 +1,7 @@
-import colorRand from "./colorRand";
-import mt_rand from "./mt_rand";
-import timerConverter from "./timerConverter";
-import AxiosStore from "./AxiosStore";
+import colorRand from './colorRand';
+import mt_rand from './mt_rand';
+import timerConverter from './timerConverter';
+import AxiosStore from './AxiosStore';
 
 /**
  *

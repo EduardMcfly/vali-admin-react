@@ -1,3 +1,3 @@
-import { RenderChildren, RenderRoute } from "./RenderValidation";
+import { RenderChildren, RenderRoute } from './RenderValidation';
 
-export { AutenticateRender, RenderRoute, RenderChildren };
+export { RenderRoute, RenderChildren };

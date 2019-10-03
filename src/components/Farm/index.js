@@ -1,4 +1,4 @@
-import AddFarm from "./AddFarm";
-import ConfigFarm from "./ConfigFarm";
+import AddFarm from './AddFarm';
+import ConfigFarm from './ConfigFarm';
 
 export { AddFarm, ConfigFarm };

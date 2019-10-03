@@ -1,0 +1,50 @@
+$transition-duration: 300ms;
+
+.page-enter {
+  opacity: 0;
+  transform: translateY(-10rem);
+  transition: all $transition-duration ease-out;
+  transition-delay: $transition-duration;
+}
+
+.page-enter.page-enter-active {
+  opacity: 1;
+  transform: none;
+}
+
+.page-leave {
+  opacity: 1;
+  transition: all $transition-duration linear;
+}
+
+.page-leave.page-leave-active {
+  opacity: 0;
+}
+
+.slide-appear,
+.slide-enter {
+  max-height: 0;
+  overflow: hidden;
+}
+
+.slide-appear.slide-appear-active,
+.slide-enter.slide-enter-active {
+  max-height: 500px;
+  -webkit-transition: all 0.8s ease-in-out;
+  -moz-transition: all 0.8s ease-in-out;
+  -o-transition: all 0.8s ease-in-out;
+  transition: all 0.8s ease-in-out;
+}
+
+.slide-leave {
+  max-height: 500px;
+}
+
+.slide-leave.slide-leave-active {
+  max-height: 0;
+  overflow: hidden;
+  -webkit-transition: all 0.8s ease-in-out;
+  -moz-transition: all 0.8s ease-in-out;
+  -o-transition: all 0.8s ease-in-out;
+  transition: all 0.8s ease-in-out;
+}
